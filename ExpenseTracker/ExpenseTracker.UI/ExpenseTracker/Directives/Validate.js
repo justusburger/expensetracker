@@ -9,25 +9,34 @@ var ExpenseTracker;
     (function (Directives) {
         var Validate = (function (_super) {
             __extends(Validate, _super);
-            function Validate(scope, element, attributes, modelController) {
+            function Validate(scope, element, attributes, modelController, container) {
                 var _this = this;
+                _super.call(this, scope, element, attributes);
+                this.hadFocus = false;
+                this.errorMessages = {
+                    'email': 'Invalid email address. Example: john.smith@email.com',
+                    'required': 'This field is required'
+                };
+
                 if (!attributes['name'])
                     throw new ExpenseTracker.ArgumentException('name', 'Input does not have a name attribute.');
 
-                _super.call(this, scope, element, attributes);
                 this.modelController = modelController;
+                this.container = container;
+                this.validIndicator = this.container.find('.valid');
+                this.invalidIndicator = this.container.find('.invalid');
+                this.spacer = this.container.find('.spacer');
 
-                this.templateHtml.then(function (content) {
-                    $(content).insertAfter(element);
-                    var container = element.next();
-                    _this.validIndicator = container.find('.valid');
-                    _this.invalidIndicator = container.find('.invalid');
-                    _this.spacer = container.find('.spacer');
+                scope.$watch(function () {
+                    return _this.modelController.$viewValue;
+                }, function () {
+                    return _this.showValidity();
+                });
 
-                    scope.$watch(function () {
-                        return _this.modelController.$viewValue;
-                    }, function () {
-                        return _this.showValidity();
+                element.on('blur', function () {
+                    _this.scope.$apply(function () {
+                        _this.hadFocus = true;
+                        _this.showValidity();
                     });
                 });
             }
@@ -36,49 +45,47 @@ var ExpenseTracker;
                 this.validIndicator.hide();
                 this.invalidIndicator.hide();
 
-                if (this.modelController.$pristine)
+                if (!this.hadFocus)
                     this.spacer.show();
                 else {
                     if (this.modelController.$valid)
                         this.validIndicator.show();
-                    if (this.modelController.$invalid)
+                    if (this.modelController.$invalid) {
                         this.invalidIndicator.show();
+                        var failedValidation;
+                        for (var key in this.modelController.$error) {
+                            if (this.modelController.$error[key]) {
+                                failedValidation = key;
+                                break;
+                            }
+                        }
+                        this.failedValidationMessage = this.errorMessages[failedValidation];
+                    }
                 }
             };
-
-            Object.defineProperty(Validate.prototype, "templateHtml", {
-                get: function () {
-                    var _this = this;
-                    var defer = this.promiseService.defer();
-                    var template = this.templateCacheService.get(Validate.TemplateUrl);
-                    if (template)
-                        defer.resolve(template);
-                    else {
-                        this.httpService.get(Validate.TemplateUrl).then(function (response) {
-                            _this.templateCacheService.put(Validate.TemplateUrl, response.data);
-                            defer.resolve(response.data);
-                        });
-                    }
-                    return defer.promise;
-                },
-                enumerable: true,
-                configurable: true
-            });
             Validate.Name = 'validate';
             Validate.TemplateUrl = 'ExpenseTracker/Views/Validate.html';
             return Validate;
         })(ExpenseTracker.DirectiveBase);
         Directives.Validate = Validate;
 
-        angular.module('ExpenseTracker.Directives').directive(Validate.Name, function () {
-            return {
-                restrict: 'A',
-                require: 'ngModel',
-                link: function (scope, element, attributes, modelController) {
-                    return new Validate(scope, element, attributes, modelController);
-                }
-            };
-        });
+        angular.module('ExpenseTracker.Directives').directive(Validate.Name, [
+            '$compile', function (compileService) {
+                return {
+                    restrict: 'A',
+                    require: 'ngModel',
+                    scope: true,
+                    templateUrl: Validate.TemplateUrl,
+                    compile: function (element, attributes) {
+                        var container = element.find('.form-validity');
+                        container.insertAfter(element);
+                        return function (scope, element, attributes, modelController) {
+                            new Validate(scope, element, attributes, modelController, container);
+                            compileService(container)(scope);
+                        };
+                    }
+                };
+            }]);
     })(ExpenseTracker.Directives || (ExpenseTracker.Directives = {}));
     var Directives = ExpenseTracker.Directives;
 })(ExpenseTracker || (ExpenseTracker = {}));

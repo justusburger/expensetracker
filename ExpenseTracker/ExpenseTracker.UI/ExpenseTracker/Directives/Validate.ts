@@ -6,27 +6,38 @@
         public static TemplateUrl: string = 'ExpenseTracker/Views/Validate.html';
 
         public modelController: ng.INgModelController;
+        public container: JQuery;
         public spacer: JQuery;
         public validIndicator: JQuery;
         public invalidIndicator: JQuery;
+        public hadFocus: boolean = false;
+        public failedValidationMessage: string;
 
-        constructor(scope: ng.IScope, element: JQuery, attributes: ng.IAttributes, modelController: ng.INgModelController) {
+        public errorMessages: any = {
+            'email': 'Invalid email address. Example: john.smith@email.com',
+            'required': 'This field is required'
+        };
+
+        constructor(scope: ng.IScope, element: JQuery, attributes: ng.IAttributes, modelController: ng.INgModelController, container: JQuery) {
+            super(scope, element, attributes);
+
             if (!attributes['name'])
                 throw new ArgumentException('name', 'Input does not have a name attribute.');
 
-            super(scope, element, attributes);
             this.modelController = modelController;
+            this.container = container;
+            this.validIndicator = this.container.find('.valid');
+            this.invalidIndicator = this.container.find('.invalid');
+            this.spacer = this.container.find('.spacer');
 
-            this.templateHtml.then((content: string) => {
-                $(content).insertAfter(element);
-                var container = element.next();
-                this.validIndicator = container.find('.valid');
-                this.invalidIndicator = container.find('.invalid');
-                this.spacer = container.find('.spacer');
+            scope.$watch(() => this.modelController.$viewValue, () => this.showValidity());
 
-                scope.$watch(() => this.modelController.$viewValue, () => this.showValidity());
+            element.on('blur', () => {
+                this.scope.$apply(() => {
+                    this.hadFocus = true;
+                    this.showValidity();
+                });
             });
-
         }
 
         public showValidity(): void {
@@ -34,36 +45,40 @@
             this.validIndicator.hide();
             this.invalidIndicator.hide();
 
-            if (this.modelController.$pristine)
+            if (!this.hadFocus)
                 this.spacer.show();
             else {
                 if (this.modelController.$valid)
                     this.validIndicator.show();
-                if (this.modelController.$invalid)
+                if (this.modelController.$invalid) {
                     this.invalidIndicator.show();
+                    var failedValidation;
+                    for (var key in this.modelController.$error) {
+                        if (this.modelController.$error[key]) {
+                            failedValidation = key;
+                            break;
+                        }
+                    }
+                    this.failedValidationMessage = this.errorMessages[failedValidation];
+                }
             }
         }
-
-        public get templateHtml(): ng.IPromise<string> {
-            var defer = this.promiseService.defer();
-            var template = this.templateCacheService.get(Validate.TemplateUrl);
-            if (template)
-                defer.resolve(template);
-            else {
-                this.httpService.get(Validate.TemplateUrl).then((response: { data: string }) => {
-                    this.templateCacheService.put(Validate.TemplateUrl, response.data);
-                    defer.resolve(response.data);
-                });
-            }
-            return defer.promise;
-        }
-
+        
     }
 
-    angular.module('ExpenseTracker.Directives').directive(Validate.Name, (): ng.IDirective => <ng.IDirective>{
+    angular.module('ExpenseTracker.Directives').directive(Validate.Name, ['$compile', (compileService: ng.ICompileService): ng.IDirective => <ng.IDirective>{
         restrict: 'A',
         require: 'ngModel',
-        link: (scope: ng.IScope, element: JQuery, attributes: ng.IAttributes, modelController: ng.INgModelController) => new Validate(scope, element, attributes, modelController)
-    });
+        scope: true,
+        templateUrl: Validate.TemplateUrl,
+        compile: (element: JQuery, attributes: ng.IAttributes) => {
+            var container = element.find('.form-validity');
+            container.insertAfter(element);
+            return (scope: ng.IScope, element: JQuery, attributes: ng.IAttributes, modelController: ng.INgModelController) => {
+                new Validate(scope, element, attributes, modelController, container);
+                compileService(container)(scope);
+            }
+        }
+    }]);
 
 } 
