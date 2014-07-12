@@ -2,3 +2,4 @@
 /ExpenseTracker/ExpenseTracker.UI/obj/Debug
 /ExpenseTracker/ExpenseTracker.API/bin
 /ExpenseTracker/ExpenseTracker.UI/bin
+/ExpenseTracker/ExpenseTracker.UI/app/js/ExpenseTracker/Abstract/*.map
