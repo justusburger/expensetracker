@@ -57,18 +57,36 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\index.html" />
+    <Content Include="app\js\bootstrap-3.2.0-dist\css\bootstrap-theme.css" />
+    <Content Include="app\js\bootstrap-3.2.0-dist\css\bootstrap-theme.min.css" />
+    <Content Include="app\js\bootstrap-3.2.0-dist\css\bootstrap.css" />
+    <Content Include="app\js\bootstrap-3.2.0-dist\css\bootstrap.min.css" />
+    <Content Include="app\js\bootstrap-3.2.0-dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="app\js\bootstrap-3.2.0-dist\js\bootstrap.js" />
+    <Content Include="app\js\bootstrap-3.2.0-dist\js\bootstrap.min.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\js\bootstrap-3.2.0-dist\css\bootstrap-theme.css.map" />
+    <Content Include="app\js\bootstrap-3.2.0-dist\css\bootstrap.css.map" />
+    <Content Include="app\js\bootstrap-3.2.0-dist\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="app\js\bootstrap-3.2.0-dist\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="app\js\bootstrap-3.2.0-dist\fonts\glyphicons-halflings-regular.woff" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="app\css\" />
+    <Folder Include="app\images\" />
+    <Folder Include="app\js\ExpenseTracker\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
