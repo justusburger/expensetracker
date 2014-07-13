@@ -38,6 +38,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Nancy">
       <HintPath>..\packages\Nancy.0.23.1\lib\net40\Nancy.dll</HintPath>
@@ -67,8 +73,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Registration.cs" />
-    <Compile Include="Models\ErrorResponse.cs" />
-    <Compile Include="Models\RegistrationForm.cs" />
+    <Compile Include="Helpers\ExpenseTrackerDbContext.cs" />
+    <Compile Include="Helpers\CryptoHelper.cs" />
+    <Compile Include="Helpers\UserMapper.cs" />
+    <Compile Include="Managers\ManagerBase.cs" />
+    <Compile Include="Managers\UserManager.cs" />
+    <Compile Include="Models\User.cs" />
+    <Compile Include="ViewModels\ErrorResponse.cs" />
+    <Compile Include="ViewModels\RegistrationForm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
