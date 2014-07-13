@@ -35,6 +35,12 @@
                     this.showValidity();
                 });
             });
+
+            if (attributes[Validate.Name + 'Watch'])
+                this.scope.$watch(attributes[Validate.Name + 'Watch'], () => {
+                    this.modelController.$setViewValue(this.modelController.$viewValue);
+                    this.showValidity();
+                });
         }
 
         public showValidity(): void {

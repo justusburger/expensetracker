@@ -33,6 +33,12 @@ var ExpenseTracker;
                         _this.showValidity();
                     });
                 });
+
+                if (attributes[Validate.Name + 'Watch'])
+                    this.scope.$watch(attributes[Validate.Name + 'Watch'], function () {
+                        _this.modelController.$setViewValue(_this.modelController.$viewValue);
+                        _this.showValidity();
+                    });
             }
             Validate.prototype.showValidity = function () {
                 this.spacer.hide();
