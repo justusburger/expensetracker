@@ -25,6 +25,17 @@
             configurable: true
         });
 
+        Object.defineProperty(Component.prototype, "registrationService", {
+            get: function () {
+                return this._registrationService || (this._registrationService = this.injectorService.get(ExpenseTracker.Services.Registration.Name));
+            },
+            set: function (value) {
+                this._registrationService = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
         Object.defineProperty(Component.prototype, "promiseService", {
             get: function () {
                 return this._promiseService || (this._promiseService = this.injectorService.get('$q'));
@@ -42,6 +53,17 @@
             },
             set: function (value) {
                 this._httpService = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Component.prototype, "resourceService", {
+            get: function () {
+                return this._resourceService || (this._resourceService = this.injectorService.get('$resource'));
+            },
+            set: function (value) {
+                this._resourceService = value;
             },
             enumerable: true,
             configurable: true

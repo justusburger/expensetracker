@@ -3,15 +3,23 @@
     export class Register extends ControllerBase {
 
         public static Name: string = 'Register';
-        public form: ExpenseTracker.Model.IRegistrationForm = <ExpenseTracker.Model.IRegistrationForm>{};
+        public form: ExpenseTracker.Models.IRegistrationForm = <ExpenseTracker.Models.IRegistrationForm>{};
 
         constructor(scope: ng.IScope) {
             super(scope);
-            scope['name'] = 'Justus';
+            this.form = {
+                name: 'Justus Burger',
+                email: 'justusburger@gmail.com',
+                password: 'P@ssw0rd',
+                acceptTermsAndConditions: true,
+                newsletterSignup: false
+            };
         }
 
         public register(): void {
-            console.log(this.form);
+            this.registrationService.register(this.form).then((response) => {
+                console.log('Done in controller', response);
+            });
         }
 
     }

@@ -12,10 +12,18 @@ var ExpenseTracker;
             function Register(scope) {
                 _super.call(this, scope);
                 this.form = {};
-                scope['name'] = 'Justus';
+                this.form = {
+                    name: 'Justus Burger',
+                    email: 'justusburger@gmail.com',
+                    password: 'P@ssw0rd',
+                    acceptTermsAndConditions: true,
+                    newsletterSignup: false
+                };
             }
             Register.prototype.register = function () {
-                console.log(this.form);
+                this.registrationService.register(this.form).then(function (response) {
+                    console.log('Done in controller', response);
+                });
             };
             Register.Name = 'Register';
             return Register;

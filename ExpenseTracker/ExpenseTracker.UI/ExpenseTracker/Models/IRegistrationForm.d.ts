@@ -1,4 +1,4 @@
-﻿declare module ExpenseTracker.Model {
+﻿declare module ExpenseTracker.Models {
 
     export interface IRegistrationForm {
 

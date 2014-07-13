@@ -17,6 +17,14 @@
             this._authenticationService = value;
         }
 
+        private _registrationService: ExpenseTracker.Services.Registration;
+        public get registrationService(): ExpenseTracker.Services.Registration {
+            return this._registrationService || (this._registrationService = this.injectorService.get(ExpenseTracker.Services.Registration.Name));
+        }
+        public set registrationService(value: ExpenseTracker.Services.Registration) {
+            this._registrationService = value;
+        }
+
         private _promiseService: ng.IQService;
         public get promiseService(): ng.IQService {
             return this._promiseService || (this._promiseService = this.injectorService.get('$q'));
@@ -31,6 +39,14 @@
         }
         public set httpService(value: ng.IHttpService) {
             this._httpService = value;
+        }
+
+        private _resourceService: ng.resource.IResourceService;
+        public get resourceService(): ng.resource.IResourceService {
+            return this._resourceService || (this._resourceService = this.injectorService.get('$resource'));
+        }
+        public set resourceService(value: ng.resource.IResourceService) {
+            this._resourceService = value;
         }
 
         public get isAuthenticated(): boolean {
