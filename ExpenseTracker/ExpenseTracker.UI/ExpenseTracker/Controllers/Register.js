@@ -14,6 +14,9 @@ var ExpenseTracker;
                 this.form = {};
                 scope['name'] = 'Justus';
             }
+            Register.prototype.register = function () {
+                console.log(this.form);
+            };
             Register.Name = 'Register';
             return Register;
         })(ExpenseTracker.ControllerBase);

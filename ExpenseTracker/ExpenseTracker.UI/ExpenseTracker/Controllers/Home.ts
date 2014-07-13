@@ -3,11 +3,14 @@
 
         public static Name: string = 'Home';
 
-        constructor() {
-            super();
+        constructor(scope: ng.IScope) {
+            super(scope);
         }
 
     }
 
-    angular.module('ExpenseTracker.Controllers').controller(Home.Name, () => new Home());
+    angular.module('ExpenseTracker.Controllers').controller(Home.Name, [
+        '$scope',
+        (scope: ng.IScope) => new Home(scope)
+    ]);
 } 

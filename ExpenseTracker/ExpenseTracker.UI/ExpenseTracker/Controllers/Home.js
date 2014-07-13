@@ -9,17 +9,20 @@ var ExpenseTracker;
     (function (Controllers) {
         var Home = (function (_super) {
             __extends(Home, _super);
-            function Home() {
-                _super.call(this);
+            function Home(scope) {
+                _super.call(this, scope);
             }
             Home.Name = 'Home';
             return Home;
         })(ExpenseTracker.ControllerBase);
         Controllers.Home = Home;
 
-        angular.module('ExpenseTracker.Controllers').controller(Home.Name, function () {
-            return new Home();
-        });
+        angular.module('ExpenseTracker.Controllers').controller(Home.Name, [
+            '$scope',
+            function (scope) {
+                return new Home(scope);
+            }
+        ]);
     })(ExpenseTracker.Controllers || (ExpenseTracker.Controllers = {}));
     var Controllers = ExpenseTracker.Controllers;
 })(ExpenseTracker || (ExpenseTracker = {}));

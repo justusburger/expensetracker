@@ -10,6 +10,10 @@
             scope['name'] = 'Justus';
         }
 
+        public register(): void {
+            console.log(this.form);
+        }
+
     }
 
     angular.module('ExpenseTracker.Controllers').controller(Register.Name, [
