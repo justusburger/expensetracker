@@ -9,18 +9,22 @@ var ExpenseTracker;
     (function (Controllers) {
         var Register = (function (_super) {
             __extends(Register, _super);
-            function Register() {
-                _super.call(this);
+            function Register(scope) {
+                _super.call(this, scope);
                 this.form = {};
+                scope['name'] = 'Justus';
             }
             Register.Name = 'Register';
             return Register;
         })(ExpenseTracker.ControllerBase);
         Controllers.Register = Register;
 
-        angular.module('ExpenseTracker.Controllers').controller(Register.Name, function () {
-            return new Register();
-        });
+        angular.module('ExpenseTracker.Controllers').controller(Register.Name, [
+            '$scope',
+            function (scope) {
+                return new Register(scope);
+            }
+        ]);
     })(ExpenseTracker.Controllers || (ExpenseTracker.Controllers = {}));
     var Controllers = ExpenseTracker.Controllers;
 })(ExpenseTracker || (ExpenseTracker = {}));

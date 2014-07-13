@@ -8,8 +8,11 @@ var ExpenseTracker;
 (function (ExpenseTracker) {
     var ControllerBase = (function (_super) {
         __extends(ControllerBase, _super);
-        function ControllerBase() {
+        function ControllerBase(scope) {
             _super.call(this);
+
+            this.scope = scope;
+            this.scope.$controller = this;
         }
         return ControllerBase;
     })(ExpenseTracker.Component);

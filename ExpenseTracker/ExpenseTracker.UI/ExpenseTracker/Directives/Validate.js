@@ -13,11 +13,6 @@ var ExpenseTracker;
                 var _this = this;
                 _super.call(this, scope, element, attributes);
                 this.hadFocus = false;
-                this.errorMessages = {
-                    'email': 'Invalid email address. Example: john.smith@email.com',
-                    'required': 'This field is required'
-                };
-
                 if (!attributes['name'])
                     throw new ExpenseTracker.ArgumentException('name', 'Input does not have a name attribute.');
 
@@ -32,7 +27,6 @@ var ExpenseTracker;
                 }, function () {
                     return _this.showValidity();
                 });
-
                 element.on('blur', function () {
                     _this.scope.$apply(function () {
                         _this.hadFocus = true;
@@ -59,12 +53,16 @@ var ExpenseTracker;
                                 break;
                             }
                         }
-                        this.failedValidationMessage = this.errorMessages[failedValidation];
+                        this.failedValidationMessage = Validate.ErrorMessages[failedValidation];
                     }
                 }
             };
             Validate.Name = 'validate';
             Validate.TemplateUrl = 'ExpenseTracker/Views/Validate.html';
+            Validate.ErrorMessages = {
+                'email': 'Invalid email address. Example: john.smith@email.com',
+                'required': 'This field is required'
+            };
             return Validate;
         })(ExpenseTracker.DirectiveBase);
         Directives.Validate = Validate;
@@ -80,8 +78,9 @@ var ExpenseTracker;
                         var container = element.find('.form-validity');
                         container.insertAfter(element);
                         return function (scope, element, attributes, modelController) {
-                            new Validate(scope, element, attributes, modelController, container);
-                            compileService(container)(scope);
+                            var validateScope = scope.$new();
+                            new Validate(validateScope, element, attributes, modelController, container);
+                            compileService(container)(validateScope);
                         };
                     }
                 };

@@ -4,6 +4,10 @@
 
         public static Name: string = 'validate';
         public static TemplateUrl: string = 'ExpenseTracker/Views/Validate.html';
+        public static ErrorMessages: any = {
+            'email': 'Invalid email address. Example: john.smith@email.com',
+            'required': 'This field is required'
+        };
 
         public modelController: ng.INgModelController;
         public container: JQuery;
@@ -13,14 +17,8 @@
         public hadFocus: boolean = false;
         public failedValidationMessage: string;
 
-        public errorMessages: any = {
-            'email': 'Invalid email address. Example: john.smith@email.com',
-            'required': 'This field is required'
-        };
-
         constructor(scope: ng.IScope, element: JQuery, attributes: ng.IAttributes, modelController: ng.INgModelController, container: JQuery) {
             super(scope, element, attributes);
-
             if (!attributes['name'])
                 throw new ArgumentException('name', 'Input does not have a name attribute.');
 
@@ -31,7 +29,6 @@
             this.spacer = this.container.find('.spacer');
 
             scope.$watch(() => this.modelController.$viewValue, () => this.showValidity());
-
             element.on('blur', () => {
                 this.scope.$apply(() => {
                     this.hadFocus = true;
@@ -59,7 +56,7 @@
                             break;
                         }
                     }
-                    this.failedValidationMessage = this.errorMessages[failedValidation];
+                    this.failedValidationMessage = Validate.ErrorMessages[failedValidation];
                 }
             }
         }
@@ -75,10 +72,11 @@
             var container = element.find('.form-validity');
             container.insertAfter(element);
             return (scope: ng.IScope, element: JQuery, attributes: ng.IAttributes, modelController: ng.INgModelController) => {
-                new Validate(scope, element, attributes, modelController, container);
-                compileService(container)(scope);
+                var validateScope = scope.$new();
+                new Validate(validateScope, element, attributes, modelController, container);
+                compileService(container)(validateScope);
             }
-        }
+        }    
     }]);
 
 } 

@@ -26,14 +26,14 @@
             <div class="col-lg-6">
                 <h4>Password</h4>
                 <div class="input-group input-group-lg">
-                    <input type="password" class="form-control" placeholder="P@ssw0rd" name="password" ng-model="$controller.form.password" required validate />
+                    <input type="password" class="form-control" placeholder="P@ssw0rd" name="password" ng-model="$controller.form.password" required validate /> <!--required validate complex-password />-->
                 </div>
                 <p class="help-block">Ssshhhh - keep it a secret</p>
             </div>
             <div class="col-lg-6">
                 <h4>Confirm password</h4>
                 <div class="input-group input-group-lg">
-                    <input type="password" class="form-control" placeholder="P@ssw0rd" name="confirmPassword" ng-model="$controller.form.confirmPassword" required validate />
+                    <input type="password" class="form-control" placeholder="P@ssw0rd" name="confirmPassword" ng-model="$controller.form.confirmPassword" required validate match="$controller.form.password" />
                 </div>
             </div>
         </div>
