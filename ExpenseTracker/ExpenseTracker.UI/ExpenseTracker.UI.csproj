@@ -64,6 +64,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <TypeScriptCompile Include="ExpenseTracker\Abstract\NotImplementedException.ts" />
+    <Content Include="ExpenseTracker\Views\AlertHandler.html" />
     <Content Include="ExpenseTracker\Views\Validate.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="index.html" />
@@ -84,6 +85,7 @@
     <Content Include="scripts\jquery-1.9.0.min.map" />
     <TypeScriptCompile Include="ExpenseTracker\Abstract\ArgumentException.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Abstract\Component.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Directives\AlertHandler.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\DirectiveBase.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Configuration.ts" />
     <Content Include="ExpenseTracker\Views\Home.html" />
@@ -399,9 +401,12 @@
     <TypeScriptCompile Include="ExpenseTracker\Directives\Validations\Match.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\Validations\ValidationBase.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Errors.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Models\AlertTypeEnum.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IErrorResponse.d.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Models\IQueuedAlert.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IRegistrationForm.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\ISuccessResponse.d.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Services\AlertService.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\ApiResourceService.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\Authentication.ts" />
   </ItemGroup>

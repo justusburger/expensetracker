@@ -12,7 +12,7 @@
 
         public defaultOnError<T>(response: Models.IErrorResponse, defer: ng.IDeferred<T>, expectedErrors?: number[]): void {
             if (response.data && !Enumerable.From(expectedErrors).Contains(response.data.errorCode)) {
-                console.log('Global error handler: ', response);
+                this.alertService.error(response.data.message);
             }
             defer.reject(response);
         }

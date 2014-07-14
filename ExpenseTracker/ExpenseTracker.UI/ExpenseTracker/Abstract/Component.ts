@@ -49,6 +49,22 @@
             this._resourceService = value;
         }
 
+        private _timeoutService: ng.ITimeoutService;
+        public get timeoutService(): ng.ITimeoutService {
+            return this._timeoutService || (this._timeoutService = this.injectorService.get('$timeout'));
+        }
+        public set timeoutService(value: ng.ITimeoutService) {
+            this._timeoutService = value;
+        }
+
+        private _alertService: ExpenseTracker.Services.Alert;
+        public get alertService(): ExpenseTracker.Services.Alert {
+            return this._alertService || (this._alertService = this.injectorService.get(ExpenseTracker.Services.Alert.Name));
+        }
+        public set alertService(value: ExpenseTracker.Services.Alert) {
+            this._alertService = value;
+        }
+
         public get isAuthenticated(): boolean {
             return this.authenticationService.isAuthenticated;
         }

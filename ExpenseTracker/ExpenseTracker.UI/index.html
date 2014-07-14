@@ -15,7 +15,7 @@
 </head>
 <body>
     <menu></menu>
-
+    <alert-handler></alert-handler>
     <div class="main-contentainer" ng-view></div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -33,10 +33,13 @@
     <script src="ExpenseTracker/Abstract/Component.js"></script>
     <script src="ExpenseTracker/Abstract/ArgumentException.js"></script>
     <script src="ExpenseTracker/Abstract/NotImplementedException.js"></script>
+    
+    <script src="ExpenseTracker/Models/AlertTypeEnum.js"></script>
 
     <script src="ExpenseTracker/Services/ApiResourceService.js"></script>
     <script src="ExpenseTracker/Services/Authentication.js"></script>
     <script src="ExpenseTracker/Services/Registration.js"></script>
+    <script src="ExpenseTracker/Services/AlertService.js"></script>
 
     <script src="ExpenseTracker/Controllers/ControllerBase.js"></script>
     <script src="ExpenseTracker/Controllers/Home.js"></script>
@@ -45,6 +48,7 @@
     <script src="ExpenseTracker/Directives/DirectiveBase.js"></script>
     <script src="ExpenseTracker/Directives/Validate.js"></script>
     <script src="ExpenseTracker/Directives/Menu.js"></script>
+    <script src="ExpenseTracker/Directives/AlertHandler.js"></script>
     <script src="ExpenseTracker/Directives/Validations/ValidationBase.js"></script>
     <script src="ExpenseTracker/Directives/Validations/ComplexPassword.js"></script>
     <script src="ExpenseTracker/Directives/Validations/Match.js"></script>

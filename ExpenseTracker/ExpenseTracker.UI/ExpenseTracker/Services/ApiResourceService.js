@@ -22,7 +22,7 @@ var ExpenseTracker;
 
             ApiResourceService.prototype.defaultOnError = function (response, defer, expectedErrors) {
                 if (response.data && !Enumerable.From(expectedErrors).Contains(response.data.errorCode)) {
-                    console.log('Global error handler: ', response);
+                    this.alertService.error(response.data.message);
                 }
                 defer.reject(response);
             };

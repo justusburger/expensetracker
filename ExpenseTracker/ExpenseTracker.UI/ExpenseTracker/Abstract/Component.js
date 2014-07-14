@@ -69,6 +69,28 @@
             configurable: true
         });
 
+        Object.defineProperty(Component.prototype, "timeoutService", {
+            get: function () {
+                return this._timeoutService || (this._timeoutService = this.injectorService.get('$timeout'));
+            },
+            set: function (value) {
+                this._timeoutService = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Component.prototype, "alertService", {
+            get: function () {
+                return this._alertService || (this._alertService = this.injectorService.get(ExpenseTracker.Services.Alert.Name));
+            },
+            set: function (value) {
+                this._alertService = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
         Object.defineProperty(Component.prototype, "isAuthenticated", {
             get: function () {
                 return this.authenticationService.isAuthenticated;
