@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
+using System.Web.UI.WebControls;
 using ExpenseTracker.API.Models;
 
 namespace ExpenseTracker.API.Helpers
@@ -11,9 +12,6 @@ namespace ExpenseTracker.API.Helpers
     {
         public IDbSet<User> Users { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            base.OnModelCreating(modelBuilder);
-        }
+        
     }
 }

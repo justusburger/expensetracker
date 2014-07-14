@@ -1,7 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Core;
+using System.Data.Entity.Infrastructure;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using ExpenseTracker.API.Exceptions;
 using ExpenseTracker.API.Helpers;
 
 namespace ExpenseTracker.API.Managers
@@ -20,11 +24,27 @@ namespace ExpenseTracker.API.Managers
             set { _context = value; }
         }
 
-        public T Add(T entity)
+        public T Add(T entity) 
         {
             context.Set<T>().Add(entity);
-            context.SaveChanges();
+            try
+            {
+                context.SaveChanges();
+            }
+            catch (DbUpdateException ex)
+            {
+                var updateException = ex.InnerException as UpdateException;
+                if (updateException != null)
+                {
+                    var sqlException = updateException.InnerException as SqlException;
+                    if(sqlException != null && sqlException.Errors.OfType<SqlError>().Any(se => se.Number == 2601 || se.Number == 2627))
+                        throw new UniqueOrIndexContraintException(ex.Message, ex);
+                }   
+                throw;
+            }
+
             return entity;
         }
+
     }
 }

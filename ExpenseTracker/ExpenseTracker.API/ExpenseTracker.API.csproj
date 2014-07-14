@@ -72,13 +72,18 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bootstrap.cs" />
+    <Compile Include="Controllers\ControllerBase.cs" />
     <Compile Include="Controllers\Registration.cs" />
+    <Compile Include="Exceptions\UniqueOrIndexContraintException.cs" />
+    <Compile Include="Helpers\ExpenseTrackerDatabaseInitializer.cs" />
     <Compile Include="Helpers\ExpenseTrackerDbContext.cs" />
     <Compile Include="Helpers\CryptoHelper.cs" />
     <Compile Include="Helpers\UserMapper.cs" />
     <Compile Include="Managers\ManagerBase.cs" />
     <Compile Include="Managers\UserManager.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="ViewModels\ControllerResponse.cs" />
     <Compile Include="ViewModels\ErrorResponse.cs" />
     <Compile Include="ViewModels\RegistrationForm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

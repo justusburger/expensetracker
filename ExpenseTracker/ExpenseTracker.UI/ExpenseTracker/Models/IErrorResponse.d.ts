@@ -4,7 +4,11 @@
 
         status: number;
         statusText: string;
-        data: { errors: string[] };
+        data: {
+            errorCode?: number;
+            statusCode?: number;
+            message?: string;
+        };
 
     }
 

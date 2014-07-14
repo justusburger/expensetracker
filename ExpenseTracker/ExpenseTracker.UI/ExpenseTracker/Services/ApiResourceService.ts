@@ -10,8 +10,10 @@
             return this.injectorService.get('API_BASE_PATH');
         }
 
-        public defaultOnError<T>(response: Models.IErrorResponse, defer: ng.IDeferred<T>): void {
-            console.log('Global error handler: ', response.data.errors);
+        public defaultOnError<T>(response: Models.IErrorResponse, defer: ng.IDeferred<T>, expectedErrors?: number[]): void {
+            if (response.data && !Enumerable.From(expectedErrors).Contains(response.data.errorCode)) {
+                console.log('Global error handler: ', response);
+            }
             defer.reject(response);
         }
 

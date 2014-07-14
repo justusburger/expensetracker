@@ -387,6 +387,9 @@
     <Content Include="scripts\i18n\angular-locale_zh.js" />
     <Content Include="scripts\i18n\angular-locale_zu-za.js" />
     <Content Include="scripts\i18n\angular-locale_zu.js" />
+    <None Include="scripts\linq-vsdoc.js" />
+    <Content Include="scripts\linq.js" />
+    <Content Include="scripts\linq.min.js" />
     <Content Include="Web.config" />
     <TypeScriptCompile Include="ExpenseTracker\Controllers\ControllerBase.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Controllers\Register.ts" />
@@ -395,6 +398,7 @@
     <TypeScriptCompile Include="ExpenseTracker\Directives\Validations\ComplexPassword.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\Validations\Match.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\Validations\ValidationBase.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Errors.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IErrorResponse.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IRegistrationForm.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\ISuccessResponse.d.ts" />
@@ -430,6 +434,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="ExpenseTracker\Controllers\Home.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\Registration.ts" />
+    <TypeScriptCompile Include="scripts\linq.d.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-cookies.d.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-mocks.d.ts" />

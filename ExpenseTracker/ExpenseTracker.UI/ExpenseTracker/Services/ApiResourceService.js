@@ -20,8 +20,10 @@ var ExpenseTracker;
                 configurable: true
             });
 
-            ApiResourceService.prototype.defaultOnError = function (response, defer) {
-                console.log('Global error handler: ', response.data.errors);
+            ApiResourceService.prototype.defaultOnError = function (response, defer, expectedErrors) {
+                if (response.data && !Enumerable.From(expectedErrors).Contains(response.data.errorCode)) {
+                    console.log('Global error handler: ', response);
+                }
                 defer.reject(response);
             };
 
