@@ -1,12 +1,11 @@
 ﻿<!DOCTYPE html>
-<html lang="en" ng-app="ExpenseTracker">
+<html lang="en">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Expense Tracker</title>
     <link href="Content/bootstrap.min.css" rel="stylesheet" />
-    <link href="Content/bootstrap-theme.min.css" rel="stylesheet" />
     <link href="css/styles.css" rel="stylesheet">
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -36,14 +35,16 @@
     
     <script src="ExpenseTracker/Models/AlertTypeEnum.js"></script>
 
-    <script src="ExpenseTracker/Services/ApiResourceService.js"></script>
-    <script src="ExpenseTracker/Services/Authentication.js"></script>
+    <script src="ExpenseTracker/Services/ApiResource.js"></script>
+    <script src="ExpenseTracker/Services/SignIn.js"></script>
     <script src="ExpenseTracker/Services/Registration.js"></script>
-    <script src="ExpenseTracker/Services/AlertService.js"></script>
+    <script src="ExpenseTracker/Services/Alert.js"></script>
+    <script src="ExpenseTracker/Services/Profile.js"></script>
+    <script src="ExpenseTracker/Services/Cache.js"></script>
 
     <script src="ExpenseTracker/Controllers/ControllerBase.js"></script>
     <script src="ExpenseTracker/Controllers/Home.js"></script>
-    <script src="ExpenseTracker/Controllers/Register.js"></script>
+    <script src="ExpenseTracker/Controllers/Registration.js"></script>
 
     <script src="ExpenseTracker/Directives/DirectiveBase.js"></script>
     <script src="ExpenseTracker/Directives/Validate.js"></script>

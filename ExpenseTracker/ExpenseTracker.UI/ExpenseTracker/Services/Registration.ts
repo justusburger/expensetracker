@@ -1,21 +1,21 @@
 ﻿module ExpenseTracker.Services {
 
-    export class Registration extends ApiResourceService {
+    export class Registration extends ApiResource {
 
         public static Name: string = 'Registration';
 
-        public registerResource: ng.resource.IResourceClass<any>;
+        public registerResource: ng.resource.IResourceClass<ng.resource.IResource<Models.IRegistrationRequest>>;
 
         constructor() {
             super();
             this.registerResource = this.resourceService(this.apiBaseUrl + '/registration/');
         }
 
-        public register(form: Models.IRegistrationForm): ng.IPromise<void> {
+        public create(form: Models.IRegistrationRequest): ng.IPromise<void> {
             var defer = this.promiseService.defer<void>();
             this.registerResource.save(
                 form,
-                (response: Models.ISuccessResponse) => this.defaultOnSuccess(response, defer),
+                (response) => this.defaultOnSuccess(response, defer),
                 (response: Models.IErrorResponse) => this.defaultOnError(response, defer)
             );
             return defer.promise;

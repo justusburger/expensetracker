@@ -12,8 +12,7 @@ var ExpenseTracker;
             function Menu(scope, element, attributes) {
                 _super.call(this, scope, element, attributes);
             }
-            Menu.prototype.signIn = function () {
-                this.authenticationService.authenticationToken = "asdcfv";
+            Menu.prototype.signOut = function () {
             };
             Menu.Name = 'menu';
             Menu.TemplateUrl = 'ExpenseTracker/Views/Menu.html';

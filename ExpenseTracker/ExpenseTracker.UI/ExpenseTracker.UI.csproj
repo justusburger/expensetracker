@@ -90,7 +90,7 @@
     <TypeScriptCompile Include="ExpenseTracker\Configuration.ts" />
     <Content Include="ExpenseTracker\Views\Home.html" />
     <Content Include="ExpenseTracker\Views\Menu.html" />
-    <Content Include="ExpenseTracker\Views\Register.html" />
+    <Content Include="ExpenseTracker\Views\Registration.html" />
     <Content Include="scripts\angular-animate.js" />
     <Content Include="scripts\angular-animate.min.js" />
     <Content Include="scripts\angular-cookies.js" />
@@ -394,7 +394,7 @@
     <Content Include="scripts\linq.min.js" />
     <Content Include="Web.config" />
     <TypeScriptCompile Include="ExpenseTracker\Controllers\ControllerBase.ts" />
-    <TypeScriptCompile Include="ExpenseTracker\Controllers\Register.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Controllers\Registration.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\Menu.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\Validate.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\Validations\ComplexPassword.ts" />
@@ -403,12 +403,16 @@
     <TypeScriptCompile Include="ExpenseTracker\Errors.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\AlertTypeEnum.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IErrorResponse.d.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Models\IProfile.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IQueuedAlert.d.ts" />
-    <TypeScriptCompile Include="ExpenseTracker\Models\IRegistrationForm.d.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Models\IRegistrationRequest.d.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Models\ISignInRequest.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\ISuccessResponse.d.ts" />
-    <TypeScriptCompile Include="ExpenseTracker\Services\AlertService.ts" />
-    <TypeScriptCompile Include="ExpenseTracker\Services\ApiResourceService.ts" />
-    <TypeScriptCompile Include="ExpenseTracker\Services\Authentication.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Services\Alert.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Services\ApiResource.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Services\Cache.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Services\Profile.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Services\SignIn.ts" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />

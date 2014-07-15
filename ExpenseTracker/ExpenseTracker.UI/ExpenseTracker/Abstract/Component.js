@@ -2,6 +2,10 @@
 (function (ExpenseTracker) {
     var Component = (function () {
         function Component() {
+            var _this = this;
+            this.cacheService.initializeDefer.promise.finally(function () {
+                return _this.onInitialized();
+            });
         }
         Object.defineProperty(Component.prototype, "injectorService", {
             get: function () {
@@ -14,12 +18,23 @@
             configurable: true
         });
 
-        Object.defineProperty(Component.prototype, "authenticationService", {
+        Object.defineProperty(Component.prototype, "signInService", {
             get: function () {
-                return this._authenticationService || (this._authenticationService = this.injectorService.get(ExpenseTracker.Services.Authentication.Name));
+                return this._signInService || (this._signInService = this.injectorService.get(ExpenseTracker.Services.SignIn.Name));
             },
             set: function (value) {
-                this._authenticationService = value;
+                this._signInService = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Component.prototype, "profileService", {
+            get: function () {
+                return this._profileService || (this._profileService = this.injectorService.get(ExpenseTracker.Services.Profile.Name));
+            },
+            set: function (value) {
+                this._profileService = value;
             },
             enumerable: true,
             configurable: true
@@ -91,13 +106,34 @@
             configurable: true
         });
 
-        Object.defineProperty(Component.prototype, "isAuthenticated", {
+        Object.defineProperty(Component.prototype, "cacheService", {
             get: function () {
-                return this.authenticationService.isAuthenticated;
+                return this._cacheService || (this._cacheService = this.injectorService.get(ExpenseTracker.Services.Cache.Name));
+            },
+            set: function (value) {
+                this._cacheService = value;
             },
             enumerable: true,
             configurable: true
         });
+
+        Object.defineProperty(Component.prototype, "isSignedIn", {
+            get: function () {
+                return !!this.cacheService.profile;
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Object.defineProperty(Component.prototype, "profile", {
+            get: function () {
+                return this.cacheService.profile;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Component.prototype.onInitialized = function () {
+        };
         return Component;
     })();
     ExpenseTracker.Component = Component;

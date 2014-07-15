@@ -12,7 +12,9 @@ namespace ExpenseTracker.API.Managers
 {
     public interface IManager<T>
     {
-        T Add(T entity);
+        T Create(T entity);
+        T GetById(int entityId);
+        void SaveChanges();
     }
 
     public abstract class ManagerBase<T> : IManager<T> where T : class 
@@ -24,7 +26,7 @@ namespace ExpenseTracker.API.Managers
             set { _context = value; }
         }
 
-        public T Add(T entity) 
+        public T Create(T entity) 
         {
             context.Set<T>().Add(entity);
             try
@@ -46,5 +48,14 @@ namespace ExpenseTracker.API.Managers
             return entity;
         }
 
+        public T GetById(int entityId)
+        {
+            return context.Set<T>().Find(entityId);
+        }
+
+        public void SaveChanges()
+        {
+            context.SaveChanges();
+        }
     }
 }

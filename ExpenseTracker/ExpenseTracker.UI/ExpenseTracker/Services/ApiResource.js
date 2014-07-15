@@ -36,4 +36,4 @@ var ExpenseTracker;
     })(ExpenseTracker.Services || (ExpenseTracker.Services = {}));
     var Services = ExpenseTracker.Services;
 })(ExpenseTracker || (ExpenseTracker = {}));
-//# sourceMappingURL=ApiResourceService.js.map
+//# sourceMappingURL=ApiResource.js.map

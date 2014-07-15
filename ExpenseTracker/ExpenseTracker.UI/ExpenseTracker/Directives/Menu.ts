@@ -8,9 +8,9 @@
         constructor(scope: ng.IScope, element: JQuery, attributes: ng.IAttributes) {
             super(scope, element, attributes);
         }
-
-        public signIn(): void {
-            this.authenticationService.authenticationToken = "asdcfv";
+        
+        public signOut(): void {
+            
         }
 
     }
@@ -19,8 +19,8 @@
         replace: true,
         restrict: 'E',
         scope: true,
-        templateUrl: Menu.TemplateUrl,           
+        templateUrl: Menu.TemplateUrl,
         link: (scope: ng.IScope, element: JQuery, attributes: ng.IAttributes) => new Menu(scope, element, attributes)
-    }); 
+    });
 
 } 

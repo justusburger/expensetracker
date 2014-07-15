@@ -23,7 +23,7 @@ var ExpenseTracker;
                 if (!Enumerable.From(this.alertService.queue).Any())
                     return;
                 var alert = this.alertService.queue.shift();
-                var alertItem = $('<div class="alert"></div>').html(alert.message).hide();
+                var alertItem = $('<div class="alert"></div>').html(alert.message);
                 if (alert.type === 0 /* Success */)
                     alertItem.addClass('alert-success');
                 if (alert.type === 1 /* Warning */)
@@ -31,7 +31,7 @@ var ExpenseTracker;
                 if (alert.type === 2 /* Error */)
                     alertItem.addClass('alert-danger');
                 this.element.append(alertItem);
-                alertItem.css('margin-left', '-' + (alertItem.outerWidth() / 2) + 'px').fadeIn(200);
+                alertItem.css('margin-left', '-' + (alertItem.outerWidth() / 2) + 'px');
                 this.timeoutService(function () {
                     return alertItem.fadeOut(2000, function () {
                         return alertItem.remove();

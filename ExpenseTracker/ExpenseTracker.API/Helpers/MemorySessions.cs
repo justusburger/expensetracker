@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Nancy;
+using Nancy.Authentication.Stateless;
 using Nancy.Bootstrapper;
 using Nancy.Cryptography;
+using Nancy.Security;
 using Nancy.Session;
 
 namespace ExpenseTracker.API.Helpers
@@ -15,6 +17,7 @@ namespace ExpenseTracker.API.Helpers
         private readonly IDictionary<string, IDictionary<string, object>> sessionStore; 
         public static readonly string CookieName = "session";
         public static readonly string NewCookieName = "new-session";
+        public static readonly string CurrentUserSessionKey = "current-user";
 
         public MemorySessions(MemorySessionsConfiguration configuration)
         {
@@ -70,6 +73,30 @@ namespace ExpenseTracker.API.Helpers
                 context.Response.WithCookie(CookieName, context.Request.Cookies[NewCookieName]);
             }
             return context.Response;
+        }
+
+        public static IUserIdentity GetCurrentUser(Request request)
+        {
+            IUserIdentity user = null;
+            if (request.Session != null && (request.Session[CurrentUserSessionKey] as IUserIdentity) != null)
+                user = request.Session[CurrentUserSessionKey] as IUserIdentity;
+            return user;
+        }
+
+        public static void SetCurrentUser(IUserIdentity user, Request request)
+        {
+            if(request == null || request.Session == null)
+                throw new ArgumentNullException("session");
+
+            request.Session[CurrentUserSessionKey] = user;
+        }
+
+        public static void RemoveCurrentUser(Request request)
+        {
+            if (request == null || request.Session == null)
+                throw new ArgumentNullException("session");
+
+            request.Session.Delete(CurrentUserSessionKey);
         }
         
     }

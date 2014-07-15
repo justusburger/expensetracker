@@ -13,30 +13,30 @@ var ExpenseTracker;
                 _super.call(this);
                 this.signInResource = this.resourceService(this.apiBaseUrl + '/sign-in');
             }
-            Object.defineProperty(SignIn.prototype, "isSignedIn", {
-                get: function () {
-                    return this._isSignedIn;
-                },
-                set: function (value) {
-                    this._isSignedIn = value;
-                },
-                enumerable: true,
-                configurable: true
-            });
-
-            SignIn.prototype.create = function (signInRequest) {
+            SignIn.prototype.signIn = function (signInRequest) {
                 var _this = this;
                 var defer = this.promiseService.defer();
                 this.signInResource.save(signInRequest, function (response) {
                     return _this.defaultOnSuccess(response, defer);
                 }, function (response) {
-                    return _this.defaultOnError(response, defer, [ExpenseTracker.Errors.SIGN_IN_INCORRECT_DETAILS]);
+                    return _this.defaultOnError(response, defer, [ExpenseTracker.Errors.SIGN_IN_INCORRECT_DETAILS, ExpenseTracker.Errors.SIGN_IN_ACCOUNT_LOCKED]);
+                });
+                return defer.promise;
+            };
+
+            SignIn.prototype.signOut = function () {
+                var _this = this;
+                var defer = this.promiseService.defer();
+                this.signInResource.delete(function (response) {
+                    return _this.defaultOnSuccess(response, defer);
+                }, function (response) {
+                    return _this.defaultOnError(response, defer, [ExpenseTracker.Errors.SIGN_IN_INCORRECT_DETAILS, ExpenseTracker.Errors.SIGN_IN_ACCOUNT_LOCKED]);
                 });
                 return defer.promise;
             };
             SignIn.Name = 'SignIn';
             return SignIn;
-        })(Services.ApiResourceService);
+        })(Services.ApiResource);
         Services.SignIn = SignIn;
 
         angular.module('ExpenseTracker.Services').factory(SignIn.Name, function () {
@@ -45,4 +45,4 @@ var ExpenseTracker;
     })(ExpenseTracker.Services || (ExpenseTracker.Services = {}));
     var Services = ExpenseTracker.Services;
 })(ExpenseTracker || (ExpenseTracker = {}));
-//# sourceMappingURL=Authentication.js.map
+//# sourceMappingURL=SignIn.js.map

@@ -7,31 +7,31 @@
 var ExpenseTracker;
 (function (ExpenseTracker) {
     (function (Services) {
-        var Registration = (function (_super) {
-            __extends(Registration, _super);
-            function Registration() {
+        var Profile = (function (_super) {
+            __extends(Profile, _super);
+            function Profile() {
                 _super.call(this);
-                this.registerResource = this.resourceService(this.apiBaseUrl + '/registration/');
+                this.profileResource = this.resourceService(this.apiBaseUrl + '/profile');
             }
-            Registration.prototype.create = function (form) {
+            Profile.prototype.get = function () {
                 var _this = this;
                 var defer = this.promiseService.defer();
-                this.registerResource.save(form, function (response) {
+                this.profileResource.get(function (response) {
                     return _this.defaultOnSuccess(response, defer);
                 }, function (response) {
-                    return _this.defaultOnError(response, defer);
+                    return _this.defaultOnError(response, defer, [ExpenseTracker.Errors.UNAUTHENTICATED]);
                 });
                 return defer.promise;
             };
-            Registration.Name = 'Registration';
-            return Registration;
+            Profile.Name = 'Profile';
+            return Profile;
         })(Services.ApiResource);
-        Services.Registration = Registration;
+        Services.Profile = Profile;
 
-        angular.module('ExpenseTracker.Services').factory(Registration.Name, function () {
-            return new Registration();
+        angular.module('ExpenseTracker.Services').factory(Profile.Name, function () {
+            return new Profile();
         });
     })(ExpenseTracker.Services || (ExpenseTracker.Services = {}));
     var Services = ExpenseTracker.Services;
 })(ExpenseTracker || (ExpenseTracker = {}));
-//# sourceMappingURL=Registration.js.map
+//# sourceMappingURL=Profile.js.map

@@ -1,6 +1,6 @@
 ﻿declare module ExpenseTracker.Models {
 
-    export interface IRegistrationForm {
+    export interface IRegistrationRequest {
 
         name: string;
         email: string;

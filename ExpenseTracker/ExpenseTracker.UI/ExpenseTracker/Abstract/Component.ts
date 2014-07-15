@@ -9,12 +9,20 @@
             this._injectorService = value;
         }
 
-        private _authenticationService: ExpenseTracker.Services.Authentication;
-        public get authenticationService(): ExpenseTracker.Services.Authentication {
-            return this._authenticationService || (this._authenticationService = this.injectorService.get(ExpenseTracker.Services.Authentication.Name));
+        private _signInService: ExpenseTracker.Services.SignIn;
+        public get signInService(): ExpenseTracker.Services.SignIn {
+            return this._signInService || (this._signInService = this.injectorService.get(ExpenseTracker.Services.SignIn.Name));
         }
-        public set authenticationService(value: ExpenseTracker.Services.Authentication) {
-            this._authenticationService = value;
+        public set signInService(value: ExpenseTracker.Services.SignIn) {
+            this._signInService = value;
+        }
+
+        private _profileService: ExpenseTracker.Services.Profile;
+        public get profileService(): ExpenseTracker.Services.Profile {
+            return this._profileService || (this._profileService = this.injectorService.get(ExpenseTracker.Services.Profile.Name));
+        }
+        public set profileService(value: ExpenseTracker.Services.Profile) {
+            this._profileService = value;
         }
 
         private _registrationService: ExpenseTracker.Services.Registration;
@@ -65,11 +73,26 @@
             this._alertService = value;
         }
 
-        public get isAuthenticated(): boolean {
-            return this.authenticationService.isAuthenticated;
+        private _cacheService: ExpenseTracker.Services.Cache;
+        public get cacheService(): ExpenseTracker.Services.Cache {
+            return this._cacheService || (this._cacheService = this.injectorService.get(ExpenseTracker.Services.Cache.Name));
+        }
+        public set cacheService(value: ExpenseTracker.Services.Cache) {
+            this._cacheService = value;
+        }
+
+        public get isSignedIn(): boolean {
+            return !!this.cacheService.profile;
+        }
+        public get profile(): Models.IProfile {
+            return this.cacheService.profile;
         }
 
         constructor() {
+            this.cacheService.initializeDefer.promise.finally(() => this.onInitialized());
+        }
+
+        public onInitialized(): void {
             
         }
 

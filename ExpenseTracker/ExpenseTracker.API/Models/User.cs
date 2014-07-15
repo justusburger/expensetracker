@@ -34,9 +34,5 @@ namespace ExpenseTracker.API.Models
         public bool Locked { get; set; }
         public int InvalidAuthentications { get; set; }
 
-        [MaxLength(100)]
-        public string AuthenticationToken { get; set; }
-
-        public DateTime? AuthenticationTokenExpiryDate { get; set; }
     }
 }

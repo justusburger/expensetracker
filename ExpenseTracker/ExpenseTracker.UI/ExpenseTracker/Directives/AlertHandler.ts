@@ -16,7 +16,7 @@
             if (!Enumerable.From(this.alertService.queue).Any())
                 return;
             var alert: Models.IQueuedAlert = this.alertService.queue.shift();
-            var alertItem = $('<div class="alert"></div>').html(alert.message).hide();
+            var alertItem = $('<div class="alert"></div>').html(alert.message);
             if (alert.type === Models.AlertType.Success)
                 alertItem.addClass('alert-success');
             if (alert.type === Models.AlertType.Warning)
@@ -24,7 +24,7 @@
             if (alert.type === Models.AlertType.Error)
                 alertItem.addClass('alert-danger');
             this.element.append(alertItem);
-            alertItem.css('margin-left', '-' + (alertItem.outerWidth() / 2) + 'px').fadeIn(200);
+            alertItem.css('margin-left', '-' + (alertItem.outerWidth() / 2) + 'px');
             this.timeoutService(() => alertItem.fadeOut(2000, () => alertItem.remove()), 4000);
         }
 

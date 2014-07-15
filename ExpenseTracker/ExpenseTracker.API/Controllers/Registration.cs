@@ -7,9 +7,12 @@ using ExpenseTracker.API.Exceptions;
 using ExpenseTracker.API.Helpers;
 using ExpenseTracker.API.Managers;
 using ExpenseTracker.API.Models;
+using ExpenseTracker.API.ViewModels;
 using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Responses;
+using Nancy.Security;
+using User = ExpenseTracker.API.Models.User;
 
 namespace ExpenseTracker.API.Controllers
 {
@@ -17,23 +20,16 @@ namespace ExpenseTracker.API.Controllers
     {
         public Registration() : base("/registration")
         {
-            Post["/"] = o => POST_REGISTER(this.Bind<RegistrationForm>());
+            Post["/"] = o => CreateRegistrationRequest(this.Bind<RegistrationRequest>());
         }
 
-        private Response POST_REGISTER(RegistrationForm model)
+        private Response CreateRegistrationRequest(RegistrationRequest model)
         {
             if (!model.AcceptTermsAndConditions)
                 return Error(ErrorResponse.Registration.ACCEPT_TERMS_AND_CONDITIONS_FALSE);
 
             User entity = model.ToEntity();
-            try
-            {
-                userManager.Register(entity, model.Password);
-            }
-            catch (UniqueOrIndexContraintException ex)
-            {
-                return Error(ErrorResponse.Registration.EMAIL_ALREADY_REGISTERED);
-            }
+            userManager.Create(entity, model.Password);
 
             return new Response { StatusCode = HttpStatusCode.Created };
         }

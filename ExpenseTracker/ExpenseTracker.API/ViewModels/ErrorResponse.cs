@@ -25,6 +25,17 @@ namespace ExpenseTracker.API.Models
             public static ErrorResponse EMAIL_ALREADY_REGISTERED = new ErrorResponse(HttpStatusCode.BadRequest, 2, "Email already registered.");
         }
 
+        public static class SignIn
+        {
+            public static ErrorResponse ACCOUNT_LOCKED = new ErrorResponse(HttpStatusCode.Forbidden, 3, "Account is locked");
+            public static ErrorResponse INCORRECT_DETAILS = new ErrorResponse(HttpStatusCode.Forbidden, 4, "Incorrect details");
+        }
+
+        public static class Profile
+        {
+            public static ErrorResponse UNAUTHENTICATED = new ErrorResponse(HttpStatusCode.Forbidden, 5, "Unauthenticated");
+        }
+
 
     }
 }

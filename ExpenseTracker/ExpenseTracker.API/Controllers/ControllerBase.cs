@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using ExpenseTracker.API.Helpers;
 using ExpenseTracker.API.Managers;
 using ExpenseTracker.API.Models;
 using ExpenseTracker.API.ViewModels;
@@ -23,11 +24,19 @@ namespace ExpenseTracker.API.Controllers
             
         }
 
-
         protected Response Error(ErrorResponse response)
         {
             return Response.AsJson(response, response.StatusCode);
         }
 
+        public Response Ok
+        {
+            get { return new Response { StatusCode = HttpStatusCode.OK }; }
+        }
+
+        public ViewModels.User CurrentUser
+        {
+            get { return MemorySessions.GetCurrentUser(Request) as ViewModels.User; }
+        }
     }
 }
