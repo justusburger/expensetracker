@@ -79,6 +79,7 @@
     <Compile Include="Helpers\ExpenseTrackerDatabaseInitializer.cs" />
     <Compile Include="Helpers\ExpenseTrackerDbContext.cs" />
     <Compile Include="Helpers\CryptoHelper.cs" />
+    <Compile Include="Helpers\MemorySessions.cs" />
     <Compile Include="Helpers\UserMapper.cs" />
     <Compile Include="Managers\ManagerBase.cs" />
     <Compile Include="Managers\UserManager.cs" />

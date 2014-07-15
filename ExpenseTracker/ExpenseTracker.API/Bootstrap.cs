@@ -17,6 +17,7 @@ namespace ExpenseTracker.API
         {
             base.ApplicationStartup(container, pipelines);
             Database.SetInitializer(new ExpenseTrackerDatabaseInitializer());
+            MemorySessions.Enable(pipelines);
         }
     }
 }
