@@ -7,6 +7,7 @@ angular.module('ExpenseTracker', ['ngRoute', 'ngResource', 'ui.bootstrap', 'Expe
         (routeProvider: ng.route.IRouteProvider) => {
             routeProvider
                 .when('/registration', { controller: ExpenseTracker.Controllers.Registration.Name, templateUrl: 'ExpenseTracker/Views/Registration.html' })
+                .when('/sign-in', { controller: ExpenseTracker.Controllers.SignIn.Name, templateUrl: 'ExpenseTracker/Views/SignIn.html' })
                 .otherwise({ controller: ExpenseTracker.Controllers.Home.Name, templateUrl: 'ExpenseTracker/Views/Home.html' });
 
         }

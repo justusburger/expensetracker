@@ -65,6 +65,14 @@
             this._timeoutService = value;
         }
 
+        private _locationService: ng.ILocationService;
+        public get locationService(): ng.ILocationService {
+            return this._locationService || (this._locationService = this.injectorService.get('$location'));
+        }
+        public set locationService(value: ng.ILocationService) {
+            this._locationService = value;
+        }
+
         private _alertService: ExpenseTracker.Services.Alert;
         public get alertService(): ExpenseTracker.Services.Alert {
             return this._alertService || (this._alertService = this.injectorService.get(ExpenseTracker.Services.Alert.Name));
@@ -86,6 +94,17 @@
         }
         public get profile(): Models.IProfile {
             return this.cacheService.profile;
+        }
+
+        private _loadingStack: any[] = [];
+        public get isLoading(): boolean {
+            return Enumerable.From(this._loadingStack).Any();
+        }
+        public beginUpdate(): void {
+            this._loadingStack.push(true);
+        }
+        public endUpdate(): void {
+            this._loadingStack.pop();
         }
 
         constructor() {

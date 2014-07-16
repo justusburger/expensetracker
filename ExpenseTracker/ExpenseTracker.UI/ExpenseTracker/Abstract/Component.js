@@ -3,6 +3,7 @@
     var Component = (function () {
         function Component() {
             var _this = this;
+            this._loadingStack = [];
             this.cacheService.initializeDefer.promise.finally(function () {
                 return _this.onInitialized();
             });
@@ -95,6 +96,17 @@
             configurable: true
         });
 
+        Object.defineProperty(Component.prototype, "locationService", {
+            get: function () {
+                return this._locationService || (this._locationService = this.injectorService.get('$location'));
+            },
+            set: function (value) {
+                this._locationService = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
         Object.defineProperty(Component.prototype, "alertService", {
             get: function () {
                 return this._alertService || (this._alertService = this.injectorService.get(ExpenseTracker.Services.Alert.Name));
@@ -131,6 +143,20 @@
             enumerable: true,
             configurable: true
         });
+
+        Object.defineProperty(Component.prototype, "isLoading", {
+            get: function () {
+                return Enumerable.From(this._loadingStack).Any();
+            },
+            enumerable: true,
+            configurable: true
+        });
+        Component.prototype.beginUpdate = function () {
+            this._loadingStack.push(true);
+        };
+        Component.prototype.endUpdate = function () {
+            this._loadingStack.pop();
+        };
 
         Component.prototype.onInitialized = function () {
         };

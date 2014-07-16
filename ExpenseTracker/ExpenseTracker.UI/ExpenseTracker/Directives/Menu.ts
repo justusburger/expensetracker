@@ -10,7 +10,14 @@
         }
         
         public signOut(): void {
-            
+            this.beginUpdate();
+            this.signInService.signOut().then(() => this.signOutSuccess(), () => this.signOutSuccess());
+        }
+
+        public signOutSuccess(): void {
+            this.endUpdate();
+            this.cacheService.profile = null;
+            this.locationService.path("/");
         }
 
     }

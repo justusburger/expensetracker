@@ -65,6 +65,7 @@
     <Content Include="Content\bootstrap.min.css" />
     <TypeScriptCompile Include="ExpenseTracker\Abstract\NotImplementedException.ts" />
     <Content Include="ExpenseTracker\Views\AlertHandler.html" />
+    <Content Include="ExpenseTracker\Views\SignIn.html" />
     <Content Include="ExpenseTracker\Views\Validate.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="index.html" />
@@ -85,6 +86,7 @@
     <Content Include="scripts\jquery-1.9.0.min.map" />
     <TypeScriptCompile Include="ExpenseTracker\Abstract\ArgumentException.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Abstract\Component.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Controllers\SignIn.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\AlertHandler.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\DirectiveBase.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Configuration.ts" />

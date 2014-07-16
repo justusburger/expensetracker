@@ -19,7 +19,7 @@ namespace ExpenseTracker.API.Controllers
             Delete["/"] = o => SignOut();
         }
 
-        //In other word: sign in
+        /* In other word: sign in */
         private Response CreateSignInRequest(SignInRequest model)
         {
             User user = userManager.GetByEmail(model.Email);
@@ -33,15 +33,22 @@ namespace ExpenseTracker.API.Controllers
             if (!userManager.HasPassword(user, model.Password))
             {
                 user.InvalidAuthentications++;
-                if (user.InvalidAuthentications > 2)
+                if (user.InvalidAuthentications > 4)
                     user.Locked = true;
                 userManager.SaveChanges();
                 return Error(ErrorResponse.SignIn.INCORRECT_DETAILS);
             }
 
-            MemorySessions.SetCurrentUser(user.ToViewModel(), Request);
+            if (user.InvalidAuthentications > 0)
+            {
+                user.InvalidAuthentications = 0;
+                userManager.SaveChanges();
+            }
 
-            return Ok;
+            var profile = user.ToViewModel();
+            MemorySessions.SetCurrentUser(profile, Request);
+
+            return Response.AsJson(profile);
         }
 
         private Response SignOut()

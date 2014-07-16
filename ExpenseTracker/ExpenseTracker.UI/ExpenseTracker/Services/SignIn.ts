@@ -6,8 +6,8 @@
 
         public signInResource: ng.resource.IResourceClass<ng.resource.IResource<Models.ISignInRequest>>;
 
-        public signIn(signInRequest: Models.ISignInRequest): ng.IPromise<void> {
-            var defer = this.promiseService.defer<void>();
+        public signIn(signInRequest: Models.ISignInRequest): ng.IPromise<Models.IProfile> {
+            var defer = this.promiseService.defer<Models.IProfile>();
             this.signInResource.save(signInRequest,
                 (response) => this.defaultOnSuccess(response, defer),
                 (response: Models.IErrorResponse) => this.defaultOnError(response, defer, [ExpenseTracker.Errors.SIGN_IN_INCORRECT_DETAILS, ExpenseTracker.Errors.SIGN_IN_ACCOUNT_LOCKED])

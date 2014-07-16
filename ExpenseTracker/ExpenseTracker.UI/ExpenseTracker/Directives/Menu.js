@@ -13,6 +13,19 @@ var ExpenseTracker;
                 _super.call(this, scope, element, attributes);
             }
             Menu.prototype.signOut = function () {
+                var _this = this;
+                this.beginUpdate();
+                this.signInService.signOut().then(function () {
+                    return _this.signOutSuccess();
+                }, function () {
+                    return _this.signOutSuccess();
+                });
+            };
+
+            Menu.prototype.signOutSuccess = function () {
+                this.endUpdate();
+                this.cacheService.profile = null;
+                this.locationService.path("/");
             };
             Menu.Name = 'menu';
             Menu.TemplateUrl = 'ExpenseTracker/Views/Menu.html';
