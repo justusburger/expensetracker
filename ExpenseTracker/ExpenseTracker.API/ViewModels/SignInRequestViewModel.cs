@@ -5,7 +5,7 @@ using System.Web;
 
 namespace ExpenseTracker.API.ViewModels
 {
-    public class SignInRequest
+    public class SignInRequestViewModel
     {
         public string Email { get; set; }
         public string Password { get; set; }

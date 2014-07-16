@@ -1,0 +1,7 @@
+﻿<div class="custom-datepicker">
+    <div class="input-group">
+        <input type="text" class="form-control" readonly ng-click="$directive.toggle()" name="date" value="{{ $directive.value | date }}" required />
+        <a class="input-group-btn btn btn-default input-group-addon" ng-click="$directive.toggle()"><span class="glyphicon glyphicon-pencil"></span></a>
+    </div>
+    <datepicker class="control" ng-model="$directive.value" ng-show="$directive.open"></datepicker>
+</div>

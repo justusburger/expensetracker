@@ -16,20 +16,20 @@ using User = ExpenseTracker.API.Models.User;
 
 namespace ExpenseTracker.API.Controllers
 {
-    public class Registration : ControllerBase
+    public class RegistrationController : ControllerBase
     {
-        public Registration() : base("/registration")
+        public RegistrationController() : base("/registration")
         {
-            Post["/"] = o => CreateRegistrationRequest(this.Bind<RegistrationRequest>());
+            Post["/"] = o => CreateRegistrationRequest(this.Bind<RegistrationRequestViewModel>());
         }
 
-        private Response CreateRegistrationRequest(RegistrationRequest model)
+        private Response CreateRegistrationRequest(RegistrationRequestViewModel model)
         {
             if (!model.AcceptTermsAndConditions)
                 return Error(ErrorResponse.Registration.ACCEPT_TERMS_AND_CONDITIONS_FALSE);
 
             User entity = model.ToEntity();
-            userManager.Create(entity, model.Password);
+            UserManager.Create(entity, model.Password);
 
             return new Response { StatusCode = HttpStatusCode.Created };
         }

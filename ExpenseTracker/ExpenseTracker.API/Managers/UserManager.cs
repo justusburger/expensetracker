@@ -31,7 +31,7 @@ namespace ExpenseTracker.API.Managers
 
         public User GetByEmail(string email)
         {
-            User user = context.Users.SingleOrDefault(u => u.Email == email);
+            User user = Context.Users.SingleOrDefault(u => u.Email == email);
             return user;
         }
 

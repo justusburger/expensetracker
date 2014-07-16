@@ -25,6 +25,22 @@
             this._profileService = value;
         }
 
+        private _expenseTypeService: ExpenseTracker.Services.ExpenseType;
+        public get expenseTypeService(): ExpenseTracker.Services.ExpenseType {
+            return this._expenseTypeService || (this._expenseTypeService = this.injectorService.get(ExpenseTracker.Services.ExpenseType.Name));
+        }
+        public set expenseTypeService(value: ExpenseTracker.Services.ExpenseType) {
+            this._expenseTypeService = value;
+        }
+
+        private _expenseService: ExpenseTracker.Services.Expense;
+        public get expenseService(): ExpenseTracker.Services.Expense {
+            return this._expenseService || (this._expenseService = this.injectorService.get(ExpenseTracker.Services.Expense.Name));
+        }
+        public set expenseService(value: ExpenseTracker.Services.Expense) {
+            this._expenseService = value;
+        }
+
         private _registrationService: ExpenseTracker.Services.Registration;
         public get registrationService(): ExpenseTracker.Services.Registration {
             return this._registrationService || (this._registrationService = this.injectorService.get(ExpenseTracker.Services.Registration.Name));
@@ -108,7 +124,7 @@
         }
 
         constructor() {
-            this.cacheService.initializeDefer.promise.finally(() => this.onInitialized());
+            this.cacheService.initializeDefer.promise.then(() => this.onInitialized());
         }
 
         public onInitialized(): void {

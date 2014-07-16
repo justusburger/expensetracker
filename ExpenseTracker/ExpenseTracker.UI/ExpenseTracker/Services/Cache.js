@@ -16,6 +16,17 @@
                 enumerable: true,
                 configurable: true
             });
+
+            Object.defineProperty(Cache.prototype, "expenseTypeNameDictionary", {
+                get: function () {
+                    return this._expenseTypeNameDictionary || (this._expenseTypeNameDictionary = {});
+                },
+                set: function (value) {
+                    this._expenseTypeNameDictionary = value;
+                },
+                enumerable: true,
+                configurable: true
+            });
             Cache.Name = "Cache";
             return Cache;
         })();

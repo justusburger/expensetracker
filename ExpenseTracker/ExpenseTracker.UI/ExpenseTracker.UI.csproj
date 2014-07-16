@@ -65,6 +65,9 @@
     <Content Include="Content\bootstrap.min.css" />
     <TypeScriptCompile Include="ExpenseTracker\Abstract\NotImplementedException.ts" />
     <Content Include="ExpenseTracker\Views\AlertHandler.html" />
+    <Content Include="ExpenseTracker\Views\Datepicker.html" />
+    <Content Include="ExpenseTracker\Views\ExpenseDetails.html" />
+    <Content Include="ExpenseTracker\Views\ExpenseList.html" />
     <Content Include="ExpenseTracker\Views\SignIn.html" />
     <Content Include="ExpenseTracker\Views\Validate.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -86,8 +89,11 @@
     <Content Include="scripts\jquery-1.9.0.min.map" />
     <TypeScriptCompile Include="ExpenseTracker\Abstract\ArgumentException.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Abstract\Component.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Controllers\ExpenseDetails.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Controllers\ExpenseList.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Controllers\SignIn.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\AlertHandler.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Directives\Datepicker.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\DirectiveBase.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Configuration.ts" />
     <Content Include="ExpenseTracker\Views\Home.html" />
@@ -403,8 +409,11 @@
     <TypeScriptCompile Include="ExpenseTracker\Directives\Validations\Match.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\Validations\ValidationBase.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Errors.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Filters\ExpenseType.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\AlertTypeEnum.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IErrorResponse.d.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Models\IExpense.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Models\IExpenseType.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IProfile.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IQueuedAlert.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IRegistrationRequest.d.ts" />
@@ -413,6 +422,8 @@
     <TypeScriptCompile Include="ExpenseTracker\Services\Alert.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\ApiResource.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\Cache.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Services\Expense.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Services\ExpenseType.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\Profile.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\SignIn.ts" />
   </ItemGroup>

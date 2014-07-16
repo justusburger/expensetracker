@@ -4,7 +4,7 @@
         function Component() {
             var _this = this;
             this._loadingStack = [];
-            this.cacheService.initializeDefer.promise.finally(function () {
+            this.cacheService.initializeDefer.promise.then(function () {
                 return _this.onInitialized();
             });
         }
@@ -36,6 +36,28 @@
             },
             set: function (value) {
                 this._profileService = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Component.prototype, "expenseTypeService", {
+            get: function () {
+                return this._expenseTypeService || (this._expenseTypeService = this.injectorService.get(ExpenseTracker.Services.ExpenseType.Name));
+            },
+            set: function (value) {
+                this._expenseTypeService = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Component.prototype, "expenseService", {
+            get: function () {
+                return this._expenseService || (this._expenseService = this.injectorService.get(ExpenseTracker.Services.Expense.Name));
+            },
+            set: function (value) {
+                this._expenseService = value;
             },
             enumerable: true,
             configurable: true

@@ -1,0 +1,54 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>
+                <span>Expenses</span>
+                <span class="pull-right btn-group page-actions">
+                    <a href="/#/expenses/add" class="btn btn-success btn-sm">
+                        <span class="glyphicon glyphicon-plus"></span>
+                        <span>Add</span>
+                    </a>
+                </span>
+            </h1>
+            <hr/>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-3">
+            <span class="stacked-nav-heading">Period</span>
+            <ul class="nav nav-stacked nav-pills period">
+                <li class="active"><a>All expenses</a></li>
+                <li><a>Today</a></li>
+                <li><a>This week</a></li>
+                <li><a>This month</a></li>
+            </ul>
+            <span class="stacked-nav-heading">Type</span>
+            <ul class="nav nav-stacked nav-pills">
+                <li><a>All</a></li>
+                <li ng-repeat="expenseType in $controller.expenseTypes"><a>{{ expenseType.title }}</a></li>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <div class="panel panel-default">
+                <table class="table table-hover table-striped">
+                    <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Type</th>
+                        <th>Amount</th>
+                        <th>Description</th>
+                        <th></th>
+                    </tr>
+                    <tr ng-repeat="expense in $controller.expenses">
+                        <td>{{ expense.date | date }}</td>
+                        <td>{{ expense.date | date:'HH:mm:ss' }}</td>
+                        <td>{{ expense.expenseTypeId | expenseType: $controller.expenseTypes }}</td>
+                        <td>{{ expense.amount }}</td>
+                        <td>{{ expense.description }}</td>
+                        <td><a class="glyphicon glyphicon-chevron-down pull-right"></a></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

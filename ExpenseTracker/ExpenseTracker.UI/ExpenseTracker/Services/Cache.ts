@@ -18,7 +18,13 @@
             this._profile = value;
         }
 
-        
+        private _expenseTypeNameDictionary: any;
+        public get expenseTypeNameDictionary(): any {
+            return this._expenseTypeNameDictionary || (this._expenseTypeNameDictionary = {});
+        }
+        public set expenseTypeNameDictionary(value: any) {
+            this._expenseTypeNameDictionary = value;
+        }
 
     }
 

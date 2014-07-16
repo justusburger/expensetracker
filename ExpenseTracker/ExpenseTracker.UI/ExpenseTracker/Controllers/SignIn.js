@@ -12,6 +12,11 @@ var ExpenseTracker;
             function SignIn(scope) {
                 _super.call(this, scope);
                 this.form = {};
+                this.form = {
+                    email: 'justusburger@gmail.com',
+                    password: 'P@ssw0rd',
+                    rememberMe: true
+                };
             }
             SignIn.prototype.signIn = function () {
                 var _this = this;
@@ -19,7 +24,7 @@ var ExpenseTracker;
                 this.signInService.signIn(this.form).then(function (profile) {
                     _this.endUpdate();
                     _this.cacheService.profile = profile;
-                    _this.locationService.path('/');
+                    _this.locationService.path('/expenses');
                 }, function (response) {
                     _this.endUpdate();
                     if (response.data.errorCode === ExpenseTracker.Errors.SIGN_IN_INCORRECT_DETAILS)

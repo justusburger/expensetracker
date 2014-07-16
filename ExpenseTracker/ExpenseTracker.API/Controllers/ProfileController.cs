@@ -7,9 +7,9 @@ using Nancy;
 
 namespace ExpenseTracker.API.Controllers
 {
-    public class Profile : ControllerBase
+    public class ProfileController : ControllerBase
     {
-        public Profile() : base("/profile")
+        public ProfileController() : base("/profile")
         {
             this.RequiresAuthentication();
             Get["/"] = o => GetCurrentUserProfile();

@@ -12,50 +12,39 @@ namespace ExpenseTracker.API.Managers
 {
     public interface IManager<T>
     {
-        T Create(T entity);
-        T GetById(int entityId);
+        IQueryable<T> All { get; }
         void SaveChanges();
     }
 
     public abstract class ManagerBase<T> : IManager<T> where T : class 
     {
         private ExpenseTrackerDbContext _context;
-        public ExpenseTrackerDbContext context
+        public ExpenseTrackerDbContext Context
         {
             get { return _context ?? (_context = new ExpenseTrackerDbContext()); }
             set { _context = value; }
         }
 
+        public IQueryable<T> All {
+            get { return Context.Set<T>(); }
+        }
+
         public T Create(T entity) 
         {
-            context.Set<T>().Add(entity);
-            try
-            {
-                context.SaveChanges();
-            }
-            catch (DbUpdateException ex)
-            {
-                var updateException = ex.InnerException as UpdateException;
-                if (updateException != null)
-                {
-                    var sqlException = updateException.InnerException as SqlException;
-                    if(sqlException != null && sqlException.Errors.OfType<SqlError>().Any(se => se.Number == 2601 || se.Number == 2627))
-                        throw new UniqueOrIndexContraintException(ex.Message, ex);
-                }   
-                throw;
-            }
-
+            Context.Set<T>().Add(entity);
+            Context.SaveChanges();
             return entity;
         }
-
-        public T GetById(int entityId)
-        {
-            return context.Set<T>().Find(entityId);
-        }
-
+        
         public void SaveChanges()
         {
-            context.SaveChanges();
+            Context.SaveChanges();
+        }
+
+        public void Delete(T entity)
+        {
+            Context.Set<T>().Remove(entity);
+            Context.SaveChanges();
         }
     }
 }

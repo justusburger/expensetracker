@@ -1,0 +1,64 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>
+                <span>Add expense</span>
+                <span class="pull-right btn-group page-actions">
+                    <a href="/#/expenses" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-chevron-left"></span><span>Back to list</span></a>
+                </span>
+            </h1>
+            <hr />
+        </div>
+    </div>
+    <div class="">
+        <div class="row">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-9">
+                <form name="expenseForm" class="form" role="form" novalidate>
+                    <div class="row field">
+                        <div class="col-lg-6">
+                            <label>Date</label>
+                            <custom-datepicker ng-model="$controller.form.date"></custom-datepicker>
+                            <!--<div class="input-group">
+                                <input type="text" class="form-control" name="date" ng-model="$controller.form.date" required />
+                                <a class="input-group-btn btn btn-default input-group-addon" ng-click="open = !open"><span class="glyphicon glyphicon-pencil"></span></a>
+                            </div>
+                            <datepicker ng-model="$controller.form.date" is-open="open"></datepicker>-->
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Time</label>
+                            <input type="text" class="form-control" placeholder="" name="time" ng-model="$controller.form.date" required />
+                        </div>
+                    </div>
+                    <div class="row field">
+                        <div class="col-lg-6">
+                            <label>Expense type</label>
+                            <select class="form-control" name="type" ng-model="$controller.form.expenseTypeId" ng-options="expenseType.id as expenseType.title for expenseType in $controller.expenseTypes" ng-required>
+                                <option style="display: none;" value="">Select expense type</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-6">
+                            <label>Amount</label>
+                            <input type="number" class="form-control" placeholder="Amount" name="amount" ng-model="$controller.form.amount" required />
+                        </div>
+                    </div>
+                    <div class="row field">
+                        <div class="col-lg-12">
+                            <label>Description</label>
+                            <textarea class="form-control" ng-model="$controller.form.description" placeholder="Description"></textarea>
+                        </div>
+                    </div>
+                    <div class="row field">
+                        <div class="col-lg-12">
+                            <a ng-disabled="expenseForm.$pristine || expenseForm.$invalid || $controller.isLoading" class="btn btn-success pull-right" ng-click="$controller.add()">
+                                <span class="glyphicon glyphicon-plus"></span>
+                                <span>Add</span>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    </div>
+</div>

@@ -9,19 +9,19 @@ namespace ExpenseTracker.API.Helpers
 {
     public static class UserMapper
     {
-        public static User ToEntity(this RegistrationRequest request)
+        public static User ToEntity(this RegistrationRequestViewModel requestViewModel)
         {
             return new User
             {
-                Name = request.Name,
-                Email = request.Email,
-                NewsletterSignup = request.NewsletterSignup
+                Name = requestViewModel.Name,
+                Email = requestViewModel.Email,
+                NewsletterSignup = requestViewModel.NewsletterSignup
             };
         }
 
-        public static ViewModels.User ToViewModel(this User user)
+        public static ViewModels.UserViewModel ToViewModel(this User user)
         {
-            return new ViewModels.User
+            return new ViewModels.UserViewModel
             {
                 Id = user.Id,
                 UserName = user.Name,

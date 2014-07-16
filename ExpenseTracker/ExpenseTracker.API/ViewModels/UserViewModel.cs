@@ -6,7 +6,7 @@ using Nancy.Security;
 
 namespace ExpenseTracker.API.ViewModels
 {
-    public class User : IUserIdentity
+    public class UserViewModel : IUserIdentity
     {
         public int Id { get; set; }
         public string UserName { get; set; }

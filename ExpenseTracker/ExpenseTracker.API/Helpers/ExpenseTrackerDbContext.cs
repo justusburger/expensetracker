@@ -11,7 +11,8 @@ namespace ExpenseTracker.API.Helpers
     public class ExpenseTrackerDbContext : DbContext
     {
         public IDbSet<User> Users { get; set; }
-
+        public IDbSet<ExpenseType> ExpenseTypes { get; set; } 
+        public IDbSet<Expense> Expenses { get; set; } 
         
     }
 }

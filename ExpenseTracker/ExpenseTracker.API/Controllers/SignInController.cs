@@ -11,18 +11,18 @@ using User = ExpenseTracker.API.Models.User;
 
 namespace ExpenseTracker.API.Controllers
 {
-    public class SignIn : ControllerBase
+    public class SignInController : ControllerBase
     {
-        public SignIn() : base("/sign-in")
+        public SignInController() : base("/sign-in")
         {
-            Post["/"] = o => CreateSignInRequest(this.Bind<SignInRequest>());
+            Post["/"] = o => SignIn(this.Bind<SignInRequestViewModel>());
             Delete["/"] = o => SignOut();
         }
 
         /* In other word: sign in */
-        private Response CreateSignInRequest(SignInRequest model)
+        private Response SignIn(SignInRequestViewModel model)
         {
-            User user = userManager.GetByEmail(model.Email);
+            User user = UserManager.GetByEmail(model.Email);
 
             if (user == null)
                 return Error(ErrorResponse.SignIn.INCORRECT_DETAILS);
@@ -30,19 +30,19 @@ namespace ExpenseTracker.API.Controllers
             if (user.Locked)
                 return Error(ErrorResponse.SignIn.ACCOUNT_LOCKED);
 
-            if (!userManager.HasPassword(user, model.Password))
+            if (!UserManager.HasPassword(user, model.Password))
             {
                 user.InvalidAuthentications++;
                 if (user.InvalidAuthentications > 4)
                     user.Locked = true;
-                userManager.SaveChanges();
+                UserManager.SaveChanges();
                 return Error(ErrorResponse.SignIn.INCORRECT_DETAILS);
             }
 
             if (user.InvalidAuthentications > 0)
             {
                 user.InvalidAuthentications = 0;
-                userManager.SaveChanges();
+                UserManager.SaveChanges();
             }
 
             var profile = user.ToViewModel();
