@@ -26,9 +26,6 @@ var ExpenseTracker;
 
             ExpenseDetails.prototype.add = function () {
                 var _this = this;
-                console.log(this.form);
-                return;
-
                 this.beginUpdate();
                 this.expenseService.create(this.form).then(function () {
                     _this.alertService.success("Expense added");

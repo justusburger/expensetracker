@@ -1,7 +1,14 @@
 ﻿<div class="custom-datepicker">
     <div class="input-group">
-        <input type="text" class="form-control" readonly ng-click="$directive.toggle()" name="date" value="{{ $directive.value | date }}" required />
+        <input type="text" class="form-control" readonly ng-click="$directive.toggle()" name="date" value="{{ $directive.value | date:'MMM d, y h:mm a' }}" required />
         <a class="input-group-btn btn btn-default input-group-addon" ng-click="$directive.toggle()"><span class="glyphicon glyphicon-pencil"></span></a>
     </div>
-    <datepicker class="control" ng-model="$directive.value" ng-show="$directive.open"></datepicker>
+    <div class="control" ng-show="$directive.open">
+        <datepicker class="datepicker" ng-model="$directive.value"></datepicker>
+        <timepicker class="timepicker pull-left" ng-model="$directive.value"></timepicker>
+        <div class="btn-group pull-right">
+            <a class="btn btn-default" ng-click="$directive.now()">Now</a>
+            <a class="btn btn-default" ng-click="$directive.toggle()">Close</a>
+        </div>
+    </div>
 </div>

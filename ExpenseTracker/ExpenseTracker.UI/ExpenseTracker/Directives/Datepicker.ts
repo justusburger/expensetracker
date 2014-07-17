@@ -17,7 +17,6 @@
                     this.value = new Date();
             };
             this.scope.$watch(() => this.value, () => {
-                this.open = false;
                 this.modelController.$setViewValue(this.value);
             });
             this.open = false;
@@ -27,7 +26,7 @@
         }
 
         public onBodyClick(e): void {
-            if ($(e.target).parents('.custom-datepicker').length > 0)
+            if (this.open && ($(e.target).parents('.custom-datepicker').length > 0 || $(e.target).parents('[role=gridcell]').length > 0))
                 return;
             this.scope.$apply(() => this.open = false);
         }
@@ -36,6 +35,11 @@
             this.open = !this.open;
         }
 
+        public now(): void {
+            this.value = new Date();
+            this.toggle();
+        }
+        
     }
 
     angular.module('ExpenseTracker.Directives').directive(Datepicker.Name, (): ng.IDirective => <ng.IDirective>{

@@ -19,9 +19,6 @@
         }
 
         public add(): void {
-            console.log(this.form);
-            return;
-
             this.beginUpdate();
             this.expenseService.create(this.form).then(() => {
                 this.alertService.success("Expense added");

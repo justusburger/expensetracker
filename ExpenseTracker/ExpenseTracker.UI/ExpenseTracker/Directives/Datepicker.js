@@ -21,7 +21,6 @@ var ExpenseTracker;
                 this.scope.$watch(function () {
                     return _this.value;
                 }, function () {
-                    _this.open = false;
                     _this.modelController.$setViewValue(_this.value);
                 });
                 this.open = false;
@@ -35,7 +34,7 @@ var ExpenseTracker;
             }
             Datepicker.prototype.onBodyClick = function (e) {
                 var _this = this;
-                if ($(e.target).parents('.custom-datepicker').length > 0)
+                if (this.open && ($(e.target).parents('.custom-datepicker').length > 0 || $(e.target).parents('[role=gridcell]').length > 0))
                     return;
                 this.scope.$apply(function () {
                     return _this.open = false;
@@ -44,6 +43,11 @@ var ExpenseTracker;
 
             Datepicker.prototype.toggle = function () {
                 this.open = !this.open;
+            };
+
+            Datepicker.prototype.now = function () {
+                this.value = new Date();
+                this.toggle();
             };
             Datepicker.Name = 'customDatepicker';
             Datepicker.TemplateUrl = 'ExpenseTracker/Views/Datepicker.html';

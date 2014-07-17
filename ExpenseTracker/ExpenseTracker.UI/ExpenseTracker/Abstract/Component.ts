@@ -49,6 +49,14 @@
             this._registrationService = value;
         }
 
+        private _popupService: ExpenseTracker.Services.Popup;
+        public get popupService(): ExpenseTracker.Services.Popup {
+            return this._popupService || (this._popupService = this.injectorService.get(ExpenseTracker.Services.Popup.Name));
+        }
+        public set popupService(value: ExpenseTracker.Services.Popup) {
+            this._popupService = value;
+        }
+
         private _promiseService: ng.IQService;
         public get promiseService(): ng.IQService {
             return this._promiseService || (this._promiseService = this.injectorService.get('$q'));
@@ -87,6 +95,22 @@
         }
         public set locationService(value: ng.ILocationService) {
             this._locationService = value;
+        }
+
+        private _sceService: ng.ISCEService;
+        public get sceService(): ng.ISCEService {
+            return this._sceService || (this._sceService = this.injectorService.get('$sce'));
+        }
+        public set sceService(value: ng.ISCEService) {
+            this._sceService = value;
+        }
+
+        private _interpolateService: ng.IInterpolateService;
+        public get interpolateService(): ng.IInterpolateService {
+            return this._interpolateService || (this._interpolateService = this.injectorService.get('$interpolate'));
+        }
+        public set interpolateService(value: ng.IInterpolateService) {
+            this._interpolateService = value;
         }
 
         private _alertService: ExpenseTracker.Services.Alert;

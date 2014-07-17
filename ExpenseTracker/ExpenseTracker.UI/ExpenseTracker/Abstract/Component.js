@@ -74,6 +74,17 @@
             configurable: true
         });
 
+        Object.defineProperty(Component.prototype, "popupService", {
+            get: function () {
+                return this._popupService || (this._popupService = this.injectorService.get(ExpenseTracker.Services.Popup.Name));
+            },
+            set: function (value) {
+                this._popupService = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
         Object.defineProperty(Component.prototype, "promiseService", {
             get: function () {
                 return this._promiseService || (this._promiseService = this.injectorService.get('$q'));
@@ -124,6 +135,28 @@
             },
             set: function (value) {
                 this._locationService = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Component.prototype, "sceService", {
+            get: function () {
+                return this._sceService || (this._sceService = this.injectorService.get('$sce'));
+            },
+            set: function (value) {
+                this._sceService = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Component.prototype, "interpolateService", {
+            get: function () {
+                return this._interpolateService || (this._interpolateService = this.injectorService.get('$interpolate'));
+            },
+            set: function (value) {
+                this._interpolateService = value;
             },
             enumerable: true,
             configurable: true

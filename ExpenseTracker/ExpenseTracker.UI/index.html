@@ -15,6 +15,7 @@
 <body>
     <menu></menu>
     <alert-handler></alert-handler>
+    <popup-handler></popup-handler>
     <div class="main-contentainer" ng-view></div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -32,8 +33,10 @@
     <script src="ExpenseTracker/Abstract/Component.js"></script>
     <script src="ExpenseTracker/Abstract/ArgumentException.js"></script>
     <script src="ExpenseTracker/Abstract/NotImplementedException.js"></script>
+    <script src="ExpenseTracker/Abstract/ArrayExtensions.js"></script>
 
     <script src="ExpenseTracker/Models/AlertTypeEnum.js"></script>
+    <script src="ExpenseTracker/Models/IPopup.js"></script>
 
     <script src="ExpenseTracker/Services/ApiResource.js"></script>
     <script src="ExpenseTracker/Services/SignIn.js"></script>
@@ -43,6 +46,7 @@
     <script src="ExpenseTracker/Services/Cache.js"></script>
     <script src="ExpenseTracker/Services/ExpenseType.js"></script>
     <script src="ExpenseTracker/Services/Expense.js"></script>
+    <script src="ExpenseTracker/Services/Popup.js"></script>
 
     <script src="ExpenseTracker/Filters/ExpenseType.js"></script>
 
@@ -57,6 +61,7 @@
     <script src="ExpenseTracker/Directives/Validate.js"></script>
     <script src="ExpenseTracker/Directives/Menu.js"></script>
     <script src="ExpenseTracker/Directives/AlertHandler.js"></script>
+    <script src="ExpenseTracker/Directives/PopupHandler.js"></script>
     <script src="ExpenseTracker/Directives/Validations/ValidationBase.js"></script>
     <script src="ExpenseTracker/Directives/Validations/ComplexPassword.js"></script>
     <script src="ExpenseTracker/Directives/Validations/Match.js"></script>

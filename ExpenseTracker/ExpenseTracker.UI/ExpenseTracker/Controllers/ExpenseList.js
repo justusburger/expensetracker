@@ -10,8 +10,26 @@ var ExpenseTracker;
         var ExpenseList = (function (_super) {
             __extends(ExpenseList, _super);
             function ExpenseList(scope) {
+                var _this = this;
                 _super.call(this, scope);
                 this.form = {};
+
+                this.removeConfirmationPopup = {
+                    title: 'Remove expense',
+                    text: 'Are you sure you want to remove <strong>{{ description }}</strong>?',
+                    style: 1 /* Danger */,
+                    size: 1 /* Small */,
+                    buttons: [
+                        { text: 'Cancel' },
+                        {
+                            text: 'Remove',
+                            style: 1 /* Danger */,
+                            clickFn: function (expense) {
+                                return _this.removeConfirmed(expense);
+                            }
+                        }
+                    ]
+                };
             }
             ExpenseList.prototype.onInitialized = function () {
                 var _this = this;
@@ -24,6 +42,22 @@ var ExpenseTracker;
                 this.expenseTypeService.getAll().then(function (expenseTypes) {
                     _this.expenseTypes = expenseTypes;
                     _this.endUpdate();
+                });
+            };
+
+            ExpenseList.prototype.remove = function (expense) {
+                this.popupService.show(this.removeConfirmationPopup, expense);
+            };
+
+            ExpenseList.prototype.removeConfirmed = function (expense) {
+                var _this = this;
+                this.beginUpdate();
+                this.expenseService.delete(expense.id).then(function () {
+                    _this.endUpdate();
+                    _this.expenses.remove(expense);
+                    _this.alertService.success('Expense removed');
+                }, function () {
+                    return _this.endUpdate();
                 });
             };
             ExpenseList.Name = 'ExpenseList';
