@@ -37,7 +37,8 @@ namespace ExpenseTracker.API.Controllers
 
         protected ControllerBase(string path) : base(path)
         {
-            Thread.Sleep(5000);
+            //This just simulates a real environment
+            Thread.Sleep(new Random().Next(1000, 5000));
         }
 
         protected Response Error(ErrorResponse response)

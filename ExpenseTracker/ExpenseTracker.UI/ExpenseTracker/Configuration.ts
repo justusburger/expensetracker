@@ -2,7 +2,7 @@
 angular.module('ExpenseTracker.Filters', []);
 angular.module('ExpenseTracker.Controllers', []);
 angular.module('ExpenseTracker.Directives', []);
-angular.module('ExpenseTracker', ['ngRoute', 'ngResource', 'ui.bootstrap', 'ExpenseTracker.Services', 'ExpenseTracker.Controllers', 'ExpenseTracker.Directives', 'ExpenseTracker.Filters'])
+angular.module('ExpenseTracker', ['ngRoute', 'ngResource', 'ngCookies', 'ui.bootstrap', 'ExpenseTracker.Services', 'ExpenseTracker.Controllers', 'ExpenseTracker.Directives', 'ExpenseTracker.Filters'])
     .config([
         '$routeProvider',
         (routeProvider: ng.route.IRouteProvider) => {
@@ -21,11 +21,21 @@ angular.module('ExpenseTracker', ['ngRoute', 'ngResource', 'ui.bootstrap', 'Expe
 angular.element(document).ready(() => {
     var body = angular.element('html');
     angular.bootstrap(body, ['ExpenseTracker']);
-    var injector = body.injector();
-    var profileService = injector.get(ExpenseTracker.Services.Profile.Name);
-    profileService.get().then((profile: ExpenseTracker.Models.IProfile) => {
-        /* API responded with a profile. This means the session is still valid. */
-        profileService.cacheService.profile = profile;
-        profileService.cacheService.initializeDefer.resolve(null);
-    }, () => profileService.cacheService.initializeDefer.resolve(null));
+
+    var injector: ng.auto.IInjectorService = body.injector();
+    var cacheService: ExpenseTracker.Services.Cache = injector.get(ExpenseTracker.Services.Cache.Name);
+    var cookies = injector.get('$cookies');
+    /* Check if user has visited before and still has a session cookie. 
+       This session cookie might still be valid so call the profile service to make sure. */
+    if (angular.isDefined(cookies['session'])) {
+        var profileService: ExpenseTracker.Services.Profile = injector.get(ExpenseTracker.Services.Profile.Name);
+        profileService.get().then((profile: ExpenseTracker.Models.IProfile) => {
+            /* API responded with a profile. This means the session is still valid. */
+            cacheService.profile = profile;
+            cacheService.initializeDefer.resolve();
+        }, () => cacheService.initializeDefer.resolve());
+    } else {
+        /* The user does not have a session cookie, so simply mark application as loaded */
+        cacheService.initializeDefer.resolve();
+    }
 });

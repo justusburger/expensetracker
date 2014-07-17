@@ -4,8 +4,10 @@
         function Component() {
             var _this = this;
             this._loadingStack = [];
+            this.isCheckingSession = true;
             this.cacheService.initializeDefer.promise.then(function () {
-                return _this.onInitialized();
+                _this.isCheckingSession = false;
+                _this.onInitialized();
             });
         }
         Object.defineProperty(Component.prototype, "injectorService", {

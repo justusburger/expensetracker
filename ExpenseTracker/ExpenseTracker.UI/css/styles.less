@@ -180,8 +180,10 @@ a {
 
         .timepicker {
             margin-top: 5px;
+
             td.form-group {
                 width: 35px !important;
+
                 input {
                     border: none;
                     -webkit-box-shadow: none;
@@ -190,10 +192,13 @@ a {
                     padding: 3px;
                 }
             }
+
             .btn {
                 border: none;
+
                 &.btn-link {
                     padding: 1px 0 0 2px;
+
                     .glyphicon {
                         margin-right: 0;
                     }
@@ -212,8 +217,10 @@ a {
     td.row-action {
         .dropdown-menu {
             margin-top: -5px;
+
             a {
                 font-size: 12px;
+
                 .glyphicon {
                     margin: 0 8px 0 -8px;
                 }
@@ -223,6 +230,63 @@ a {
 }
 
 .glyphicon {
-    &.red { color: #d43f3a; }
-    &.green { color: #4cae4c; }
+    &.red {
+        color: #d43f3a;
+    }
+
+    &.green {
+        color: #4cae4c;
+    }
+}
+
+.checking-session {
+    color: #ccc;
+    display: inline-block;
+    margin-top: 6px;
+}
+
+.spinner {
+    -webkit-animation: spin 3s infinite linear;
+    -moz-animation: spin 3s infinite linear;
+    -o-animation: spin 3s infinite linear;
+    animation: spin 3s infinite linear;
+    -webkit-transform-origin: 50% 50%;
+    transform-origin: 50% 50%;
+    -ms-transform-origin: 50% 50%; /* IE 9 */
+}
+
+@-moz-keyframes spin {
+    from {
+        -moz-transform: rotate(0deg);
+    }
+
+    to {
+        -moz-transform: rotate(360deg);
+    }
+}
+
+@-webkit-keyframes spin {
+    from {
+        -webkit-transform: rotate(0deg);
+    }
+
+    to {
+        -webkit-transform: rotate(360deg);
+    }
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.login.btn {
+    .glyphicon {
+        margin: 0 0 0 -22px !important;
+    }
 }

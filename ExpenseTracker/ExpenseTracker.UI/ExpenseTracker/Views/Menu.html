@@ -10,10 +10,6 @@
             <a class="navbar-brand" href="/">Expense Tracker</a>
         </div>
         <div class="navbar-collapse collapse">
-            <form class="navbar-form navbar-right" ng-hide="$directive.isSignedIn">
-                <a class="registration-link" href="/#/registration">Don't have an account?</a>
-                <a class="btn btn-success" href="/#/sign-in">Sign in</a>
-            </form>
             <ul class="nav navbar-nav navbar-right" ng-show="$directive.isSignedIn">
                 <li><a href="/#/expenses">Expenses</a></li>
                 <li>
@@ -38,7 +34,16 @@
                     </ul>
                 </li>
             </ul>
-            <div class="register navbar-right"></div>
+            <form class="navbar-form navbar-right">
+                <span class="checking-session" ng-show="$directive.isCheckingSession">
+                    <em>Checking your session</em>
+                    <i class="glyphicon glyphicon-cog spinner"></i>
+                </span>
+                <span ng-hide="$directive.isSignedIn || $directive.isCheckingSession">
+                    <a class="registration-link" href="/#/registration">Don't have an account?</a>
+                    <a class="btn btn-success" href="/#/sign-in">Sign in</a>
+                </span>
+            </form>
         </div>
     </div>
 </div>

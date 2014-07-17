@@ -155,8 +155,12 @@
             this._loadingStack.pop();
         }
 
+        public isCheckingSession: boolean = true;
         constructor() {
-            this.cacheService.initializeDefer.promise.then(() => this.onInitialized());
+            this.cacheService.initializeDefer.promise.then(() => {
+                this.isCheckingSession = false;
+                this.onInitialized();
+            });
         }
 
         public onInitialized(): void {

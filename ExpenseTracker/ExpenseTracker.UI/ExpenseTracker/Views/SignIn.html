@@ -8,6 +8,9 @@
                 <input type="checkbox" value="remember-me" ng-model="$controller.form.rememberMe"/> Remember me
             </label>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit" ng-disabled="signInForm.$invalid || $controller.isLoading" ng-click="$controller.signIn()">Sign in</button>
+        <button class="btn btn-lg btn-primary btn-block login" type="submit" ng-disabled="signInForm.$invalid || $controller.isLoading" ng-click="$controller.signIn()">
+            <i ng-show="$controller.isLoading" class="glyphicon glyphicon-cog spinner"></i>
+            <span>Sign in</span>
+        </button>
     </form>
 </div>
