@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
 using ExpenseTracker.API.Helpers;
 using ExpenseTracker.API.Managers;
@@ -36,7 +37,7 @@ namespace ExpenseTracker.API.Controllers
 
         protected ControllerBase(string path) : base(path)
         {
-            
+            Thread.Sleep(5000);
         }
 
         protected Response Error(ErrorResponse response)

@@ -113,6 +113,14 @@
             this._interpolateService = value;
         }
 
+        private _routeParamsService: ng.route.IRouteParamsService;
+        public get routeParamsService(): ng.route.IRouteParamsService {
+            return this._routeParamsService || (this._routeParamsService = this.injectorService.get('$routeParams'));
+        }
+        public set routeParamsService(value: ng.route.IRouteParamsService) {
+            this._routeParamsService = value;
+        }
+
         private _alertService: ExpenseTracker.Services.Alert;
         public get alertService(): ExpenseTracker.Services.Alert {
             return this._alertService || (this._alertService = this.injectorService.get(ExpenseTracker.Services.Alert.Name));

@@ -11,10 +11,36 @@ var ExpenseTracker;
             __extends(ExpenseDetails, _super);
             function ExpenseDetails(scope) {
                 _super.call(this, scope);
-                this.form = {};
             }
+            Object.defineProperty(ExpenseDetails.prototype, "isEditing", {
+                get: function () {
+                    return !!this.expenseId;
+                },
+                enumerable: true,
+                configurable: true
+            });
+
+            Object.defineProperty(ExpenseDetails.prototype, "expenseId", {
+                get: function () {
+                    return this.routeParamsService['id'];
+                },
+                enumerable: true,
+                configurable: true
+            });
+
             ExpenseDetails.prototype.onInitialized = function () {
                 var _this = this;
+                if (this.isEditing) {
+                    this.beginUpdate();
+                    this.expenseService.getById(this.expenseId).then(function (expense) {
+                        _this.form = expense;
+                        _this.endUpdate();
+                    }, function () {
+                        return _this.endUpdate();
+                    });
+                } else
+                    this.form = {};
+
                 this.beginUpdate();
                 this.expenseTypeService.getAll().then(function (expenseTypes) {
                     _this.expenseTypes = expenseTypes;
@@ -24,15 +50,25 @@ var ExpenseTracker;
                 });
             };
 
-            ExpenseDetails.prototype.add = function () {
+            ExpenseDetails.prototype.save = function () {
                 var _this = this;
-                this.beginUpdate();
-                this.expenseService.create(this.form).then(function () {
-                    _this.alertService.success("Expense added");
-                    _this.locationService.path("/expenses");
-                }, function () {
-                    return _this.endUpdate();
-                });
+                if (this.isEditing) {
+                    this.beginUpdate();
+                    this.expenseService.update(this.form).then(function () {
+                        _this.alertService.success("Expense updated");
+                        _this.locationService.path("/expenses");
+                    }, function () {
+                        return _this.endUpdate();
+                    });
+                } else {
+                    this.beginUpdate();
+                    this.expenseService.create(this.form).then(function () {
+                        _this.alertService.success("Expense added");
+                        _this.locationService.path("/expenses");
+                    }, function () {
+                        return _this.endUpdate();
+                    });
+                }
             };
             ExpenseDetails.Name = 'ExpenseDetails';
             return ExpenseDetails;

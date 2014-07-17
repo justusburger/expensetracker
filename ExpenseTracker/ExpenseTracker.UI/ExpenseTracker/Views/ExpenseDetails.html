@@ -2,7 +2,8 @@
     <div class="row">
         <div class="col-md-12">
             <h1>
-                <span>Add expense</span>
+                <span ng-hide="$controller.isEditing">Add expense</span>
+                <span ng-show="$controller.isEditing">Edit expense</span>
                 <span class="pull-right btn-group page-actions">
                     <a href="/#/expenses" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-chevron-left"></span><span>Back to list</span></a>
                 </span>
@@ -41,9 +42,11 @@
                     </div>
                     <div class="row field">
                         <div class="col-lg-12">
-                            <a ng-disabled="expenseForm.$pristine || expenseForm.$invalid || $controller.isLoading" class="btn btn-success pull-right" ng-click="$controller.add()">
-                                <span class="glyphicon glyphicon-plus"></span>
-                                <span>Add</span>
+                            <a ng-disabled="expenseForm.$pristine || expenseForm.$invalid || $controller.isLoading" class="btn btn-success pull-right" ng-click="$controller.save()">
+                                <span ng-hide="$controller.isEditing" class="glyphicon glyphicon-plus"></span>
+                                <span ng-hide="$controller.isEditing">Add</span>
+                                <span ng-show="$controller.isEditing" class="glyphicon glyphicon-ok"></span>
+                                <span ng-show="$controller.isEditing">Save</span>
                             </a>
                         </div>
                     </div>

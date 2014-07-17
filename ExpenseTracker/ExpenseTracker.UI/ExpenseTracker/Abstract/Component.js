@@ -162,6 +162,17 @@
             configurable: true
         });
 
+        Object.defineProperty(Component.prototype, "routeParamsService", {
+            get: function () {
+                return this._routeParamsService || (this._routeParamsService = this.injectorService.get('$routeParams'));
+            },
+            set: function (value) {
+                this._routeParamsService = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
         Object.defineProperty(Component.prototype, "alertService", {
             get: function () {
                 return this._alertService || (this._alertService = this.injectorService.get(ExpenseTracker.Services.Alert.Name));

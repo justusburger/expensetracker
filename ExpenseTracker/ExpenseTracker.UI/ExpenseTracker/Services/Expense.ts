@@ -20,8 +20,8 @@
             return defer.promise;
         }
 
-        public getById(id: number): ng.IPromise<Models.IExpense[]> {
-            var defer = this.promiseService.defer<Models.IExpense[]>();
+        public getById(id: number): ng.IPromise<Models.IExpense> {
+            var defer = this.promiseService.defer<Models.IExpense>();
             this.expenseResource.get({ id: id },
                 (response) => this.defaultOnSuccess(response, defer),
                 (response: Models.IErrorResponse) => this.defaultOnError(response, defer)
