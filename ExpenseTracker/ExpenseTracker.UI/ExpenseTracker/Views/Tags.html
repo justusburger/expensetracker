@@ -1,3 +1,5 @@
 ﻿<div class="tags-handler">
-    <tags-input ng-model="$directive.value"></tags-input>
+    <tags-input ng-model="$directive.value">
+        <auto-complete source="$directive.source($query)" min-length="0"></auto-complete>
+    </tags-input>
 </div>

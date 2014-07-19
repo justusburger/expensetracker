@@ -70,6 +70,10 @@ var ExpenseTracker;
                     });
                 }
             };
+
+            ExpenseDetails.prototype.tagsSource = function (query) {
+                return this.promiseService.when(this.tags);
+            };
             ExpenseDetails.Name = 'ExpenseDetails';
             return ExpenseDetails;
         })(ExpenseTracker.ControllerBase);

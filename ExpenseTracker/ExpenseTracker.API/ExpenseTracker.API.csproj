@@ -101,6 +101,7 @@
     <Compile Include="ViewModels\RegistrationRequestViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\SignInRequestViewModel.cs" />
+    <Compile Include="ViewModels\TagViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

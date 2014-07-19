@@ -31,6 +31,17 @@ var ExpenseTracker;
                         }));
                 });
             }
+            Tags.prototype.source = function (query) {
+                var defer = this.promiseService.defer();
+                if (this.attributes['source']) {
+                    var sourcePromise = this.scope.$eval('$parent.' + this.attributes['source'], { $query: query });
+                    sourcePromise.then(function (result) {
+                        return defer.resolve(result);
+                    });
+                } else
+                    defer.resolve([]);
+                return defer.promise;
+            };
             Tags.Name = 'tags';
             Tags.TemplateUrl = 'ExpenseTracker/Views/Tags.html';
             return Tags;

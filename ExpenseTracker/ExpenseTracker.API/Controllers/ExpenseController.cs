@@ -16,10 +16,11 @@ namespace ExpenseTracker.API.Controllers
         {
             this.RequiresAuthentication();
             Get["/"] = o => GetAll();
-            Get["/{id}"] = o => GetById((int)o["id"]);
+            Get["/{id:int}"] = o => GetById((int)o["id"]);
             Post["/"] = o => Create(this.Bind<ExpenseViewModel>());
             Put["/"] = o => Update(this.Bind<ExpenseViewModel>());
-            Delete["/{id}"] = o => DeleteById((int)o["id"]);
+            Delete["/{id:int}"] = o => DeleteById((int)o["id"]);
+            Get["/tags"] = o => GetAllTags();
         }
 
         private Response GetAll()
@@ -54,6 +55,13 @@ namespace ExpenseTracker.API.Controllers
         {
             ExpenseManager.Delete(CurrentUser.Id, id);
             return Ok;
+        }
+
+        private Response GetAllTags()
+        {
+            var tags = ExpenseManager.GetAllTags(CurrentUser.Id).GroupBy(t => t.Text);
+            var result = tags.Select(group => new TagViewModel { Text = group.Key, Count = group.Count() }).ToList();
+            return Response.AsJson(result);
         }
     }
 }

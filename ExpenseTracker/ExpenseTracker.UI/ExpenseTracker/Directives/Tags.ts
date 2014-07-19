@@ -25,6 +25,16 @@
             });
         }
 
+        public source(query: string): ng.IPromise<any[]> {
+            var defer = this.promiseService.defer<any[]>();
+            if (this.attributes['source']) {
+                var sourcePromise = <ng.IPromise<any[]>>this.scope.$eval('$parent.' + this.attributes['source'], { $query: query });
+                sourcePromise.then((result) => defer.resolve(result));
+            } else
+                defer.resolve([]);
+            return defer.promise;
+        }
+
     }
 
     angular.module('ExpenseTracker.Directives').directive(Tags.Name, (): ng.IDirective => <ng.IDirective>{

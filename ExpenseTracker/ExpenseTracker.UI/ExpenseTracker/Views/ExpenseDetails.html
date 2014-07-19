@@ -29,7 +29,7 @@
                         </div>
                         <div class="col-lg-6">
                             <label>Tags</label>
-                            <tags ng-model="$controller.form.tags"></tags>
+                            <tags ng-model="$controller.form.tags" source="$controller.tagsSource($query)"></tags>
                         </div>
                     </div>
                     <div class="row field">
@@ -40,7 +40,7 @@
                     </div>
                     <div class="row field">
                         <div class="col-lg-12">
-                            <a ng-disabled="expenseForm.$pristine || expenseForm.$invalid || $controller.isLoading" class="btn btn-success pull-right" ng-click="$controller.save()">
+                            <a ng-disabled="expenseForm.$pristine || expenseForm.$invalid || $controller.isLoading()" class="btn btn-success pull-right" ng-click="$controller.save()">
                                 <span ng-hide="$controller.isEditing" class="glyphicon glyphicon-plus"></span>
                                 <span ng-hide="$controller.isEditing">Add</span>
                                 <span ng-show="$controller.isEditing" class="glyphicon glyphicon-ok"></span>

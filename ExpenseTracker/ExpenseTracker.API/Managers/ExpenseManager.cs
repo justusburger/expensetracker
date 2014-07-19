@@ -14,6 +14,7 @@ namespace ExpenseTracker.API.Managers
         Expense Create(int userId, Expense entity);
         void Update(int userId, Expense entity);
         void Delete(int userId, int id);
+        IQueryable<Tag> GetAllTags(int userId);
     }
 
     public class ExpenseManager : ManagerBase<Expense>, IExpenseManager
@@ -56,6 +57,11 @@ namespace ExpenseTracker.API.Managers
             var entity = GetById(userId, id);
             Context.Entry(entity).State = EntityState.Deleted;
             SaveChanges();
+        }
+
+        public IQueryable<Tag> GetAllTags(int userId)
+        {
+            return Context.Tags.Where(t => t.Expense.UserId == userId);
         }
     }
 }

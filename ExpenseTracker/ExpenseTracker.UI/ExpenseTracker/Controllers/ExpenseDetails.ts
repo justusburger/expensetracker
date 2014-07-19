@@ -51,6 +51,10 @@
             }
         }
 
+        public tagsSource(query: string): ng.IPromise<Models.ITag[]> {
+            return this.promiseService.when(this.tags);
+        }
+
     }
 
     angular.module('ExpenseTracker.Controllers').controller(ExpenseDetails.Name, [

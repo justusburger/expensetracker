@@ -436,7 +436,7 @@
     <TypeScriptCompile Include="ExpenseTracker\Services\Popup.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\Profile.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\SignIn.ts" />
-    <TypeScriptCompile Include="tests\test.ts" />
+    <TypeScriptCompile Include="tests\Abstract\Component.ts" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -454,7 +454,7 @@
     <Content Include="scripts\angular-loader.min.js.map" />
     <Content Include="scripts\angular-cookies.min.js.map" />
     <Content Include="scripts\angular-animate.min.js.map" />
-    <Content Include="tests\chutzpah.json" />
+    <Content Include="chutzpah.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
