@@ -1,6 +1,7 @@
 ﻿interface Array<T> {
     remove(element: any): T[];
     any(selector?: (element) => boolean): boolean;
+    select(selector: (element) => any): any[];
 }
 
 module ExpenseTracker.Extensions {
@@ -19,10 +20,16 @@ module ExpenseTracker.Extensions {
             return Enumerable.From(self).Any(selector);
         }
 
+        public static select(selector: (element) => boolean): any[] {
+            var self = (<any[]>(<any>this));
+            return Enumerable.From(self).Select(selector).ToArray();
+        }
+
     }
 
     Array.prototype.remove = ArrayExtensions.remove;
     Array.prototype.any = ArrayExtensions.any;
+    Array.prototype.select = ArrayExtensions.select;
 
 }
 

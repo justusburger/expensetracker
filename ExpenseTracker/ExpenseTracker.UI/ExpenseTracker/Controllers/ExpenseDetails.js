@@ -40,14 +40,6 @@ var ExpenseTracker;
                     });
                 } else
                     this.form = {};
-
-                this.beginUpdate();
-                this.expenseTypeService.getAll().then(function (expenseTypes) {
-                    _this.expenseTypes = expenseTypes;
-                    _this.endUpdate();
-                }, function () {
-                    return _this.endUpdate();
-                });
             };
 
             ExpenseDetails.prototype.save = function () {

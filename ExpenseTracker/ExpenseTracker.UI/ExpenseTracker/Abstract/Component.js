@@ -43,17 +43,6 @@
             configurable: true
         });
 
-        Object.defineProperty(Component.prototype, "expenseTypeService", {
-            get: function () {
-                return this._expenseTypeService || (this._expenseTypeService = this.injectorService.get(ExpenseTracker.Services.ExpenseType.Name));
-            },
-            set: function (value) {
-                this._expenseTypeService = value;
-            },
-            enumerable: true,
-            configurable: true
-        });
-
         Object.defineProperty(Component.prototype, "expenseService", {
             get: function () {
                 return this._expenseService || (this._expenseService = this.injectorService.get(ExpenseTracker.Services.Expense.Name));

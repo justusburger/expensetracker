@@ -34,7 +34,6 @@ namespace ExpenseTracker.API.Models
         public bool Locked { get; set; }
         public int InvalidAuthentications { get; set; }
 
-        public virtual ICollection<ExpenseType> ExpenseTypes { get; set; } 
         public virtual ICollection<Expense> Expenses { get; set; } 
     }
 }

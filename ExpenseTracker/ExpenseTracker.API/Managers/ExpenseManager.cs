@@ -20,7 +20,7 @@ namespace ExpenseTracker.API.Managers
     {
         public IQueryable<Expense> AllByUser(int userId)
         {
-            return All.Where(e => e.UserId == userId);
+            return All.Where(e => e.UserId == userId).Include(e => e.Tags);
         }
 
         public Expense GetById(int userId, int id)
@@ -36,9 +36,18 @@ namespace ExpenseTracker.API.Managers
 
         public void Update(int userId, Expense entity)
         {
-            entity.UserId = userId;
-            Context.Set<Expense>().Attach(entity);
-            Context.Entry(entity).State = EntityState.Modified;
+            var originalEntity = GetById(userId, entity.Id);
+            originalEntity.Date = entity.Date;
+            originalEntity.Amount = entity.Amount;
+            originalEntity.Description = entity.Description;
+
+            //Remove tags in the original list but not in the new list
+            var tagsToRemove = originalEntity.Tags.Where(tag => entity.Tags.All(t => t.Text != tag.Text)).ToList();
+            //Add tags in the new list but not in the old list
+            var tagsToAdd = entity.Tags.Where(tag => originalEntity.Tags.All(t => t.Text != tag.Text)).ToList();
+
+            tagsToRemove.ForEach(t => originalEntity.Tags.Remove(t));
+            tagsToAdd.ForEach(t => originalEntity.Tags.Add(t));
             SaveChanges();
         }
 

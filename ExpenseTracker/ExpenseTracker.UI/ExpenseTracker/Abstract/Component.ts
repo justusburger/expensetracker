@@ -24,15 +24,7 @@
         public set profileService(value: ExpenseTracker.Services.Profile) {
             this._profileService = value;
         }
-
-        private _expenseTypeService: ExpenseTracker.Services.ExpenseType;
-        public get expenseTypeService(): ExpenseTracker.Services.ExpenseType {
-            return this._expenseTypeService || (this._expenseTypeService = this.injectorService.get(ExpenseTracker.Services.ExpenseType.Name));
-        }
-        public set expenseTypeService(value: ExpenseTracker.Services.ExpenseType) {
-            this._expenseTypeService = value;
-        }
-
+        
         private _expenseService: ExpenseTracker.Services.Expense;
         public get expenseService(): ExpenseTracker.Services.Expense {
             return this._expenseService || (this._expenseService = this.injectorService.get(ExpenseTracker.Services.Expense.Name));

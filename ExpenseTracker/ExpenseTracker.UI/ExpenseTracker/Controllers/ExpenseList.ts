@@ -5,7 +5,6 @@
         public static Name: string = 'ExpenseList';
         public form: any = {};
         public expenses: Models.IExpense[];
-        public expenseTypes: Models.IExpenseType[];
         public removeConfirmationPopup: Models.IPopup;
 
         constructor(scope: ng.IScope) {
@@ -31,11 +30,6 @@
             this.beginUpdate();
             this.expenseService.getAll().then((expenses) => {
                 this.expenses = expenses;
-                this.endUpdate();
-            });
-            this.beginUpdate();
-            this.expenseTypeService.getAll().then((expenseTypes) => {
-                this.expenseTypes = expenseTypes;
                 this.endUpdate();
             });
         }

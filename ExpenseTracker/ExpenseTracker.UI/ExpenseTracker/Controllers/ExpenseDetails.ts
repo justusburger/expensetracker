@@ -4,7 +4,6 @@
 
         public static Name: string = 'ExpenseDetails';
         public form: Models.IExpense;
-        public expenseTypes: Models.IExpenseType[];
 
         constructor(scope: ng.IScope) {
             super(scope);
@@ -27,12 +26,6 @@
                 }, () => this.endUpdate());
             } else 
                 this.form = <any>{};
-
-            this.beginUpdate();
-            this.expenseTypeService.getAll().then((expenseTypes) => {
-                this.expenseTypes = expenseTypes;
-                this.endUpdate();
-            }, () => this.endUpdate());
         }
 
         public save(): void {

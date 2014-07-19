@@ -2,7 +2,7 @@
 angular.module('ExpenseTracker.Filters', []);
 angular.module('ExpenseTracker.Controllers', []);
 angular.module('ExpenseTracker.Directives', []);
-angular.module('ExpenseTracker', ['ngRoute', 'ngResource', 'ngCookies', 'ui.bootstrap', 'ExpenseTracker.Services', 'ExpenseTracker.Controllers', 'ExpenseTracker.Directives', 'ExpenseTracker.Filters'])
+angular.module('ExpenseTracker', ['ngRoute', 'ngResource', 'ngCookies', 'ui.bootstrap', 'ngTagsInput', 'ExpenseTracker.Services', 'ExpenseTracker.Controllers', 'ExpenseTracker.Directives', 'ExpenseTracker.Filters'])
     .config([
         '$routeProvider',
         (routeProvider: ng.route.IRouteProvider) => {
@@ -16,7 +16,7 @@ angular.module('ExpenseTracker', ['ngRoute', 'ngResource', 'ngCookies', 'ui.boot
 
         }
     ])
-    .constant('API_BASE_PATH', 'http://dev.expensetracker.com/api').constant('another', {});
+    .constant('API_BASE_PATH', '/api');
 
 angular.element(document).ready(() => {
     var body = angular.element('html');

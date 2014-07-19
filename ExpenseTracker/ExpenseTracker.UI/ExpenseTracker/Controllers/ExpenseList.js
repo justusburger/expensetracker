@@ -38,11 +38,6 @@ var ExpenseTracker;
                     _this.expenses = expenses;
                     _this.endUpdate();
                 });
-                this.beginUpdate();
-                this.expenseTypeService.getAll().then(function (expenseTypes) {
-                    _this.expenseTypes = expenseTypes;
-                    _this.endUpdate();
-                });
             };
 
             ExpenseList.prototype.remove = function (expense) {

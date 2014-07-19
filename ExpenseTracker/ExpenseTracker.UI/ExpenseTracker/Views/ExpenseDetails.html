@@ -16,22 +16,20 @@
             <div class="col-sm-3"></div>
             <div class="col-sm-9">
                 <form name="expenseForm" class="form" role="form" novalidate>
-                    <div class="row field">
+                    <div class="row">
                         <div class="col-lg-6">
-                            <label>Date</label>
-                            <custom-datepicker ng-model="$controller.form.date"></custom-datepicker>
-                        </div>
-                    </div>
-                    <div class="row field">
-                        <div class="col-lg-6">
-                            <label>Expense type</label>
-                            <select class="form-control" name="type" ng-model="$controller.form.expenseTypeId" ng-options="expenseType.id as expenseType.title for expenseType in $controller.expenseTypes" ng-required>
-                                <option style="display: none;" value="">Select expense type</option>
-                            </select>
+                            <div class="field">
+                                <label>Date</label>
+                                <custom-datepicker ng-model="$controller.form.date"></custom-datepicker>
+                            </div>
+                            <div class="field">
+                                <label>Amount</label>
+                                <input type="number" class="form-control" placeholder="Amount" name="amount" ng-model="$controller.form.amount" required />
+                            </div>
                         </div>
                         <div class="col-lg-6">
-                            <label>Amount</label>
-                            <input type="number" class="form-control" placeholder="Amount" name="amount" ng-model="$controller.form.amount" required />
+                            <label>Tags</label>
+                            <tags ng-model="$controller.form.tags"></tags>
                         </div>
                     </div>
                     <div class="row field">
@@ -53,6 +51,5 @@
                 </form>
             </div>
         </div>
-
     </div>
 </div>

@@ -11,8 +11,13 @@ namespace ExpenseTracker.API.Helpers
     public class ExpenseTrackerDbContext : DbContext
     {
         public IDbSet<User> Users { get; set; }
-        public IDbSet<ExpenseType> ExpenseTypes { get; set; } 
-        public IDbSet<Expense> Expenses { get; set; } 
-        
+        public IDbSet<Tag> Tags { get; set; } 
+        public IDbSet<Expense> Expenses { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.Entity<Expense>().HasMany(a => a.Tags).WithRequired(t => t.Expense);
+        }
     }
 }

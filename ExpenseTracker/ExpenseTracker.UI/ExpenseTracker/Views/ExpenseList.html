@@ -34,7 +34,7 @@
                     <tr>
                         <th>Date</th>
                         <th>Time</th>
-                        <th>Type</th>
+                        <th>Tags</th>
                         <th>Amount</th>
                         <th>Description</th>
                         <th></th>
@@ -42,7 +42,9 @@
                     <tr ng-repeat="expense in $controller.expenses">
                         <td>{{ expense.date | date }}</td>
                         <td>{{ expense.date | date:'HH:mm:ss' }}</td>
-                        <td>{{ expense.expenseTypeId | expenseType: $controller.expenseTypes }}</td>
+                        <td>
+                            <span class="badge tag" ng-repeat="tag in expense.tags">{{ tag }}</span>
+                        </td>
                         <td>{{ expense.amount }}</td>
                         <td>{{ expense.description }}</td>
                         <td class="dropdown row-action">

@@ -8,7 +8,7 @@ namespace ExpenseTracker.API.ViewModels
     public class ExpenseViewModel
     {
         public int Id { get; set; }
-        public int ExpenseTypeId { get; set; }
+        public string[] Tags { get; set; }
         public int UserId { get; set; }
         public DateTime Date { get; set; }
         public decimal Amount { get; set; }

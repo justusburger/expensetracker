@@ -15,12 +15,18 @@
                 var self = this;
                 return Enumerable.From(self).Any(selector);
             };
+
+            ArrayExtensions.select = function (selector) {
+                var self = this;
+                return Enumerable.From(self).Select(selector).ToArray();
+            };
             return ArrayExtensions;
         })();
         Extensions.ArrayExtensions = ArrayExtensions;
 
         Array.prototype.remove = ArrayExtensions.remove;
         Array.prototype.any = ArrayExtensions.any;
+        Array.prototype.select = ArrayExtensions.select;
     })(ExpenseTracker.Extensions || (ExpenseTracker.Extensions = {}));
     var Extensions = ExpenseTracker.Extensions;
 })(ExpenseTracker || (ExpenseTracker = {}));

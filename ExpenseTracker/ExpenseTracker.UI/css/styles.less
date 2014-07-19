@@ -19,8 +19,12 @@ a {
     cursor: pointer;
 }
 
+.navbar-right {
+    margin-right: -15px;
+}
+
 .navbar-form {
-    margin-top: 10px;
+    margin: 10px 0 0 0 !important;
 }
 
 .main-contentainer {
@@ -79,7 +83,7 @@ a {
 .alert-handler {
     position: absolute;
     left: 50%;
-    padding-top: 10px;
+    padding-top: 50px;
     z-index: 100;
 
     .alert {
@@ -289,4 +293,42 @@ a {
     .glyphicon {
         margin: 0 0 0 -22px !important;
     }
+}
+
+.tags-handler {
+    .host {
+        margin: 0;
+
+        .tags {
+            padding: 1px;
+            border: solid 1px #ccc;
+            -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            -moz-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+            border-radius: 4px;
+
+            .tag-item {
+                font: inherit !important;
+                height: 24px;
+                background: #5bc0de;
+                border-color: #46b8da;
+                color: #fff; 
+                span {
+                    display: inline-block;
+                    padding: 2px 3px;
+                }
+                .remove-button {
+                    color: #fff;
+                }
+            }
+
+            input {
+                font: inherit !important;
+                margin: 0 2px;
+            }
+        }
+    }
+}
+.badge.tag {
+    margin-right: 2px;
 }

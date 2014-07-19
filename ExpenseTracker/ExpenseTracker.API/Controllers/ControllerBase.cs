@@ -28,17 +28,10 @@ namespace ExpenseTracker.API.Controllers
             set { _expenseManager = value; }
         }
 
-        private IExpenseTypeManager _expenseTypeManager;
-        public IExpenseTypeManager ExpenseTypeManager
-        {
-            get { return _expenseTypeManager ?? (_expenseTypeManager = new ExpenseTypeManager()); }
-            set { _expenseTypeManager = value; }
-        }
-
         protected ControllerBase(string path) : base(path)
         {
             //This just simulates a real environment
-            Thread.Sleep(new Random().Next(1000, 5000));
+            //Thread.Sleep(new Random().Next(1000, 5000));
         }
 
         protected Response Error(ErrorResponse response)
