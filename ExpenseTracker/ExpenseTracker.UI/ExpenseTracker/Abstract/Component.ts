@@ -3,7 +3,9 @@
 
         private _injectorService: ng.auto.IInjectorService;
         public get injectorService(): ng.auto.IInjectorService {
-            return this._injectorService || (this._injectorService = (<ng.auto.IInjectorService>(<any>$('html')).injector()));
+            if (!this._injectorService) 
+                this._injectorService = angular.element('html').injector();
+            return this._injectorService;
         }
         public set injectorService(value: ng.auto.IInjectorService) {
             this._injectorService = value;
@@ -137,14 +139,19 @@
         }
 
         private _loadingStack: any[] = [];
-        public get isLoading(): boolean {
-            return Enumerable.From(this._loadingStack).Any();
+        public isLoading(type?: string): boolean {
+            return this._loadingStack.any(item => item === (type || true));
         }
-        public beginUpdate(): void {
-            this._loadingStack.push(true);
+        public beginUpdate(type?: string): void {
+            this._loadingStack.push(type || true);
         }
-        public endUpdate(): void {
-            this._loadingStack.pop();
+        public endUpdate(type?: string): void {
+            var itemToRemove: any;
+            this._loadingStack.forEach(item => {
+                if (item === (type || true) && !itemToRemove)
+                    itemToRemove = item;
+            });
+            this._loadingStack.remove(itemToRemove);
         }
 
         public isCheckingSession: boolean = true;

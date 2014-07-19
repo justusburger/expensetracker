@@ -40,6 +40,14 @@ var ExpenseTracker;
                     });
                 } else
                     this.form = {};
+
+                this.beginUpdate('tags');
+                this.expenseService.getAllTags().then(function (tags) {
+                    _this.tags = tags;
+                    _this.endUpdate('tags');
+                }, function () {
+                    return _this.endUpdate('tags');
+                });
             };
 
             ExpenseDetails.prototype.save = function () {

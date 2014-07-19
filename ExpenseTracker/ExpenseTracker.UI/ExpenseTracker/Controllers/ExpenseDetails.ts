@@ -4,6 +4,7 @@
 
         public static Name: string = 'ExpenseDetails';
         public form: Models.IExpense;
+        public tags: Models.ITag[];
 
         constructor(scope: ng.IScope) {
             super(scope);
@@ -26,6 +27,12 @@
                 }, () => this.endUpdate());
             } else 
                 this.form = <any>{};
+
+            this.beginUpdate('tags');
+            this.expenseService.getAllTags().then((tags: Models.ITag[]) => {
+                this.tags = tags;
+                this.endUpdate('tags');
+            }, () => this.endUpdate('tags'));
         }
 
         public save(): void {

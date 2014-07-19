@@ -12,7 +12,9 @@
         }
         Object.defineProperty(Component.prototype, "injectorService", {
             get: function () {
-                return this._injectorService || (this._injectorService = $('html').injector());
+                if (!this._injectorService)
+                    this._injectorService = angular.element('html').injector();
+                return this._injectorService;
             },
             set: function (value) {
                 this._injectorService = value;
@@ -201,18 +203,21 @@
             configurable: true
         });
 
-        Object.defineProperty(Component.prototype, "isLoading", {
-            get: function () {
-                return Enumerable.From(this._loadingStack).Any();
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Component.prototype.beginUpdate = function () {
-            this._loadingStack.push(true);
+        Component.prototype.isLoading = function (type) {
+            return this._loadingStack.any(function (item) {
+                return item === (type || true);
+            });
         };
-        Component.prototype.endUpdate = function () {
-            this._loadingStack.pop();
+        Component.prototype.beginUpdate = function (type) {
+            this._loadingStack.push(type || true);
+        };
+        Component.prototype.endUpdate = function (type) {
+            var itemToRemove;
+            this._loadingStack.forEach(function (item) {
+                if (item === (type || true) && !itemToRemove)
+                    itemToRemove = item;
+            });
+            this._loadingStack.remove(itemToRemove);
         };
 
         Component.prototype.onInitialized = function () {

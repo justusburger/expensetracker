@@ -11,7 +11,10 @@ var ExpenseTracker;
             __extends(Expense, _super);
             function Expense() {
                 _super.call(this);
-                this.expenseResource = this.resourceService(this.apiBaseUrl + '/expense/:id', null, { update: { method: 'PUT' } });
+                this.expenseResource = this.resourceService(this.apiBaseUrl + '/expense/:id', null, {
+                    update: { method: 'PUT' },
+                    getAllTags: { method: 'GET', url: this.apiBaseUrl + '/expense/tags', isArray: true }
+                });
             }
             Expense.prototype.getAll = function () {
                 var _this = this;
@@ -61,6 +64,17 @@ var ExpenseTracker;
                 var _this = this;
                 var defer = this.promiseService.defer();
                 this.expenseResource.delete({ id: id }, function (response) {
+                    return _this.defaultOnSuccess(response, defer);
+                }, function (response) {
+                    return _this.defaultOnError(response, defer);
+                });
+                return defer.promise;
+            };
+
+            Expense.prototype.getAllTags = function () {
+                var _this = this;
+                var defer = this.promiseService.defer();
+                this.expenseResource.getAllTags(function (response) {
                     return _this.defaultOnSuccess(response, defer);
                 }, function (response) {
                     return _this.defaultOnError(response, defer);

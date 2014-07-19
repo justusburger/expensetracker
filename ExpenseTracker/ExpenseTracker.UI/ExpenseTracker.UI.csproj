@@ -66,6 +66,7 @@
     <TypeScriptCompile Include="ExpenseTracker\Abstract\ArrayExtensions.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Abstract\NotImplementedException.ts" />
     <Content Include="Content\ng-tags-input.min.css" />
+    <Content Include="css\jasmine.css" />
     <Content Include="ExpenseTracker\Views\AlertHandler.html" />
     <Content Include="ExpenseTracker\Views\Datepicker.html" />
     <Content Include="ExpenseTracker\Views\ExpenseDetails.html" />
@@ -88,6 +89,8 @@
     <Content Include="scripts\angular-ui\ui-bootstrap.min.js" />
     <Content Include="scripts\bootstrap.js" />
     <Content Include="scripts\bootstrap.min.js" />
+    <Content Include="scripts\jasmine-html.js" />
+    <Content Include="scripts\jasmine.js" />
     <Content Include="scripts\jquery-1.9.0.js" />
     <Content Include="scripts\jquery-1.9.0.min.js" />
     <Content Include="scripts\jquery-1.9.0.min.map" />
@@ -425,6 +428,7 @@
     <TypeScriptCompile Include="ExpenseTracker\Models\IRegistrationRequest.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\ISignInRequest.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\ISuccessResponse.d.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Models\ITag.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\Alert.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\ApiResource.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\Cache.ts" />
@@ -432,6 +436,7 @@
     <TypeScriptCompile Include="ExpenseTracker\Services\Popup.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\Profile.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\SignIn.ts" />
+    <TypeScriptCompile Include="tests\test.ts" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -449,6 +454,7 @@
     <Content Include="scripts\angular-loader.min.js.map" />
     <Content Include="scripts\angular-cookies.min.js.map" />
     <Content Include="scripts\angular-animate.min.js.map" />
+    <Content Include="tests\chutzpah.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -472,6 +478,9 @@
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-scenario.d.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular.d.ts" />
     <TypeScriptCompile Include="scripts\typings\jquery\jquery.d.ts" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
