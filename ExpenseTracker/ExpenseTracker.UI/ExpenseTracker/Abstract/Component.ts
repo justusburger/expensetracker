@@ -139,6 +139,14 @@
             this._cacheService = value;
         }
 
+        private _dataProviderFactory: ExpenseTracker.Services.DataProviderFactory;
+        public get dataProviderFactory(): ExpenseTracker.Services.DataProviderFactory {
+            return this._dataProviderFactory || (this._dataProviderFactory = this.injectorService.get(ExpenseTracker.Services.DataProviderFactory.Name));
+        }
+        public set dataProviderFactory(value: ExpenseTracker.Services.DataProviderFactory) {
+            this._dataProviderFactory = value;
+        }
+
         public get isSignedIn(): boolean {
             return !!this.cacheService.profile;
         }

@@ -83,6 +83,7 @@
     <Compile Include="Controllers\SignInController.cs" />
     <Compile Include="Exceptions\UniqueOrIndexContraintException.cs" />
     <Compile Include="Helpers\ControllerExtensions.cs" />
+    <Compile Include="Helpers\DataProviderMapper.cs" />
     <Compile Include="Helpers\ExpenseMapper.cs" />
     <Compile Include="Helpers\ExpenseTrackerDatabaseInitializer.cs" />
     <Compile Include="Helpers\ExpenseTrackerDbContext.cs" />
@@ -92,10 +93,14 @@
     <Compile Include="Managers\ExpenseManager.cs" />
     <Compile Include="Managers\ManagerBase.cs" />
     <Compile Include="Managers\UserManager.cs" />
+    <Compile Include="Models\DataProviderQuery.cs" />
+    <Compile Include="Models\DataProviderResults.cs" />
     <Compile Include="Models\Expense.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="ViewModels\ControllerResponse.cs" />
+    <Compile Include="ViewModels\DataProviderQueryViewModel.cs" />
+    <Compile Include="ViewModels\DataProviderResultsViewModel.cs" />
     <Compile Include="ViewModels\ErrorResponse.cs" />
     <Compile Include="ViewModels\ExpenseViewModel.cs" />
     <Compile Include="ViewModels\RegistrationRequestViewModel.cs" />

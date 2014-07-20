@@ -15,13 +15,14 @@
             super();
             this.expenseResource = <IExpenseResourceClass>this.resourceService(this.apiBaseUrl + '/expense/:id', null, {
                 update: { method: 'PUT' },
-                getAllTags: { method: 'GET', url: this.apiBaseUrl + '/expense/tags', isArray: true }
+                getAllTags: { method: 'GET', url: this.apiBaseUrl + '/expense/tags', isArray: true },
+                query: { method: 'GET' }
             });
         }
 
-        public getAll(): ng.IPromise<Models.IExpense[]> {
-            var defer = this.promiseService.defer<Models.IExpense[]>();
-            this.expenseResource.query(
+        public getAll(query: Models.IDataProviderParams): ng.IPromise<Models.IDataProviderResults<Models.IExpense>> {
+            var defer = this.promiseService.defer<Models.IDataProviderResults<Models.IExpense>>();
+            this.expenseResource.query(query,
                 (response) => this.defaultOnSuccess(response, defer),
                 (response: Models.IErrorResponse) => this.defaultOnError(response, defer)
             );

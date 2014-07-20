@@ -1,0 +1,11 @@
+﻿<div class="grid-pager">
+    <ul class="pagination">
+        <li ng-class="{ 'disabled': !$directive.showPrevious }"><a ng-click="$directive.previous()"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
+        <li ng-show="$directive.showFirst"><a ng-click="$directive.setPage(1)">1</a></li>
+        <li ng-show="$directive.showFirstEllipse" class="disabled"><a>...</a></li>
+        <li ng-repeat="page in $directive.pages" ng-class="{ 'active': page == $directive.currentPage }"><a ng-click="$directive.setPage(page)">{{ page }}</a></li>
+        <li ng-show="$directive.showLastEllipse" class="disabled"><a>...</a></li>
+        <li ng-show="$directive.showLast"><a ng-click="$directive.setPage($directive.last)">{{ $directive.last }}</a></li>
+        <li ng-class="{ 'disabled': !$directive.showNext }"><a ng-click="$directive.next()"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
+    </ul>
+</div>

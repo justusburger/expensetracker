@@ -15,6 +15,7 @@ namespace ExpenseTracker.API.Managers
         void Update(int userId, Expense entity);
         void Delete(int userId, int id);
         IQueryable<Tag> GetAllTags(int userId);
+        DataProviderResults<Expense> Query(int userId, DataProviderQuery query);
     }
 
     public class ExpenseManager : ManagerBase<Expense>, IExpenseManager
@@ -62,6 +63,21 @@ namespace ExpenseTracker.API.Managers
         public IQueryable<Tag> GetAllTags(int userId)
         {
             return Context.Tags.Where(t => t.Expense.UserId == userId);
+        }
+
+        public DataProviderResults<Expense> Query(int userId, DataProviderQuery query)
+        {
+            var results = new DataProviderResults<Expense> { Query = query };
+
+            //Item and page count
+            var expenses = Context.Expenses.Where(e => e.UserId == userId);
+            results.Query.ItemCount = expenses.Count();
+
+            expenses = expenses.OrderBy(e => e.Date);
+
+            //Pagination
+            results.Items = expenses.Skip(results.Query.Skip).Take(results.Query.Take);
+            return results;
         }
     }
 }

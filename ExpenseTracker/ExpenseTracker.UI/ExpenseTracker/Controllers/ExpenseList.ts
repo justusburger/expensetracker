@@ -6,6 +6,7 @@
         public form: any = {};
         public expenses: Models.IExpense[];
         public removeConfirmationPopup: Models.IPopup;
+        public expenseDataProvider: ExpenseTracker.Services.DataProvider<Models.IExpense>;
 
         constructor(scope: ng.IScope) {
             super(scope);
@@ -24,14 +25,12 @@
                     }
                 ]
             };
+
+            this.expenseDataProvider = this.dataProviderFactory.create(query => this.expenseService.getAll(query));
         }
 
         public onInitialized(): void {
-            this.beginUpdate();
-            this.expenseService.getAll().then((expenses) => {
-                this.expenses = expenses;
-                this.endUpdate();
-            });
+            this.expenseDataProvider.initialize();
         }
         
         public remove(expense: Models.IExpense): void {

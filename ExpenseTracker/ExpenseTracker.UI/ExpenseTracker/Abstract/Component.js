@@ -199,6 +199,17 @@
             configurable: true
         });
 
+        Object.defineProperty(Component.prototype, "dataProviderFactory", {
+            get: function () {
+                return this._dataProviderFactory || (this._dataProviderFactory = this.injectorService.get(ExpenseTracker.Services.DataProviderFactory.Name));
+            },
+            set: function (value) {
+                this._dataProviderFactory = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
         Object.defineProperty(Component.prototype, "isSignedIn", {
             get: function () {
                 return !!this.cacheService.profile;

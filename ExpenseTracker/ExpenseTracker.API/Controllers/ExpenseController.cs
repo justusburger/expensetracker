@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Web;
+using System.Web.UI;
 using ExpenseTracker.API.Helpers;
 using ExpenseTracker.API.Models;
 using ExpenseTracker.API.ViewModels;
@@ -15,7 +17,7 @@ namespace ExpenseTracker.API.Controllers
         public ExpenseController() : base("/expense")
         {
             this.RequiresAuthentication();
-            Get["/"] = o => GetAll();
+            Get["/"] = o => Query(this.Bind<DataProviderQueryViewModel>());
             Get["/{id:int}"] = o => GetById((int)o["id"]);
             Post["/"] = o => Create(this.Bind<ExpenseViewModel>());
             Put["/"] = o => Update(this.Bind<ExpenseViewModel>());
@@ -23,10 +25,10 @@ namespace ExpenseTracker.API.Controllers
             Get["/tags"] = o => GetAllTags();
         }
 
-        private Response GetAll()
+        private Response Query(DataProviderQueryViewModel query)
         {
-            List<ExpenseViewModel> expenses = ExpenseManager.AllByUser(CurrentUser.Id).Select(ExpenseMapper.ToViewModel).ToList();
-            return Response.AsJson(expenses);
+            DataProviderResults<Expense> results = ExpenseManager.Query(CurrentUser.Id, query.ToEntity());
+            return Response.AsJson(results.ToViewModel(ExpenseMapper.ToViewModel));
         }
 
         private Response GetById(int id)

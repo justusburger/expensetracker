@@ -30,14 +30,13 @@ var ExpenseTracker;
                         }
                     ]
                 };
+
+                this.expenseDataProvider = this.dataProviderFactory.create(function (query) {
+                    return _this.expenseService.getAll(query);
+                });
             }
             ExpenseList.prototype.onInitialized = function () {
-                var _this = this;
-                this.beginUpdate();
-                this.expenseService.getAll().then(function (expenses) {
-                    _this.expenses = expenses;
-                    _this.endUpdate();
-                });
+                this.expenseDataProvider.initialize();
             };
 
             ExpenseList.prototype.remove = function (expense) {

@@ -13,13 +13,14 @@ var ExpenseTracker;
                 _super.call(this);
                 this.expenseResource = this.resourceService(this.apiBaseUrl + '/expense/:id', null, {
                     update: { method: 'PUT' },
-                    getAllTags: { method: 'GET', url: this.apiBaseUrl + '/expense/tags', isArray: true }
+                    getAllTags: { method: 'GET', url: this.apiBaseUrl + '/expense/tags', isArray: true },
+                    query: { method: 'GET' }
                 });
             }
-            Expense.prototype.getAll = function () {
+            Expense.prototype.getAll = function (query) {
                 var _this = this;
                 var defer = this.promiseService.defer();
-                this.expenseResource.query(function (response) {
+                this.expenseResource.query(query, function (response) {
                     return _this.defaultOnSuccess(response, defer);
                 }, function (response) {
                     return _this.defaultOnError(response, defer);
