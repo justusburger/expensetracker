@@ -59,6 +59,14 @@
             this._promiseService = value;
         }
 
+        private _compileService: ng.ICompileService;
+        public get compileService(): ng.ICompileService {
+            return this._compileService || (this._compileService = this.injectorService.get('$compile'));
+        }
+        public set compileService(value: ng.ICompileService) {
+            this._compileService = value;
+        }
+
         private _httpService: ng.IHttpService;
         public get httpService(): ng.IHttpService {
             return this._httpService || (this._httpService = this.injectorService.get('$http'));

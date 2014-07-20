@@ -89,6 +89,17 @@
             configurable: true
         });
 
+        Object.defineProperty(Component.prototype, "compileService", {
+            get: function () {
+                return this._compileService || (this._compileService = this.injectorService.get('$compile'));
+            },
+            set: function (value) {
+                this._compileService = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
         Object.defineProperty(Component.prototype, "httpService", {
             get: function () {
                 return this._httpService || (this._httpService = this.injectorService.get('$http'));

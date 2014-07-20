@@ -9,62 +9,58 @@ var ExpenseTracker;
     (function (Directives) {
         var Validate = (function (_super) {
             __extends(Validate, _super);
-            function Validate(scope, element, attributes, modelController, container) {
+            function Validate(scope, element, attributes, modelController) {
                 var _this = this;
-                _super.call(this, scope, element, attributes);
-                this.hadFocus = false;
+                _super.call(this, scope.$new(), element, attributes);
                 if (!attributes['name'])
                     throw new ExpenseTracker.ArgumentException('name', 'Input does not have a name attribute.');
 
-                this.modelController = modelController;
-                this.container = container;
-                this.validIndicator = this.container.find('.valid');
-                this.invalidIndicator = this.container.find('.invalid');
-                this.spacer = this.container.find('.spacer');
+                if (!attributes[Validate.Name])
+                    throw new ExpenseTracker.ArgumentException('error container', 'Input does not have an error container specified.');
 
-                scope.$watch(function () {
-                    return _this.modelController.$viewValue;
-                }, function () {
-                    return _this.showValidity();
-                });
-                element.on('blur', function () {
-                    _this.scope.$apply(function () {
-                        _this.hadFocus = true;
-                        _this.showValidity();
-                    });
-                });
+                this.modelController = modelController;
+
+                this.container = angular.element(attributes[Validate.Name]).addClass('form-validity');
+                this.container.append('<i class="glyphicon glyphicon-ok valid" ng-show="$directive.valid"></i>');
+                this.container.append('<i class="glyphicon glyphicon-exclamation-sign invalid" ng-show="$directive.invalid" popover="{{ $directive.failedValidationMessage }}" popover-trigger="mouseenter" popover-placement="left"></i>');
+                this.compileService(this.container)(this.scope);
 
                 if (attributes[Validate.Name + 'Watch'])
                     this.scope.$watch(attributes[Validate.Name + 'Watch'], function () {
-                        _this.modelController.$setViewValue(_this.modelController.$viewValue);
-                        _this.showValidity();
+                        return _this.modelController.$setViewValue(_this.modelController.$viewValue);
                     });
             }
-            Validate.prototype.showValidity = function () {
-                this.spacer.hide();
-                this.validIndicator.hide();
-                this.invalidIndicator.hide();
+            Object.defineProperty(Validate.prototype, "valid", {
+                get: function () {
+                    return this.modelController.$valid;
+                },
+                enumerable: true,
+                configurable: true
+            });
 
-                if (!this.hadFocus)
-                    this.spacer.show();
-                else {
-                    if (this.modelController.$valid)
-                        this.validIndicator.show();
-                    if (this.modelController.$invalid) {
-                        this.invalidIndicator.show();
-                        var failedValidation;
-                        for (var key in this.modelController.$error) {
-                            if (this.modelController.$error[key]) {
-                                failedValidation = key;
-                                break;
-                            }
+            Object.defineProperty(Validate.prototype, "invalid", {
+                get: function () {
+                    return this.modelController.$invalid;
+                },
+                enumerable: true,
+                configurable: true
+            });
+
+            Object.defineProperty(Validate.prototype, "failedValidationMessage", {
+                get: function () {
+                    var failedValidation;
+                    for (var key in this.modelController.$error) {
+                        if (this.modelController.$error[key]) {
+                            failedValidation = key;
+                            break;
                         }
-                        this.failedValidationMessage = Validate.ErrorMessages[failedValidation];
                     }
-                }
-            };
+                    return Validate.ErrorMessages[failedValidation];
+                },
+                enumerable: true,
+                configurable: true
+            });
             Validate.Name = 'validate';
-            Validate.TemplateUrl = 'ExpenseTracker/Views/Validate.html';
             Validate.ErrorMessages = {
                 'email': 'Invalid email address. Example: john.smith@email.com',
                 'required': 'This field is required'
@@ -73,24 +69,16 @@ var ExpenseTracker;
         })(ExpenseTracker.DirectiveBase);
         Directives.Validate = Validate;
 
-        angular.module('ExpenseTracker.Directives').directive(Validate.Name, [
-            '$compile', function (compileService) {
-                return {
-                    restrict: 'A',
-                    require: 'ngModel',
-                    scope: true,
-                    templateUrl: Validate.TemplateUrl,
-                    compile: function (element, attributes) {
-                        var container = element.find('.form-validity');
-                        container.insertAfter(element);
-                        return function (scope, element, attributes, modelController) {
-                            var validateScope = scope.$new();
-                            new Validate(validateScope, element, attributes, modelController, container);
-                            compileService(container)(validateScope);
-                        };
-                    }
-                };
-            }]);
+        angular.module('ExpenseTracker.Directives').directive(Validate.Name, function () {
+            return {
+                restrict: 'A',
+                require: 'ngModel',
+                scope: true,
+                link: function (scope, element, attributes, modelController) {
+                    return new Validate(scope, element, attributes, modelController);
+                }
+            };
+        });
     })(ExpenseTracker.Directives || (ExpenseTracker.Directives = {}));
     var Directives = ExpenseTracker.Directives;
 })(ExpenseTracker || (ExpenseTracker = {}));
