@@ -51,7 +51,7 @@ var ExpenseTracker;
                 this.beginUpdate();
                 this.expenseService.delete(expense.id).then(function () {
                     _this.endUpdate();
-                    _this.expenses.remove(expense);
+                    _this.expenseDataProvider.refresh();
                     _this.alertService.success('Expense removed');
                 }, function () {
                     return _this.endUpdate();

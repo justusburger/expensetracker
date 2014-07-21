@@ -57,6 +57,7 @@ namespace ExpenseTracker.API.Managers
         public void Delete(int userId, int id)
         {
             var entity = GetById(userId, id);
+            entity.Tags.Clear();
             Context.Entry(entity).State = EntityState.Deleted;
             SaveChanges();
         }

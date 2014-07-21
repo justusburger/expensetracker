@@ -37,7 +37,7 @@
                 <grid-text-filter class="pull-right col-md-4" source="$controller.expenseDataProvider" filter-fields="description amount"></grid-text-filter>
             </p>
             <div class="panel panel-default">
-                <table class="table table-hover table-striped">
+                <table class="table table-hover table-striped" ng-class="{ 'loading': $controller.expenseDataProvider.isLoading() }">
                     <tr>
                         <th>Date</th>
                         <th>Time</th>
@@ -55,11 +55,11 @@
                         <td>{{ expense.amount }}</td>
                         <td>{{ expense.description }}</td>
                         <td class="row-action">
-                            <span class="dropdown pull-right">
+                            <span class="dropdown pull-right" is-open="dropdownOpen">
                                 <a class="glyphicon glyphicon-chevron-down pull-right dropdown-toggle"></a>
                                 <ul class="dropdown-menu dropdown-menu-right">
                                     <li><a href="/#/expenses/edit/{{ expense.id }}"><span class="glyphicon glyphicon-pencil"></span><span>Edit</span></a></li>
-                                    <li><a ng-click="$controller.remove(expense)"><span class="glyphicon glyphicon-remove red"></span><span>Remove</span></a></li>
+                                    <li><a ng-click="dropdownOpen = false; $controller.remove(expense)"><span class="glyphicon glyphicon-remove red"></span><span>Remove</span></a></li>
                                 </ul>
                             </span>
 

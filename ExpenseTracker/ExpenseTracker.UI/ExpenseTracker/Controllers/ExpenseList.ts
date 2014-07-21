@@ -4,7 +4,6 @@
 
         public static Name: string = 'ExpenseList';
         public form: any = {};
-        public expenses: Models.IExpense[];
         public removeConfirmationPopup: Models.IPopup;
         public expenseDataProvider: ExpenseTracker.Services.DataProvider<Models.IExpense>;
 
@@ -41,7 +40,7 @@
             this.beginUpdate();
             this.expenseService.delete(expense.id).then(() => {
                 this.endUpdate();
-                this.expenses.remove(expense);
+                this.expenseDataProvider.refresh();
                 this.alertService.success('Expense removed');
             }, () => this.endUpdate());
         }

@@ -31,6 +31,14 @@ var ExpenseTracker;
                 this.load(this.defaultQuery);
             };
 
+            DataProvider.prototype.refresh = function () {
+                this.load({
+                    page: this.query.page,
+                    pageSize: this.query.pageSize,
+                    filters: this.filters
+                });
+            };
+
             DataProvider.prototype.load = function (query) {
                 var _this = this;
                 this.beginUpdate();

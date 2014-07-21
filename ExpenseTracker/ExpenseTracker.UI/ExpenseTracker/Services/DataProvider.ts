@@ -23,6 +23,14 @@
         public reset(): void {
             this.load(this.defaultQuery);
         }
+
+        public refresh(): void {
+            this.load({
+                page: this.query.page,
+                pageSize: this.query.pageSize,
+                filters: this.filters
+            });
+        }
         
         private load(query: Models.IDataProviderQuery): void {
             this.beginUpdate();
