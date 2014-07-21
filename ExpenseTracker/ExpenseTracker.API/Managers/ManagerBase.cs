@@ -18,8 +18,8 @@ namespace ExpenseTracker.API.Managers
 
     public abstract class ManagerBase<T> : IManager<T> where T : class 
     {
-        private ExpenseTrackerDbContext _context;
-        public ExpenseTrackerDbContext Context
+        private IExpenseTrackerDbContext _context;
+        public IExpenseTrackerDbContext Context
         {
             get { return _context ?? (_context = new ExpenseTrackerDbContext()); }
             set { _context = value; }

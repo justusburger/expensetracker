@@ -232,6 +232,7 @@ a {
             }
         }
     }
+
     &.loading {
         opacity: 0.5;
     }
@@ -338,10 +339,11 @@ a {
 }
 
 .badge.tag {
-    margin-right: 2px;
-    background: #5bc0de;
-    border-color: #46b8da;
+    margin: 0 2px 2px 0;
+    background: #428bca;
+    border-color: #428bca;
     color: #fff;
+    opacity: 0.8;
 }
 
 .grid-pager .pagination {
@@ -350,7 +352,47 @@ a {
 
 .page-loading {
     color: #ccc;
-    position: relative;
-    top: -2px;
     font-size: 12px !important;
+    margin-top: 14px;
+}
+
+.tags-filter {
+    .tag {
+        .badge {
+            background: #fff;
+            color: #aaa;
+        }
+
+        opacity: 0.4;
+        margin: 0 3px 3px 0;
+        font-size: 11px;
+
+        &:hover {
+            opacity: 0.8;
+        }
+
+        &.selected {
+            opacity: 1;
+        }
+    }
+
+    .filter-mode {
+        .glyphicon-plus, .glyphicon-minus {
+            font-size: 9px;
+            position: relative;
+            font-size: 8px;
+            position: relative;
+            top: -5px;
+            right: -2px;
+        }
+    }
+}
+.tooltip {
+    font-size: 10px;
+    letter-spacing: 0px;
+    text-transform: none;
+    font-weight: normal;
+    &.right {
+        min-width: 150px;
+    }
 }

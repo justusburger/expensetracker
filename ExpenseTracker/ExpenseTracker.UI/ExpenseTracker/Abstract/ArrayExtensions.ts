@@ -5,6 +5,7 @@
     first(): any;
     last(): any;
     pushRange(range: any[]): T[];
+    contains(item: any): boolean;
 }
 
 module ExpenseTracker.Extensions {
@@ -48,6 +49,11 @@ module ExpenseTracker.Extensions {
             return self;
         }
 
+        public static contains(item: any): boolean {
+            var self = (<any[]>(<any>this));
+            return self.indexOf(item) > -1;
+        }
+
     }
 
     Array.prototype.remove = ArrayExtensions.remove;
@@ -56,6 +62,7 @@ module ExpenseTracker.Extensions {
     Array.prototype.first = ArrayExtensions.first;
     Array.prototype.last = ArrayExtensions.last;
     Array.prototype.pushRange = ArrayExtensions.pushRange;
+    Array.prototype.contains = ArrayExtensions.contains;
 
 }
 

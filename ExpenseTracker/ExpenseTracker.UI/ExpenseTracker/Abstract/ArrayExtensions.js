@@ -42,6 +42,11 @@
 
                 return self;
             };
+
+            ArrayExtensions.contains = function (item) {
+                var self = this;
+                return self.indexOf(item) > -1;
+            };
             return ArrayExtensions;
         })();
         Extensions.ArrayExtensions = ArrayExtensions;
@@ -52,6 +57,7 @@
         Array.prototype.first = ArrayExtensions.first;
         Array.prototype.last = ArrayExtensions.last;
         Array.prototype.pushRange = ArrayExtensions.pushRange;
+        Array.prototype.contains = ArrayExtensions.contains;
     })(ExpenseTracker.Extensions || (ExpenseTracker.Extensions = {}));
     var Extensions = ExpenseTracker.Extensions;
 })(ExpenseTracker || (ExpenseTracker = {}));

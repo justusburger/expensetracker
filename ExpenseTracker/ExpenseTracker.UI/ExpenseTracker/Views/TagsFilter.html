@@ -1,0 +1,11 @@
+﻿<div class="tags-filter">
+    <span class="stacked-nav-heading">
+        Tags
+        <a class="pull-right filter-mode" ng-click="$directive.toggleFilterType()" tooltip="{{ $directive.filterTypeTooltip }}" tooltip-placement="right" tooltip-popup-delay="500">
+            <span class="glyphicon " ng-class="{ 'glyphicon-plus': !$directive.isAndFilter, 'glyphicon-minus': $directive.isAndFilter }"></span><span class="glyphicon glyphicon-filter"></span>
+        </a>
+    </span>
+    <a ng-click="$directive.toggle(tag)" class="badge tag" ng-class="{ 'selected': $directive.isSelected(tag) }" ng-repeat="tag in $directive.tags | orderBy:'-count'">
+        {{ tag.text }} <span class="badge">{{ tag.count }}</span>
+    </a>
+</div>

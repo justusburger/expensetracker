@@ -9,10 +9,6 @@
                         <span>Add</span>
                     </a>
                 </span>
-                <span class="page-loading" ng-show="$controller.expenseDataProvider.isLoading()">
-                    <em>Loading expenses</em>
-                    <span class="glyphicon glyphicon-cog spinner"></span>
-                </span>
             </h1>
             <hr />
         </div>
@@ -26,14 +22,14 @@
                 <li><a>This week</a></li>
                 <li><a>This month</a></li>
             </ul>
-            <span class="stacked-nav-heading">Type</span>
-            <ul class="nav nav-stacked nav-pills">
-                <li><a>All</a></li>
-                <li ng-repeat="expenseType in $controller.expenseTypes"><a>{{ expenseType.title }}</a></li>
-            </ul>
+            <tags-filter source="$controller.expenseDataProvider"></tags-filter>
         </div>
         <div class="col-md-9">
             <p class="row">
+                <span class="col-md-4 page-loading pull-left" ng-show="$controller.expenseDataProvider.isLoading()">
+                    <em>Loading expenses</em>
+                    <span class="glyphicon glyphicon-cog spinner"></span>
+                </span>
                 <grid-text-filter class="pull-right col-md-4" source="$controller.expenseDataProvider" filter-fields="description amount"></grid-text-filter>
             </p>
             <div class="panel panel-default">

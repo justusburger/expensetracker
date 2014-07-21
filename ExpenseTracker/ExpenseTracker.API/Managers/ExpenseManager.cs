@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Web;
+using ExpenseTracker.API.Helpers;
 using ExpenseTracker.API.Models;
 
 namespace ExpenseTracker.API.Managers
@@ -73,7 +74,8 @@ namespace ExpenseTracker.API.Managers
             IEnumerable<Expense> expenses = Context.Expenses.Where(e => e.UserId == userId).ToList();
 
             //Filter
-            expenses = expenses.Where(e => Filter(e, query.Filters));
+            var helper = new ExpenseFilterHelper();
+            expenses = expenses.Where(e => helper.Filter(e, query.Filters));
 
             //Item and page count
             results.Query.ItemCount = expenses.Count();
@@ -85,22 +87,5 @@ namespace ExpenseTracker.API.Managers
             results.Items = expenses.Skip(results.Query.Skip).Take(results.Query.Take);
             return results;
         }
-
-        private bool Filter(Expense expense, Dictionary<string, string> filters)
-        {
-            if(filters == null || !filters.Any())
-                return true;
-
-            if (expense.Description != null && filters.ContainsKey("description") && expense.Description.ToLowerInvariant().Contains(filters["description"]))
-                return true;
-
-            if (filters.ContainsKey("amount") && expense.Amount.ToString(CultureInfo.InvariantCulture).Contains(filters["amount"]))
-                return true;
-
-            if (expense.Tags != null && filters.ContainsKey("tags") && expense.Tags.Any(t => t.Text.ToLowerInvariant().Contains(filters["tags"])))
-                return true;
-
-            return false;
-        } 
     }
 }
