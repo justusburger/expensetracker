@@ -31,10 +31,6 @@ var ExpenseTracker;
                 this.load(this.defaultQuery);
             };
 
-            DataProvider.prototype.initialize = function () {
-                this.reset();
-            };
-
             DataProvider.prototype.load = function (query) {
                 var _this = this;
                 this.beginUpdate();

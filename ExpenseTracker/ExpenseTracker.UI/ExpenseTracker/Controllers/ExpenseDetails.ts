@@ -1,6 +1,6 @@
 ﻿module ExpenseTracker.Controllers {
 
-    export class ExpenseDetails extends ControllerBase {
+    export class ExpenseDetails extends SecuredController {
 
         public static Name: string = 'ExpenseDetails';
         public form: Models.IExpense;
@@ -8,6 +8,7 @@
 
         constructor(scope: ng.IScope) {
             super(scope);
+            this.beginUpdate();
         }
 
         public get isEditing(): boolean {
@@ -18,21 +19,24 @@
             return this.routeParamsService['id'];
         }
 
-        public onInitialized(): void {
-            if (this.isEditing) {
-                this.beginUpdate();
-                this.expenseService.getById(this.expenseId).then((expense: Models.IExpense) => {
-                    this.form = expense;
+        public initialize(): ng.IPromise<void> {
+            return super.initialize().then(() => {
+                if (this.isEditing) {
+                    this.expenseService.getById(this.expenseId).then((expense: Models.IExpense) => {
+                        this.form = expense;
+                        this.endUpdate();
+                    }, () => this.endUpdate());
+                } else {
+                    this.form = <any>{};
                     this.endUpdate();
-                }, () => this.endUpdate());
-            } else 
-                this.form = <any>{};
+                }
 
-            this.beginUpdate('tags');
-            this.expenseService.getAllTags().then((tags: Models.ITag[]) => {
-                this.tags = tags;
-                this.endUpdate('tags');
-            }, () => this.endUpdate('tags'));
+                this.beginUpdate('tags');
+                this.expenseService.getAllTags().then((tags: Models.ITag[]) => {
+                    this.tags = tags;
+                    this.endUpdate('tags');
+                }, () => this.endUpdate('tags'));
+            });
         }
 
         public save(): void {

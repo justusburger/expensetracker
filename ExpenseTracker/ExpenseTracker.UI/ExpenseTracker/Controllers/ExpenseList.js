@@ -35,8 +35,11 @@ var ExpenseTracker;
                     return _this.expenseService.getAll(query);
                 });
             }
-            ExpenseList.prototype.onInitialized = function () {
-                this.expenseDataProvider.initialize();
+            ExpenseList.prototype.initialize = function () {
+                var _this = this;
+                return _super.prototype.initialize.call(this).then(function () {
+                    return _this.expenseDataProvider.reset();
+                });
             };
 
             ExpenseList.prototype.remove = function (expense) {
@@ -56,7 +59,7 @@ var ExpenseTracker;
             };
             ExpenseList.Name = 'ExpenseList';
             return ExpenseList;
-        })(ExpenseTracker.ControllerBase);
+        })(ExpenseTracker.SecuredController);
         Controllers.ExpenseList = ExpenseList;
 
         angular.module('ExpenseTracker.Controllers').controller(ExpenseList.Name, [

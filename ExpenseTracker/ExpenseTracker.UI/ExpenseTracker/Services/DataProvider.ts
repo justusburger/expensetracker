@@ -23,11 +23,7 @@
         public reset(): void {
             this.load(this.defaultQuery);
         }
-
-        public initialize(): void {
-            this.reset();
-        }
-
+        
         private load(query: Models.IDataProviderQuery): void {
             this.beginUpdate();
             this.selectorFn(query).then((results: Models.IDataProviderResults<T>) => {

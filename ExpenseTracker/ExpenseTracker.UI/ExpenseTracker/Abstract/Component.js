@@ -5,9 +5,8 @@
             var _this = this;
             this._loadingStack = [];
             this.isCheckingSession = true;
-            this.cacheService.initializeDefer.promise.then(function () {
+            this.initialize().then(function () {
                 _this.isCheckingSession = false;
-                _this.onInitialized();
             });
         }
         Object.defineProperty(Component.prototype, "injectorService", {
@@ -242,7 +241,16 @@
             this._loadingStack.remove(itemToRemove);
         };
 
-        Component.prototype.onInitialized = function () {
+        Object.defineProperty(Component.prototype, "isSecured", {
+            get: function () {
+                return false;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Component.prototype.initialize = function () {
+            return this.cacheService.initializeDefer.promise;
         };
         return Component;
     })();

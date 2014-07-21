@@ -4,6 +4,10 @@
             <h1>
                 <span ng-hide="$controller.isEditing">Add expense</span>
                 <span ng-show="$controller.isEditing">Edit expense</span>
+                <span class="page-loading" ng-show="$controller.isLoading()">
+                    <em>Loading expense</em>
+                    <span class="glyphicon glyphicon-cog spinner"></span>
+                </span>
                 <span class="pull-right btn-group page-actions">
                     <a href="/#/expenses" class="btn btn-default btn-sm"><span class="glyphicon glyphicon-chevron-left"></span><span>Back to list</span></a>
                 </span>
@@ -16,45 +20,47 @@
             <div class="col-sm-3"></div>
             <div class="col-sm-9">
                 <form name="expenseForm" class="form" role="form" novalidate>
-                    <div class="row">
-                        <div class="col-lg-6">
-                            <div class="field">
-                                <label>Date</label>
-                                <span class="pull-right" id="date-validation"></span>
-                                <custom-datepicker ng-model="$controller.form.date" name="date" validate="#date-validation" required></custom-datepicker>
+                    <fieldset ng-disabled="$controller.isLoading()">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="field">
+                                    <label>Date</label>
+                                    <span class="pull-right" id="date-validation"></span>
+                                    <custom-datepicker ng-model="$controller.form.date" name="date" validate="#date-validation" required></custom-datepicker>
+                                </div>
+                                <div class="field">
+                                    <label>Amount</label>
+                                    <span class="pull-right" id="amount-validation"></span>
+                                    <input type="number" class="form-control" placeholder="Amount" name="amount" ng-model="$controller.form.amount" required validate="#amount-validation" />
+                                </div>
                             </div>
-                            <div class="field">
-                                <label>Amount</label>
-                                <span class="pull-right" id="amount-validation"></span>
-                                <input type="number" class="form-control" placeholder="Amount" name="amount" ng-model="$controller.form.amount" required validate="#amount-validation" />
-                            </div>
-                        </div>
-                        <div class="col-lg-6">
-                            <label>Tags</label>
-                            <span class="pull-right" id="tags-validation"></span>
-                            <tags ng-model="$controller.form.tags" source="$controller.tagsSource($query)" name="tags" validate="#tags-validation"></tags>
-                        </div>
-                    </div>
-                    <div class="row field">
-                        <div class="col-lg-12">
-                            <label>Description</label>
-                            <span class="pull-right" id="description-validation"></span>
-                            <textarea class="form-control" ng-model="$controller.form.description" placeholder="Description" name="description" validate="#description-validation"></textarea>
-                        </div>
-                    </div>
-                    <div class="row field">
-                        <div class="col-lg-12">
-                            <div class="pull-right">
-                                <a href="/#/expenses" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span><span>Cancel</span></a>
-                                <a ng-disabled="expenseForm.$pristine || expenseForm.$invalid || $controller.isLoading()" class="btn btn-success" ng-click="$controller.save()">
-                                    <span ng-hide="$controller.isEditing" class="glyphicon glyphicon-plus"></span>
-                                    <span ng-hide="$controller.isEditing">Add</span>
-                                    <span ng-show="$controller.isEditing" class="glyphicon glyphicon-ok"></span>
-                                    <span ng-show="$controller.isEditing">Save</span>
-                                </a>
+                            <div class="col-lg-6">
+                                <label>Tags</label>
+                                <span class="pull-right" id="tags-validation"></span>
+                                <tags ng-model="$controller.form.tags" source="$controller.tagsSource($query)" name="tags" validate="#tags-validation"></tags>
                             </div>
                         </div>
-                    </div>
+                        <div class="row field">
+                            <div class="col-lg-12">
+                                <label>Description</label>
+                                <span class="pull-right" id="description-validation"></span>
+                                <textarea class="form-control" ng-model="$controller.form.description" placeholder="Description" name="description" validate="#description-validation"></textarea>
+                            </div>
+                        </div>
+                        <div class="row field">
+                            <div class="col-lg-12">
+                                <div class="pull-right">
+                                    <a href="/#/expenses" class="btn btn-default"><span class="glyphicon glyphicon-chevron-left"></span><span>Cancel</span></a>
+                                    <a ng-disabled="expenseForm.$pristine || expenseForm.$invalid || $controller.isLoading()" class="btn btn-success" ng-click="$controller.save()">
+                                        <span ng-hide="$controller.isEditing" class="glyphicon glyphicon-plus"></span>
+                                        <span ng-hide="$controller.isEditing">Add</span>
+                                        <span ng-show="$controller.isEditing" class="glyphicon glyphicon-ok"></span>
+                                        <span ng-show="$controller.isEditing">Save</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
                 </form>
             </div>
         </div>

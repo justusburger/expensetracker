@@ -11,6 +11,7 @@ var ExpenseTracker;
             __extends(ExpenseDetails, _super);
             function ExpenseDetails(scope) {
                 _super.call(this, scope);
+                this.beginUpdate();
             }
             Object.defineProperty(ExpenseDetails.prototype, "isEditing", {
                 get: function () {
@@ -28,25 +29,28 @@ var ExpenseTracker;
                 configurable: true
             });
 
-            ExpenseDetails.prototype.onInitialized = function () {
+            ExpenseDetails.prototype.initialize = function () {
                 var _this = this;
-                if (this.isEditing) {
-                    this.beginUpdate();
-                    this.expenseService.getById(this.expenseId).then(function (expense) {
-                        _this.form = expense;
+                return _super.prototype.initialize.call(this).then(function () {
+                    if (_this.isEditing) {
+                        _this.expenseService.getById(_this.expenseId).then(function (expense) {
+                            _this.form = expense;
+                            _this.endUpdate();
+                        }, function () {
+                            return _this.endUpdate();
+                        });
+                    } else {
+                        _this.form = {};
                         _this.endUpdate();
-                    }, function () {
-                        return _this.endUpdate();
-                    });
-                } else
-                    this.form = {};
+                    }
 
-                this.beginUpdate('tags');
-                this.expenseService.getAllTags().then(function (tags) {
-                    _this.tags = tags;
-                    _this.endUpdate('tags');
-                }, function () {
-                    return _this.endUpdate('tags');
+                    _this.beginUpdate('tags');
+                    _this.expenseService.getAllTags().then(function (tags) {
+                        _this.tags = tags;
+                        _this.endUpdate('tags');
+                    }, function () {
+                        return _this.endUpdate('tags');
+                    });
                 });
             };
 
@@ -76,7 +80,7 @@ var ExpenseTracker;
             };
             ExpenseDetails.Name = 'ExpenseDetails';
             return ExpenseDetails;
-        })(ExpenseTracker.ControllerBase);
+        })(ExpenseTracker.SecuredController);
         Controllers.ExpenseDetails = ExpenseDetails;
 
         angular.module('ExpenseTracker.Controllers').controller(ExpenseDetails.Name, [

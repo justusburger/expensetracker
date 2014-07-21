@@ -1,6 +1,6 @@
 ﻿module ExpenseTracker.Controllers {
 
-    export class ExpenseList extends ControllerBase {
+    export class ExpenseList extends SecuredController {
 
         public static Name: string = 'ExpenseList';
         public form: any = {};
@@ -29,8 +29,8 @@
             this.expenseDataProvider = this.dataProviderFactory.create(query => this.expenseService.getAll(query));
         }
 
-        public onInitialized(): void {
-            this.expenseDataProvider.initialize();
+        public initialize(): ng.IPromise<void> {
+            return super.initialize().then(() => this.expenseDataProvider.reset());
         }
         
         public remove(expense: Models.IExpense): void {

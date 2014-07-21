@@ -170,16 +170,19 @@
             this._loadingStack.remove(itemToRemove);
         }
 
+        public get isSecured(): boolean {
+            return false;
+        }
+
         public isCheckingSession: boolean = true;
         constructor() {
-            this.cacheService.initializeDefer.promise.then(() => {
+            this.initialize().then(() => {
                 this.isCheckingSession = false;
-                this.onInitialized();
             });
         }
 
-        public onInitialized(): void {
-            
+        public initialize(): ng.IPromise<void> {
+            return this.cacheService.initializeDefer.promise;
         }
 
     }
