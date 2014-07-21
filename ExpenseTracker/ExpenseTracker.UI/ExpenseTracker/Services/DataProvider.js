@@ -11,14 +11,24 @@ var ExpenseTracker;
             __extends(DataProvider, _super);
             function DataProvider(selectorFn) {
                 _super.call(this);
+                this._filters = {};
                 this.selectorFn = selectorFn;
-                this.pageSize = 2;
+                this.query = this.defaultQuery;
             }
+            Object.defineProperty(DataProvider.prototype, "defaultQuery", {
+                get: function () {
+                    return {
+                        page: 1,
+                        pageSize: 20,
+                        filters: this.filters
+                    };
+                },
+                enumerable: true,
+                configurable: true
+            });
+
             DataProvider.prototype.reset = function () {
-                this.load({
-                    page: 1,
-                    pageSize: this.pageSize
-                });
+                this.load(this.defaultQuery);
             };
 
             DataProvider.prototype.initialize = function () {
@@ -38,9 +48,37 @@ var ExpenseTracker;
             DataProvider.prototype.setPage = function (page) {
                 this.load({
                     page: page,
-                    pageSize: this.pageSize
+                    pageSize: this.query.pageSize,
+                    filters: this.filters
                 });
             };
+
+            DataProvider.prototype.filter = function (source, filters) {
+                this._filters[source] = filters;
+                this.load({
+                    page: this.query.page,
+                    pageSize: this.query.pageSize,
+                    filters: this.filters
+                });
+            };
+
+            Object.defineProperty(DataProvider.prototype, "filters", {
+                get: function () {
+                    var results = [];
+                    for (var source in this._filters) {
+                        var sourceFilters = this._filters[source];
+                        if (sourceFilters && sourceFilters.any()) {
+                            sourceFilters.forEach(function (sourceFilter) {
+                                if (typeof sourceFilter.query !== 'undefined' && sourceFilter.query !== null && sourceFilter.query.toString().trim() !== '')
+                                    results.push(sourceFilter.field + ':' + sourceFilter.query);
+                            });
+                        }
+                    }
+                    return results;
+                },
+                enumerable: true,
+                configurable: true
+            });
             return DataProvider;
         })(ExpenseTracker.Component);
         Services.DataProvider = DataProvider;

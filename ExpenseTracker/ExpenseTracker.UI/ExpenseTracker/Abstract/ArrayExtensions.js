@@ -30,6 +30,18 @@
                 var self = this;
                 return self[self.length - 1];
             };
+
+            ArrayExtensions.pushRange = function (range) {
+                var self = this;
+                if (!Enumerable.From(range).Any())
+                    return self;
+
+                range.forEach(function (value) {
+                    return self.push(value);
+                });
+
+                return self;
+            };
             return ArrayExtensions;
         })();
         Extensions.ArrayExtensions = ArrayExtensions;
@@ -39,6 +51,7 @@
         Array.prototype.select = ArrayExtensions.select;
         Array.prototype.first = ArrayExtensions.first;
         Array.prototype.last = ArrayExtensions.last;
+        Array.prototype.pushRange = ArrayExtensions.pushRange;
     })(ExpenseTracker.Extensions || (ExpenseTracker.Extensions = {}));
     var Extensions = ExpenseTracker.Extensions;
 })(ExpenseTracker || (ExpenseTracker = {}));

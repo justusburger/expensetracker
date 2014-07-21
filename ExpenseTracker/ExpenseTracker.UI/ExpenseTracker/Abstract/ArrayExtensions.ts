@@ -4,6 +4,7 @@
     select(selector: (element) => any): any[];
     first(): any;
     last(): any;
+    pushRange(range: any[]): T[];
 }
 
 module ExpenseTracker.Extensions {
@@ -37,6 +38,16 @@ module ExpenseTracker.Extensions {
             return self[self.length - 1];
         }
 
+        public static pushRange(range: any[]): any[] {
+            var self = (<any[]>(<any>this));
+            if (!Enumerable.From(range).Any())
+                return self;
+
+            range.forEach(value => self.push(value));
+
+            return self;
+        }
+
     }
 
     Array.prototype.remove = ArrayExtensions.remove;
@@ -44,6 +55,7 @@ module ExpenseTracker.Extensions {
     Array.prototype.select = ArrayExtensions.select;
     Array.prototype.first = ArrayExtensions.first;
     Array.prototype.last = ArrayExtensions.last;
+    Array.prototype.pushRange = ArrayExtensions.pushRange;
 
 }
 

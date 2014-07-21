@@ -72,6 +72,7 @@
     <Content Include="ExpenseTracker\Views\ExpenseDetails.html" />
     <Content Include="ExpenseTracker\Views\ExpenseList.html" />
     <Content Include="ExpenseTracker\Views\GridPager.html" />
+    <Content Include="ExpenseTracker\Views\GridTextFilter.html" />
     <Content Include="ExpenseTracker\Views\PopupHandler.html" />
     <Content Include="ExpenseTracker\Views\SignIn.html" />
     <Content Include="ExpenseTracker\Views\Tags.html" />
@@ -83,7 +84,10 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="scripts\angular-messages.min.js.map" />
     <None Include="scripts\jquery-1.9.0.intellisense.js" />
+    <Content Include="scripts\angular-messages.js" />
+    <Content Include="scripts\angular-messages.min.js" />
     <Content Include="scripts\angular-ui\ui-bootstrap-tpls.js" />
     <Content Include="scripts\angular-ui\ui-bootstrap-tpls.min.js" />
     <Content Include="scripts\angular-ui\ui-bootstrap.js" />
@@ -413,6 +417,7 @@
     <TypeScriptCompile Include="ExpenseTracker\Controllers\ControllerBase.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Controllers\Registration.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\GridPager.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Directives\GridTextFilter.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\Menu.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\PopupHandler.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\Tags.ts" />

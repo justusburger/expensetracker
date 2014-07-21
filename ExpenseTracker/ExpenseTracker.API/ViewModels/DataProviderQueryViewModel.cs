@@ -11,5 +11,6 @@ namespace ExpenseTracker.API.ViewModels
         public int PageSize { get; set; }
         public int PageCount { get; set; }
         public int ItemCount { get; set; }
+        public List<string> Filters { get; set; }
     }
 }

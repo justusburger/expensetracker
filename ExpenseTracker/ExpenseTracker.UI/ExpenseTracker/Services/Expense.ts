@@ -20,7 +20,7 @@
             });
         }
 
-        public getAll(query: Models.IDataProviderParams): ng.IPromise<Models.IDataProviderResults<Models.IExpense>> {
+        public getAll(query: Models.IDataProviderQuery): ng.IPromise<Models.IDataProviderResults<Models.IExpense>> {
             var defer = this.promiseService.defer<Models.IDataProviderResults<Models.IExpense>>();
             this.expenseResource.query(query,
                 (response) => this.defaultOnSuccess(response, defer),

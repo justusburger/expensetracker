@@ -1,15 +1,21 @@
 ﻿ declare module ExpenseTracker.Models {
      
-     export interface IDataProviderParams {
+     export interface IDataProviderQuery {
          page: number;
          pageSize: number;
          pageCount?: number;
-         itemCount?: number
+         itemCount?: number;
+         filters: string[];
+     }
+
+     export interface IDataProviderFilter {
+         field: string;
+         query: string;
      }
 
      export interface IDataProviderResults<T> {
          items: T[];
-         query: IDataProviderParams;
+         query: IDataProviderQuery;
      }
 
  }

@@ -10,7 +10,7 @@
                     </a>
                 </span>
             </h1>
-            <hr/>
+            <hr />
         </div>
     </div>
     <div class="row">
@@ -29,6 +29,13 @@
             </ul>
         </div>
         <div class="col-md-9">
+            <p class="row">
+                <span class="col-md-4 pull-left grid-loading" ng-show="$controller.expenseDataProvider.isLoading()">
+                    <em>Loading expenses</em>
+                    <span class="glyphicon glyphicon-cog spinner"></span>
+                </span>
+                <grid-text-filter class="pull-right col-md-4" source="$controller.expenseDataProvider" filter-fields="description amount"></grid-text-filter>
+            </p>
             <div class="panel panel-default">
                 <table class="table table-hover table-striped">
                     <tr>
@@ -37,9 +44,7 @@
                         <th>Tags</th>
                         <th>Amount</th>
                         <th>Description</th>
-                        <th>
-                            <span ng-show="$controller.expenseDataProvider.isLoading()" class="glyphicon glyphicon-cog spinner pull-right"></span>
-                        </th>
+                        <th></th>
                     </tr>
                     <tr ng-repeat="expense in $controller.expenseDataProvider.items">
                         <td>{{ expense.date | date }}</td>
@@ -49,12 +54,15 @@
                         </td>
                         <td>{{ expense.amount }}</td>
                         <td>{{ expense.description }}</td>
-                        <td class="dropdown row-action">
-                            <a class="glyphicon glyphicon-chevron-down pull-right dropdown-toggle"></a>
-                            <ul class="dropdown-menu dropdown-menu-right">
-                                <li><a href="/#/expenses/edit/{{ expense.id }}"><span class="glyphicon glyphicon-pencil"></span><span>Edit</span></a></li>
-                                <li><a ng-click="$controller.remove(expense)"><span class="glyphicon glyphicon-remove red"></span><span>Remove</span></a></li>
-                            </ul>
+                        <td class="row-action">
+                            <span class="dropdown">
+                                <a class="glyphicon glyphicon-chevron-down pull-right dropdown-toggle"></a>
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li><a href="/#/expenses/edit/{{ expense.id }}"><span class="glyphicon glyphicon-pencil"></span><span>Edit</span></a></li>
+                                    <li><a ng-click="$controller.remove(expense)"><span class="glyphicon glyphicon-remove red"></span><span>Remove</span></a></li>
+                                </ul>
+                            </span>
+
                         </td>
                     </tr>
                 </table>

@@ -11,11 +11,22 @@ namespace ExpenseTracker.API.Helpers
     {
         public static DataProviderQuery ToEntity(this DataProviderQueryViewModel viewModel)
         {
-            return new DataProviderQuery
+            var result = new DataProviderQuery
             {
                 Page = viewModel.Page,
                 PageSize = viewModel.PageSize
             };
+
+            if (viewModel.Filters != null && viewModel.Filters.Any())
+            {
+                result.Filters = new Dictionary<string, string>();
+                foreach (var filter in viewModel.Filters.Where(a => a.Contains(':')))
+                {
+                    var pieces = filter.Split(':');
+                    result.Filters.Add(pieces[0].ToLowerInvariant(), pieces[1].ToLowerInvariant());
+                }
+            }
+            return result;
         }
 
         public static DataProviderQueryViewModel ToViewModel(this DataProviderQuery entity)
