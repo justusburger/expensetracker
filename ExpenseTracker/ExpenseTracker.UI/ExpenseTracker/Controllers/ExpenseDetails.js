@@ -76,7 +76,8 @@ var ExpenseTracker;
             };
 
             ExpenseDetails.prototype.tagsSource = function (query) {
-                return this.promiseService.when(this.tags);
+                var filteredTags = this.filterService('filter')(this.tags, query);
+                return this.promiseService.when(filteredTags);
             };
             ExpenseDetails.Name = 'ExpenseDetails';
             return ExpenseDetails;

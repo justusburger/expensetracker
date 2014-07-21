@@ -176,6 +176,17 @@
             configurable: true
         });
 
+        Object.defineProperty(Component.prototype, "filterService", {
+            get: function () {
+                return this._filterService || (this._filterService = this.injectorService.get('$filter'));
+            },
+            set: function (value) {
+                this._filterService = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
         Object.defineProperty(Component.prototype, "alertService", {
             get: function () {
                 return this._alertService || (this._alertService = this.injectorService.get(ExpenseTracker.Services.Alert.Name));

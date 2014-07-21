@@ -56,7 +56,8 @@
         }
 
         public tagsSource(query: string): ng.IPromise<Models.ITag[]> {
-            return this.promiseService.when(this.tags);
+            var filteredTags = this.filterService('filter')(this.tags, query);
+            return this.promiseService.when(filteredTags);
         }
 
     }

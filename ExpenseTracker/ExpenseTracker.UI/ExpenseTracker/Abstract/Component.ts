@@ -123,6 +123,14 @@
             this._routeParamsService = value;
         }
 
+        private _filterService: ng.IFilterService;
+        public get filterService(): ng.IFilterService {
+            return this._filterService || (this._filterService = this.injectorService.get('$filter'));
+        }
+        public set filterService(value: ng.IFilterService) {
+            this._filterService = value;
+        }
+
         private _alertService: ExpenseTracker.Services.Alert;
         public get alertService(): ExpenseTracker.Services.Alert {
             return this._alertService || (this._alertService = this.injectorService.get(ExpenseTracker.Services.Alert.Name));
