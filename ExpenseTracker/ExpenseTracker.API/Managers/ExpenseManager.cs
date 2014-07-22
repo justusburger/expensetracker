@@ -44,6 +44,7 @@ namespace ExpenseTracker.API.Managers
             originalEntity.Date = entity.Date;
             originalEntity.Amount = entity.Amount;
             originalEntity.Description = entity.Description;
+            originalEntity.Comment = entity.Comment;
 
             //Remove tags in the original list but not in the new list
             var tagsToRemove = originalEntity.Tags.Where(tag => entity.Tags.All(t => t.Text != tag.Text)).ToList();
@@ -84,6 +85,8 @@ namespace ExpenseTracker.API.Managers
             expenses = expenses.OrderBy(e => e.Date);
 
             //Pagination
+            if (query.Page > query.PageCount)
+                query.Page = query.PageCount;
             results.Items = expenses.Skip(results.Query.Skip).Take(results.Query.Take);
             return results;
         }

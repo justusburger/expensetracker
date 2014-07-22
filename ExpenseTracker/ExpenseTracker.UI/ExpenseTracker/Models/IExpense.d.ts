@@ -7,6 +7,7 @@
         date: Date;
         amount: number;
         description: string;
+        comment: string;
         tags: string[];
 
     }

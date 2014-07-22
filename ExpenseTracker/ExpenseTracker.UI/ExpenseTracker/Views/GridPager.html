@@ -1,5 +1,5 @@
 ﻿<div class="grid-pager">
-    <ul class="pagination">
+    <ul class="pagination" ng-class="{ 'none': $directive.last == 1 || $directive.last == 0 }">
         <li ng-class="{ 'disabled': !$directive.showPrevious }"><a ng-click="$directive.previous()"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
         <li ng-show="$directive.showFirst"><a ng-click="$directive.setPage(1)">1</a></li>
         <li ng-show="$directive.showFirstEllipse" class="disabled"><a>...</a></li>

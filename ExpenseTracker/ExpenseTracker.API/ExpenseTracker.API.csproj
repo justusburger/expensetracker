@@ -101,6 +101,15 @@
     <Compile Include="Managers\ExpenseManager.cs" />
     <Compile Include="Managers\ManagerBase.cs" />
     <Compile Include="Managers\UserManager.cs" />
+    <Compile Include="Migrations\201407181748141_InitialCreate.cs" />
+    <Compile Include="Migrations\201407181748141_InitialCreate.Designer.cs">
+      <DependentUpon>201407181748141_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201407221230279_AddExpenseComment.cs" />
+    <Compile Include="Migrations\201407221230279_AddExpenseComment.Designer.cs">
+      <DependentUpon>201407221230279_AddExpenseComment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DataProviderQuery.cs" />
     <Compile Include="Models\DataProviderResults.cs" />
     <Compile Include="Models\Expense.cs" />
@@ -127,7 +136,14 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201407181748141_InitialCreate.resx">
+      <DependentUpon>201407181748141_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201407221230279_AddExpenseComment.resx">
+      <DependentUpon>201407221230279_AddExpenseComment.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

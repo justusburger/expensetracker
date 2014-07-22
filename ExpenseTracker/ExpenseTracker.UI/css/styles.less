@@ -346,8 +346,17 @@ a {
     opacity: 0.8;
 }
 
-.grid-pager .pagination {
-    margin: 0;
+.grid-pager {
+    .pagination {
+        margin: 0;
+
+        &.none {
+            opacity: 0.5;
+        }
+    }
+}
+.pagination>li>a {
+    padding: 4px 8px;
 }
 
 .page-loading {

@@ -18,7 +18,8 @@ namespace ExpenseTracker.API.Helpers
                 Date = entity.Date,
                 Description = entity.Description,
                 UserId = entity.UserId,
-                Tags = entity.Tags.Select(t => t.Text).ToArray()
+                Tags = entity.Tags.Select(t => t.Text).ToArray(),
+                Comment = entity.Comment
             };
         }
 
@@ -31,7 +32,8 @@ namespace ExpenseTracker.API.Helpers
                 Date = model.Date,
                 Description = model.Description,
                 UserId = model.UserId,
-                Tags = model.Tags.Select(t => new Tag { Text = t }).ToList()
+                Tags = model.Tags.Select(t => new Tag { Text = t }).ToList(),
+                Comment = model.Comment
             };
         }
     }
