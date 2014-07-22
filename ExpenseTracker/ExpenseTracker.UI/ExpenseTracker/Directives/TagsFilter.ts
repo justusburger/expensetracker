@@ -58,6 +58,13 @@
             return this.selectedTags.contains(tag);
         }
 
+        public clear(): void {
+            var hadSelectedTags = this.selectedTags.any();
+            this.selectedTags = [];
+            if (hadSelectedTags)
+                this.filter();
+        }
+
     }
 
     angular.module('ExpenseTracker.Directives').directive(TagsFilter.Name, (): ng.IDirective => <ng.IDirective>{

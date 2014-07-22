@@ -1,7 +1,8 @@
 ﻿<div class="tags-filter">
     <span class="stacked-nav-heading">
-        Tags
-        <a class="pull-right filter-mode" ng-click="$directive.toggleFilterType()" tooltip="{{ $directive.filterTypeTooltip }}" tooltip-placement="right" tooltip-popup-delay="500">
+        <span>Tags</span>
+        <a class="glyphicon glyphicon-remove-circle" ng-click="$directive.clear()" ng-show="$directive.selectedTags.any()" tooltip="Clear selected tags" tooltip-placement="right" tooltip-popup-delay="1000"></a>
+        <a class="pull-right filter-mode" ng-click="$directive.toggleFilterType()" tooltip="{{ $directive.filterTypeTooltip }}" tooltip-placement="right" tooltip-popup-delay="1000">
             <span class="glyphicon " ng-class="{ 'glyphicon-plus': !$directive.isAndFilter, 'glyphicon-minus': $directive.isAndFilter }"></span><span class="glyphicon glyphicon-filter"></span>
         </a>
     </span>

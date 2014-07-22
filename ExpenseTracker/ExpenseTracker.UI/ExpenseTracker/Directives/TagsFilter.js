@@ -73,6 +73,13 @@ var ExpenseTracker;
             TagsFilter.prototype.isSelected = function (tag) {
                 return this.selectedTags.contains(tag);
             };
+
+            TagsFilter.prototype.clear = function () {
+                var hadSelectedTags = this.selectedTags.any();
+                this.selectedTags = [];
+                if (hadSelectedTags)
+                    this.filter();
+            };
             TagsFilter.Name = 'tagsFilter';
 
             TagsFilter.TemplateUrl = 'ExpenseTracker/Views/TagsFilter.html';
