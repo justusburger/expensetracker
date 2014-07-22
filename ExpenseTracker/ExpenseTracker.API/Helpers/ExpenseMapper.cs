@@ -36,5 +36,16 @@ namespace ExpenseTracker.API.Helpers
                 Comment = model.Comment
             };
         }
+
+        public static ExpenseDataProviderResultsViewModel ToViewModel(this ExpenseDataProviderResults entity)
+        {
+            return new ExpenseDataProviderResultsViewModel
+            {
+                Query = entity.Query.ToViewModel(),
+                Items = entity.Items.Select(ToViewModel).ToList(),
+                Total = entity.Total,
+                AveragePerDay = entity.AveragePerDay
+            };
+        }
     }
 }

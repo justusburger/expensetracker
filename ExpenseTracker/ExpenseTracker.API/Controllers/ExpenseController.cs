@@ -27,8 +27,8 @@ namespace ExpenseTracker.API.Controllers
 
         private Response Query(DataProviderQueryViewModel query)
         {
-            DataProviderResults<Expense> results = ExpenseManager.Query(CurrentUser.Id, query.ToEntity());
-            return Response.AsJson(results.ToViewModel(ExpenseMapper.ToViewModel));
+            ExpenseDataProviderResults results = ExpenseManager.Query(CurrentUser.Id, query.ToEntity());
+            return Response.AsJson(results.ToViewModel());
         }
 
         private Response GetById(int id)

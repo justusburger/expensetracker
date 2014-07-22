@@ -43,6 +43,7 @@ var ExpenseTracker;
                 var _this = this;
                 this.beginUpdate();
                 this.selectorFn(query).then(function (results) {
+                    _this.queryResults = results;
                     _this.items = results.items;
                     _this.query = results.query;
                     _this.endUpdate();

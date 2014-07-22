@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.SqlTypes;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -17,7 +18,7 @@ namespace ExpenseTracker.API.Managers
         void Update(int userId, Expense entity);
         void Delete(int userId, int id);
         IQueryable<Tag> GetAllTags(int userId);
-        DataProviderResults<Expense> Query(int userId, DataProviderQuery query);
+        ExpenseDataProviderResults Query(int userId, DataProviderQuery query);
     }
 
     public class ExpenseManager : ManagerBase<Expense>, IExpenseManager
@@ -69,17 +70,25 @@ namespace ExpenseTracker.API.Managers
             return Context.Tags.Where(t => t.Expense.UserId == userId);
         }
 
-        public DataProviderResults<Expense> Query(int userId, DataProviderQuery query)
+        public ExpenseDataProviderResults Query(int userId, DataProviderQuery query)
         {
-            var results = new DataProviderResults<Expense> { Query = query };
+            var results = new ExpenseDataProviderResults { Query = query };
             IEnumerable<Expense> expenses = Context.Expenses.Where(e => e.UserId == userId).ToList();
 
             //Filter
             var helper = new ExpenseFilterHelper();
             expenses = expenses.Where(e => helper.Filter(e, query.Filters));
 
-            //Item and page count
+            //Item and page count, totals and average daily spending
             results.Query.ItemCount = expenses.Count();
+            results.Total = expenses.Sum(e => e.Amount);
+            var dateTimeSpan = helper.DateTimeSpan(query.Filters);
+            if (dateTimeSpan.From == (DateTime) SqlDateTime.MinValue && dateTimeSpan.To == (DateTime) SqlDateTime.MaxValue)
+            {
+                dateTimeSpan.From = expenses.Min(e => e.Date);
+                dateTimeSpan.To = expenses.Max(e => e.Date);
+            }
+            results.AveragePerDay = Math.Round(results.Total/dateTimeSpan.DaysSafe, 2);
 
             //Sorting
             expenses = expenses.OrderBy(e => e.Date);

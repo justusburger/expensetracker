@@ -28,12 +28,12 @@
             </p>
             <div class="panel panel-default">
                 <table class="table table-hover table-striped" ng-class="{ 'loading': $controller.expenseDataProvider.isLoading() }">
-                    <tr>
+                    <tr class="headings">
                         <th>Date</th>
                         <th>Time</th>
                         <th>Tags</th>
-                        <th>Amount</th>
                         <th>Description</th>
+                        <th class="text-right">Amount</th>
                         <th></th>
                     </tr>
                     <tr ng-repeat="expense in $controller.expenseDataProvider.items">
@@ -42,8 +42,8 @@
                         <td>
                             <span class="badge tag" ng-repeat="tag in expense.tags">{{ tag }}</span>
                         </td>
-                        <td>{{ expense.amount }}</td>
                         <td>{{ expense.description }}</td>
+                        <td class="text-right">{{ expense.amount | number:2 }}</td>
                         <td class="row-action">
                             <span class="dropdown pull-right" is-open="dropdownOpen">
                                 <a class="glyphicon glyphicon-chevron-down pull-right dropdown-toggle"></a>
@@ -54,6 +54,24 @@
                             </span>
 
                         </td>
+                    </tr>
+                    <tr class="total">
+                        <td colspan="4">
+                            <strong>Total </strong><em>(Across all pages)</em>
+                        </td>
+                        <td class="text-right">
+                            <strong>{{ $controller.expenseDataProvider.queryResults.total | number:2 }}</strong>
+                        </td>
+                        <td colspan="1"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                            <strong>Average per day </strong><em>(for the selected period)</em>
+                        </td>
+                        <td class="text-right">
+                            <strong>{{ $controller.expenseDataProvider.queryResults.averagePerDay | number:2 }}</strong>
+                        </td>
+                        <td colspan="1"></td>
                     </tr>
                 </table>
             </div>

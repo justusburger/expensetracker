@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -54,14 +55,34 @@ namespace ExpenseTracker.API.Helpers
 
             if (filters.ContainsKey("date"))
             {
-                var split = filters["date"].Split('|');
-                var from = DateTime.Parse(split[0]);
-                var to = DateTime.Parse(split[1]);
-                if (expense.Date < from || expense.Date > to)
+                var dateTimeSpan = DateTimeSpan(filters);
+                if (expense.Date < dateTimeSpan.From || expense.Date > dateTimeSpan.To)
                     return false;
             }
 
             return true;
+        }
+
+        public DateTimeSpan DateTimeSpan(Dictionary<string, string> filters)
+        {
+            var result = new DateTimeSpan
+            {
+                From = (DateTime)SqlDateTime.MinValue,
+                To = (DateTime)SqlDateTime.MaxValue
+            };
+            if (filters != null && filters.ContainsKey("date"))
+            {
+                var split = filters["date"].Split('|');
+                result.From = DateTime.Parse(split[0]);
+                result.To = DateTime.Parse(split[1]);
+                if (result.From > result.To)
+                {
+                    var to = new DateTime(result.From.Ticks);
+                    result.To = result.From;
+                    result.From = to;
+                }
+            }
+            return result;
         }
     }
 }

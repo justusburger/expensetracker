@@ -5,6 +5,7 @@
         private items: T[];
         public query: Models.IDataProviderQuery;
         private _filters: any = {};
+        public queryResults: Models.IDataProviderResults<T>;
 
         constructor(selectorFn: (query: Models.IDataProviderQuery) => ng.IPromise<Models.IDataProviderResults<T>>) {
             super();
@@ -35,6 +36,7 @@
         private load(query: Models.IDataProviderQuery): void {
             this.beginUpdate();
             this.selectorFn(query).then((results: Models.IDataProviderResults<T>) => {
+                this.queryResults = results;
                 this.items = results.items;
                 this.query = results.query;
                 this.endUpdate();

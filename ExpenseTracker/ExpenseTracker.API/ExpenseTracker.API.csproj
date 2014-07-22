@@ -112,7 +112,9 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\DataProviderQuery.cs" />
     <Compile Include="Models\DataProviderResults.cs" />
+    <Compile Include="Models\DateTimeSpan.cs" />
     <Compile Include="Models\Expense.cs" />
+    <Compile Include="Models\ExpenseDataProviderResults.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Tests\Managers\ExpenseFilterHelperTests.cs" />
@@ -120,6 +122,7 @@
     <Compile Include="ViewModels\DataProviderQueryViewModel.cs" />
     <Compile Include="ViewModels\DataProviderResultsViewModel.cs" />
     <Compile Include="ViewModels\ErrorResponse.cs" />
+    <Compile Include="ViewModels\ExpenseDataProviderResultsViewModel.cs" />
     <Compile Include="ViewModels\ExpenseViewModel.cs" />
     <Compile Include="ViewModels\RegistrationRequestViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
