@@ -65,7 +65,7 @@
                 if (sourceFilters && sourceFilters.any()) {
                     sourceFilters.forEach(sourceFilter => {
                         if (typeof sourceFilter.query !== 'undefined' && sourceFilter.query !== null && sourceFilter.query.toString().trim() !== '')
-                            results.push(sourceFilter.field + ':' + sourceFilter.query);
+                            results.push(sourceFilter.field + ':' + sourceFilter.query.split(':').join('>'));
                     });
                 }
             }

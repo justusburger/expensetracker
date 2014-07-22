@@ -52,7 +52,16 @@ namespace ExpenseTracker.API.Helpers
                     return false;
             }
 
+            if (filters.ContainsKey("date"))
+            {
+                var split = filters["date"].Split('|');
+                var from = DateTime.Parse(split[0]);
+                var to = DateTime.Parse(split[1]);
+                if (expense.Date < from || expense.Date > to)
+                    return false;
+            }
+
             return true;
-        } 
+        }
     }
 }

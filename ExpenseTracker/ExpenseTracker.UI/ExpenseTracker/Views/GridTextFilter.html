@@ -3,4 +3,5 @@
         <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
         <input type="text" class="form-control input-group-sm" placeholder="Filter by description" ng-model="$directive.text" ng-model-options="{ debounce: 500 }" />
     </div>
+    <a ng-show="$directive.text" ng-click="$directive.clear()" class="glyphicon glyphicon-remove-circle clear-filter"></a>
 </div>

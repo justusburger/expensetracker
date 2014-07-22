@@ -14,7 +14,7 @@ var ExpenseTracker;
                 this.selectedTags = [];
 
                 if (!attributes['source'])
-                    throw new ExpenseTracker.ArgumentException('source', 'Grid text filter data provider property not set');
+                    throw new ExpenseTracker.ArgumentException('source', 'Grid tags filter data provider property not set');
 
                 this.dataProvider = this.scope.$eval('$parent.' + attributes['source']);
             }
@@ -67,7 +67,7 @@ var ExpenseTracker;
                 var query = this.selectedTags.select(function (a) {
                     return a.text;
                 }).join(this.isAndFilter ? '&' : '|');
-                this.dataProvider.filter('tags', [{ field: 'tags', query: query }]);
+                this.dataProvider.filter(TagsFilter.Name, [{ field: 'tags', query: query }]);
             };
 
             TagsFilter.prototype.isSelected = function (tag) {

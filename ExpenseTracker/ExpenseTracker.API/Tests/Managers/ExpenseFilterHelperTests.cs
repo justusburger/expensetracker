@@ -66,25 +66,7 @@ namespace ExpenseTracker.API.Tests.helpers
             //Assert
             Assert.IsFalse(result);
         }
-
-        [Test]
-        public void filter__should_filter_amount_match()
-        {
-            //Arrange
-            var expense = new Expense
-            {
-                Amount = (decimal)255.55
-            };
-            var filters = new Dictionary<string, string>
-            {
-                { "amount", "55" }
-            };
-            //Act
-            var result = helper.Filter(expense, filters);
-            //Assert
-            Assert.IsTrue(result);
-        }
-
+        
         [Test]
         public void filter__should_filter_single_tag()
         {
@@ -154,5 +136,40 @@ namespace ExpenseTracker.API.Tests.helpers
             Assert.IsFalse(result);
         }
 
+        [Test]
+        public void filter__should_filter_date_match()
+        {
+            //Arrange
+            var expense = new Expense
+            {
+                Date = new DateTime(2014, 1, 10)
+            };
+            var filters = new Dictionary<string, string>
+            {
+                { "date", "2014-01-01T00:00:00.000Z|2014-01-15T23:59:59.000Z" }
+            };
+            //Act
+            var result = helper.Filter(expense, filters);
+            //Assert
+            Assert.IsTrue(result);
+        }
+
+        [Test]
+        public void filter__should_filter_date_no_match()
+        {
+            //Arrange
+            var expense = new Expense
+            {
+                Date = new DateTime(2014, 1, 20)
+            };
+            var filters = new Dictionary<string, string>
+            {
+                { "date", "2014-01-01T00:00:00.000Z|2014-01-15T23:59:59.000Z" }
+            };
+            //Act
+            var result = helper.Filter(expense, filters);
+            //Assert
+            Assert.IsFalse(result);
+        }
     }
 }

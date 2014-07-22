@@ -15,13 +15,7 @@
     </div>
     <div class="row">
         <div class="col-sm-3">
-            <span class="stacked-nav-heading">Period</span>
-            <ul class="nav nav-stacked nav-pills period">
-                <li class="active"><a>All expenses</a></li>
-                <li><a>Today</a></li>
-                <li><a>This week</a></li>
-                <li><a>This month</a></li>
-            </ul>
+            <date-filter source="$controller.expenseDataProvider"></date-filter>
             <tags-filter source="$controller.expenseDataProvider"></tags-filter>
         </div>
         <div class="col-md-9">

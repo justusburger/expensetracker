@@ -68,6 +68,7 @@
     <Content Include="Content\ng-tags-input.min.css" />
     <Content Include="css\jasmine.css" />
     <Content Include="ExpenseTracker\Views\AlertHandler.html" />
+    <Content Include="ExpenseTracker\Views\DateFilter.html" />
     <Content Include="ExpenseTracker\Views\Datepicker.html" />
     <Content Include="ExpenseTracker\Views\ExpenseDetails.html" />
     <Content Include="ExpenseTracker\Views\ExpenseList.html" />
@@ -107,6 +108,7 @@
     <TypeScriptCompile Include="ExpenseTracker\Abstract\SecuredComponent.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Controllers\SignIn.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\AlertHandler.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Directives\DateFilter.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\Datepicker.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\DirectiveBase.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Configuration.ts" />

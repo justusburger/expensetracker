@@ -387,12 +387,25 @@ a {
         }
     }
 }
+
 .tooltip {
     font-size: 10px;
     letter-spacing: 0px;
     text-transform: none;
     font-weight: normal;
+
     &.right {
         min-width: 150px;
+    }
+}
+
+.grid-text-filter {
+    position: relative;
+
+    .clear-filter {
+        position: absolute;
+        right: 20px;
+        z-index: 10;
+        top: 10px;
     }
 }

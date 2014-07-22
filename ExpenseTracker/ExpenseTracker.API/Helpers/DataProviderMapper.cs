@@ -23,7 +23,7 @@ namespace ExpenseTracker.API.Helpers
                 foreach (var filter in viewModel.Filters.Where(a => a.Contains(':')))
                 {
                     var pieces = filter.Split(':');
-                    result.Filters.Add(pieces[0].ToLowerInvariant(), pieces[1].ToLowerInvariant());
+                    result.Filters.Add(pieces[0].ToLowerInvariant(), pieces[1].ToLowerInvariant().Replace(">", ":"));
                 }
             }
             return result;

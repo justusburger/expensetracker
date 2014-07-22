@@ -24,8 +24,12 @@
             this.scope.$watch(() => this.text, (text: string, oldText: string) => {
                 if (typeof text === 'undefined' && typeof oldText === 'undefined')
                     return;
-                this.dataProvider.filter(GridTextFilter.Name, this.filters(text));
+                this.filter();
             });
+        }
+
+        public filter(): void {
+            this.dataProvider.filter(GridTextFilter.Name, this.filters(this.text));
         }
 
         public filters(query: string): Models.IDataProviderFilter[] {
@@ -37,6 +41,13 @@
                 });
             });
             return filters;
+        }
+
+        public clear(): void {
+            var hadText = !!this.text;
+            this.text = '';
+            if (hadText)
+                this.filter();
         }
     }
 

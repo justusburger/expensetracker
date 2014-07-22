@@ -1,0 +1,12 @@
+﻿<div class="date-filter">
+    <span class="stacked-nav-heading">
+        <span>Period</span>
+        <a class="glyphicon glyphicon-remove-circle" ng-click="$directive.clear()" ng-hide="$directive.isClear" tooltip="Clear selected date span" tooltip-placement="right" tooltip-popup-delay="1000"></a>
+    </span>
+    <ul class="nav nav-stacked nav-pills period">
+        <li ng-class="{ 'active': $directive.isClear }"><a ng-click="$directive.clear()">All expenses</a></li>
+        <li ng-class ="{ 'active': $directive.isToday }"><a ng-click="$directive.today()">Today</a></li>
+        <li ng-class="{ 'active': $directive.isThisWeek }"><a ng-click="$directive.thisWeek()">This week</a></li>
+        <li ng-class="{ 'active': $directive.isThisMonth }"><a ng-click="$directive.thisMonth()">This month</a></li>
+    </ul>
+</div>

@@ -28,9 +28,13 @@ var ExpenseTracker;
                 }, function (text, oldText) {
                     if (typeof text === 'undefined' && typeof oldText === 'undefined')
                         return;
-                    _this.dataProvider.filter(GridTextFilter.Name, _this.filters(text));
+                    _this.filter();
                 });
             }
+            GridTextFilter.prototype.filter = function () {
+                this.dataProvider.filter(GridTextFilter.Name, this.filters(this.text));
+            };
+
             GridTextFilter.prototype.filters = function (query) {
                 var filters = [];
                 this.filterFields.forEach(function (field) {
@@ -40,6 +44,13 @@ var ExpenseTracker;
                     });
                 });
                 return filters;
+            };
+
+            GridTextFilter.prototype.clear = function () {
+                var hadText = !!this.text;
+                this.text = '';
+                if (hadText)
+                    this.filter();
             };
             GridTextFilter.Name = 'gridTextFilter';
             GridTextFilter.TemplateUrl = 'ExpenseTracker/Views/GridTextFilter.html';
