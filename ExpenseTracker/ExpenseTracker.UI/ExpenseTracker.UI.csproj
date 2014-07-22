@@ -104,7 +104,7 @@
     <TypeScriptCompile Include="ExpenseTracker\Abstract\Component.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Controllers\ExpenseDetails.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Controllers\ExpenseList.ts" />
-    <TypeScriptCompile Include="ExpenseTracker\Controllers\SecuredController.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Abstract\SecuredComponent.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Controllers\SignIn.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\AlertHandler.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\Datepicker.ts" />

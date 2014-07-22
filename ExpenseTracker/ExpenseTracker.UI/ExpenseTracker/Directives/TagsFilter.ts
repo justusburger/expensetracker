@@ -3,6 +3,7 @@
     export class TagsFilter extends DirectiveBase {
 
         public static Name: string = 'tagsFilter';
+        public get isSecured(): boolean { return true; }
         public static TemplateUrl: string = 'ExpenseTracker/Views/TagsFilter.html';
         public dataProvider: ExpenseTracker.Services.DataProvider<any>;
         public tags: Models.ITag[];

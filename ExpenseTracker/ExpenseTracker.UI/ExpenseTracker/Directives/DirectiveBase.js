@@ -27,7 +27,7 @@ var ExpenseTracker;
             configurable: true
         });
         return DirectiveBase;
-    })(ExpenseTracker.Component);
+    })(ExpenseTracker.SecuredComponent);
     ExpenseTracker.DirectiveBase = DirectiveBase;
 })(ExpenseTracker || (ExpenseTracker = {}));
 //# sourceMappingURL=DirectiveBase.js.map

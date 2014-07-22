@@ -35,6 +35,14 @@ var ExpenseTracker;
                     return _this.expenseService.getAll(query);
                 });
             }
+            Object.defineProperty(ExpenseList.prototype, "isSecured", {
+                get: function () {
+                    return true;
+                },
+                enumerable: true,
+                configurable: true
+            });
+
             ExpenseList.prototype.initialize = function () {
                 var _this = this;
                 return _super.prototype.initialize.call(this).then(function () {
@@ -59,7 +67,7 @@ var ExpenseTracker;
             };
             ExpenseList.Name = 'ExpenseList';
             return ExpenseList;
-        })(ExpenseTracker.SecuredController);
+        })(ExpenseTracker.ControllerBase);
         Controllers.ExpenseList = ExpenseList;
 
         angular.module('ExpenseTracker.Controllers').controller(ExpenseList.Name, [

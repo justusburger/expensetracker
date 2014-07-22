@@ -1,8 +1,9 @@
 ﻿module ExpenseTracker.Controllers {
 
-    export class ExpenseList extends SecuredController {
+    export class ExpenseList extends ControllerBase {
 
         public static Name: string = 'ExpenseList';
+        public get isSecured(): boolean { return true; }
         public form: any = {};
         public removeConfirmationPopup: Models.IPopup;
         public expenseDataProvider: ExpenseTracker.Services.DataProvider<Models.IExpense>;

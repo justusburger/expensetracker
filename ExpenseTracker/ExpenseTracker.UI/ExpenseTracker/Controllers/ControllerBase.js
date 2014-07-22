@@ -15,7 +15,7 @@ var ExpenseTracker;
             this.scope.$controller = this;
         }
         return ControllerBase;
-    })(ExpenseTracker.Component);
+    })(ExpenseTracker.SecuredComponent);
     ExpenseTracker.ControllerBase = ControllerBase;
 })(ExpenseTracker || (ExpenseTracker = {}));
 //# sourceMappingURL=ControllerBase.js.map

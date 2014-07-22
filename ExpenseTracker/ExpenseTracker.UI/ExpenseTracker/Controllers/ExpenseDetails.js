@@ -13,6 +13,14 @@ var ExpenseTracker;
                 _super.call(this, scope);
                 this.beginUpdate();
             }
+            Object.defineProperty(ExpenseDetails.prototype, "isSecured", {
+                get: function () {
+                    return true;
+                },
+                enumerable: true,
+                configurable: true
+            });
+
             Object.defineProperty(ExpenseDetails.prototype, "isEditing", {
                 get: function () {
                     return !!this.expenseId;
@@ -81,7 +89,7 @@ var ExpenseTracker;
             };
             ExpenseDetails.Name = 'ExpenseDetails';
             return ExpenseDetails;
-        })(ExpenseTracker.SecuredController);
+        })(ExpenseTracker.ControllerBase);
         Controllers.ExpenseDetails = ExpenseDetails;
 
         angular.module('ExpenseTracker.Controllers').controller(ExpenseDetails.Name, [

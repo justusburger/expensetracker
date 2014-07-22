@@ -4,7 +4,7 @@
         $directive: DirectiveBase;
     }
 
-    export class DirectiveBase extends Component {
+    export class DirectiveBase extends SecuredComponent {
 
         public scope: IDirectiveScope;
         public element: JQuery;

@@ -4,7 +4,7 @@
         $controller: ControllerBase;
     }
 
-    export class ControllerBase extends Component {
+    export class ControllerBase extends SecuredComponent {
 
         public scope: IControllerScope;
 

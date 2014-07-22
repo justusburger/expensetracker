@@ -6,20 +6,20 @@
 };
 var ExpenseTracker;
 (function (ExpenseTracker) {
-    var SecuredController = (function (_super) {
-        __extends(SecuredController, _super);
-        function SecuredController(scope) {
-            _super.call(this, scope);
+    var SecuredComponent = (function (_super) {
+        __extends(SecuredComponent, _super);
+        function SecuredComponent() {
+            _super.call(this);
         }
-        Object.defineProperty(SecuredController.prototype, "isSecured", {
+        Object.defineProperty(SecuredComponent.prototype, "isSecured", {
             get: function () {
-                return true;
+                return false;
             },
             enumerable: true,
             configurable: true
         });
 
-        SecuredController.prototype.initialize = function () {
+        SecuredComponent.prototype.initialize = function () {
             var _this = this;
             return _super.prototype.initialize.call(this).then(function () {
                 if (_this.isSecured && !_this.isSignedIn) {
@@ -28,8 +28,8 @@ var ExpenseTracker;
                 }
             });
         };
-        return SecuredController;
-    })(ExpenseTracker.ControllerBase);
-    ExpenseTracker.SecuredController = SecuredController;
+        return SecuredComponent;
+    })(ExpenseTracker.Component);
+    ExpenseTracker.SecuredComponent = SecuredComponent;
 })(ExpenseTracker || (ExpenseTracker = {}));
-//# sourceMappingURL=SecuredController.js.map
+//# sourceMappingURL=SecuredComponent.js.map

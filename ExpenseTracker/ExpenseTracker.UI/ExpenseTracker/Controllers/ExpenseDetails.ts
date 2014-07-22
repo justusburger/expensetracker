@@ -1,8 +1,9 @@
 ﻿module ExpenseTracker.Controllers {
 
-    export class ExpenseDetails extends SecuredController {
+    export class ExpenseDetails extends ControllerBase {
 
         public static Name: string = 'ExpenseDetails';
+        public get isSecured(): boolean { return true; }
         public form: Models.IExpense;
         public tags: Models.ITag[];
 

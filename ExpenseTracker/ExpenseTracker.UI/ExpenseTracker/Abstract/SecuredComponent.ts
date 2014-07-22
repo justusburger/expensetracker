@@ -1,11 +1,11 @@
 ﻿module ExpenseTracker {
 
-    export class SecuredController extends ControllerBase {
+    export class SecuredComponent extends Component {
 
-        public get isSecured(): boolean { return true; }
+        public get isSecured(): boolean { return false; }
 
-        constructor(scope: ng.IScope) {
-            super(scope);
+        constructor() {
+            super();
 
         }
 

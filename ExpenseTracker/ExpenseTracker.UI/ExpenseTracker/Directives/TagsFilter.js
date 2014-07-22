@@ -18,6 +18,14 @@ var ExpenseTracker;
 
                 this.dataProvider = this.scope.$eval('$parent.' + attributes['source']);
             }
+            Object.defineProperty(TagsFilter.prototype, "isSecured", {
+                get: function () {
+                    return true;
+                },
+                enumerable: true,
+                configurable: true
+            });
+
             TagsFilter.prototype.initialize = function () {
                 var _this = this;
                 return _super.prototype.initialize.call(this).then(function () {
@@ -66,6 +74,7 @@ var ExpenseTracker;
                 return this.selectedTags.contains(tag);
             };
             TagsFilter.Name = 'tagsFilter';
+
             TagsFilter.TemplateUrl = 'ExpenseTracker/Views/TagsFilter.html';
             return TagsFilter;
         })(ExpenseTracker.DirectiveBase);
