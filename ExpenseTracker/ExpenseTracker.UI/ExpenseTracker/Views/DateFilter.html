@@ -5,8 +5,31 @@
     </span>
     <ul class="nav nav-stacked nav-pills period">
         <li ng-class="{ 'active': $directive.isClear }"><a ng-click="$directive.clear()">All expenses</a></li>
-        <li ng-class ="{ 'active': $directive.isToday }"><a ng-click="$directive.today()">Today</a></li>
+        <li ng-class="{ 'active': $directive.isToday }"><a ng-click="$directive.today()">Today</a></li>
         <li ng-class="{ 'active': $directive.isThisWeek }"><a ng-click="$directive.thisWeek()">This week</a></li>
         <li ng-class="{ 'active': $directive.isThisMonth }"><a ng-click="$directive.thisMonth()">This month</a></li>
+        <li ng-class="{ 'active': $directive.isCustom }" class="custom">
+            <a ng-click="$directive.isCustom = true">Custom</a>
+            <form name="customDateForm" ng-show="$directive.isCustom">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="field">
+                            <label>From</label>
+                            <span class="pull-right" id="from-validation"></span>
+                            <custom-datepicker ng-model="$parent.$directive.dates.from" name="from" validate="#from-validation" required></custom-datepicker>
+                        </div>
+                        <div class="field">
+                            <label>To</label>
+                            <span class="pull-right" id="to-validation"></span>
+                            <custom-datepicker ng-model="$parent.$directive.dates.to" name="to" validate="#to-validation" required></custom-datepicker>
+                        </div>
+                        <a class="btn btn-success pull-right btn-sm" ng-click="$directive.filter()" ng-disabled="customDateForm.$invalid">
+                            <span class="glyphicon glyphicon-ok"></span>
+                            <span>Filter</span>
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </li>
     </ul>
 </div>

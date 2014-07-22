@@ -15,12 +15,15 @@ var ExpenseTracker;
                 this.modelController = modelController;
                 this.modelController.$render = function () {
                     _this.value = _this.modelController.$viewValue;
-                    if (!_this.value)
-                        _this.value = new Date();
+                    //if (!this.value)
+                    //    this.value = new Date();
                 };
                 this.scope.$watch(function () {
                     return _this.value;
-                }, function () {
+                }, function (newValue, oldValue) {
+                    if (typeof newValue === 'undefined' && typeof oldValue === 'undefined')
+                        return;
+
                     _this.modelController.$setViewValue(_this.value);
                 });
                 this.open = false;

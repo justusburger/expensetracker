@@ -13,10 +13,13 @@
             this.modelController = modelController;
             this.modelController.$render = () => {
                 this.value = this.modelController.$viewValue;
-                if (!this.value)
-                    this.value = new Date();
+                //if (!this.value) 
+                //    this.value = new Date();
             };
-            this.scope.$watch(() => this.value, () => {
+            this.scope.$watch(() => this.value, (newValue, oldValue) => {
+                if (typeof newValue === 'undefined' && typeof oldValue === 'undefined')
+                    return;
+
                 this.modelController.$setViewValue(this.value);
             });
             this.open = false;

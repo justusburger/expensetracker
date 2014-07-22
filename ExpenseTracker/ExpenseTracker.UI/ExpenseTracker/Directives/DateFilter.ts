@@ -5,8 +5,11 @@
         public static Name: string = 'dateFilter';
         public static TemplateUrl: string = 'ExpenseTracker/Views/DateFilter.html';
         public dataProvider: ExpenseTracker.Services.DataProvider<any>;
-        public from: Date;
-        public to: Date;
+        public dates = {
+            from: null,
+            to: null
+        };
+        public isCustom: boolean;
 
         constructor(scope: ng.IScope, element: JQuery, attributes: ng.IAttributes) {
             super(scope, element, attributes);
@@ -18,80 +21,84 @@
         }
 
         public filter(): void {
-            if (this.from && this.to)
+            if (this.dates.from && this.dates.to)
                 this.dataProvider.filter(DateFilter.Name, [{
                     field: 'date',
-                    query: this.from.toISOString() + '|' + this.to.toISOString()
+                    query: this.dates.from.toISOString() + '|' + this.dates.to.toISOString()
                 }]);
             else
                 this.dataProvider.filter(DateFilter.Name, []);
         }
 
         public clear(): void {
-            var hadDate = !!this.from && !!this.to;
-            this.from = undefined;
-            this.to = undefined;
+            this.isCustom = false;
+            var hadDate = !!this.dates.from && !!this.dates.to;
+            this.dates.from = undefined;
+            this.dates.to = undefined;
             if (hadDate)
                 this.filter();
         }
 
         public get isClear(): boolean {
-            return !this.from && !this.to;
+            return !this.dates.from && !this.dates.to && !this.isCustom;
         }
 
         public today(): void {
+            this.isCustom = false;
             var now = new Date();
-            this.from = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-            this.to = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
+            this.dates.from = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+            this.dates.to = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59);
             this.filter();
         }
 
         public get isToday(): boolean {
-            if (this.isClear)
+            if (this.isClear || this.isCustom)
                 return false;
 
             var now = new Date();
-            return this.from.getTime() == (new Date(now.getFullYear(), now.getMonth(), now.getDate())).getTime() &&
-                this.to.getTime() == (new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59)).getTime();
+            return this.dates.from.getTime() == (new Date(now.getFullYear(), now.getMonth(), now.getDate())).getTime() &&
+                this.dates.to.getTime() == (new Date(now.getFullYear(), now.getMonth(), now.getDate(), 23, 59, 59)).getTime();
         }
 
         public thisWeek(): void {
+            this.isCustom = false;
             var now = new Date();
             var firstDayOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
             var lastDayOfWeek = new Date(now.setDate(now.getDate() - now.getDay() + 6));
-            this.from = new Date(firstDayOfWeek.getFullYear(), firstDayOfWeek.getMonth(), firstDayOfWeek.getDate());
-            this.to = new Date(lastDayOfWeek.getFullYear(), lastDayOfWeek.getMonth(), lastDayOfWeek.getDate(), 23, 59, 59);
+            this.dates.from = new Date(firstDayOfWeek.getFullYear(), firstDayOfWeek.getMonth(), firstDayOfWeek.getDate());
+            this.dates.to = new Date(lastDayOfWeek.getFullYear(), lastDayOfWeek.getMonth(), lastDayOfWeek.getDate(), 23, 59, 59);
             this.filter();
         }
 
         public get isThisWeek(): boolean {
-            if (this.isClear)
+            if (this.isClear || this.isCustom)
                 return false;
 
             var now = new Date();
             var firstDayOfWeek = new Date(now.setDate(now.getDate() - now.getDay()));
             var lastDayOfWeek = new Date(now.setDate(now.getDate() - now.getDay() + 6));
-            if (this.from.getTime() !== (new Date(firstDayOfWeek.getFullYear(), firstDayOfWeek.getMonth(), firstDayOfWeek.getDate())).getTime())
+            if (this.dates.from.getTime() !== (new Date(firstDayOfWeek.getFullYear(), firstDayOfWeek.getMonth(), firstDayOfWeek.getDate())).getTime())
                 return false;
-            if (this.to.getTime() !== (new Date(lastDayOfWeek.getFullYear(), lastDayOfWeek.getMonth(), lastDayOfWeek.getDate(), 23, 59, 59)).getTime())
+            if (this.dates.to.getTime() !== (new Date(lastDayOfWeek.getFullYear(), lastDayOfWeek.getMonth(), lastDayOfWeek.getDate(), 23, 59, 59)).getTime())
                 return false;
             return true;
         }
 
         public thisMonth(): void {
+            this.isCustom = false;
             var now = new Date();
-            this.from = new Date(now.getFullYear(), now.getMonth());
-            this.to = new Date(now.getFullYear(), now.getMonth() + 1, -1, 23, 59, 59);
+            this.dates.from = new Date(now.getFullYear(), now.getMonth());
+            this.dates.to = new Date(now.getFullYear(), now.getMonth() + 1, -1, 23, 59, 59);
             this.filter();
         }
 
         public get isThisMonth(): boolean {
-            if (this.isClear)
+            if (this.isClear || this.isCustom)
                 return false;
 
             var now = new Date();
-            return this.from.getTime() == (new Date(now.getFullYear(), now.getMonth())).getTime() &&
-                this.to.getTime() == (new Date(now.getFullYear(), now.getMonth() + 1, -1, 23, 59, 59)).getTime();
+            return this.dates.from.getTime() == (new Date(now.getFullYear(), now.getMonth())).getTime() &&
+                this.dates.to.getTime() == (new Date(now.getFullYear(), now.getMonth() + 1, -1, 23, 59, 59)).getTime();
         }
     }
 

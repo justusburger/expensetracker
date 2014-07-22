@@ -355,7 +355,8 @@ a {
         }
     }
 }
-.pagination>li>a {
+
+.pagination > li > a {
     padding: 4px 8px;
 }
 
@@ -416,5 +417,19 @@ a {
         right: 20px;
         z-index: 10;
         top: 10px;
+    }
+}
+
+.date-filter {
+    .custom {
+        & > a {
+            border-radius: 4px 4px 0 0;
+        }
+        .panel {
+            border-radius: 0 0 4px 4px;
+        }
+        .field {
+            margin-bottom: 10px;
+        }
     }
 }
