@@ -20,11 +20,21 @@ var ExpenseTracker;
             Expense.prototype.getAll = function (query) {
                 var _this = this;
                 var defer = this.promiseService.defer();
-                this.expenseResource.query(query, function (response) {
-                    return _this.defaultOnSuccess(response, defer);
-                }, function (response) {
-                    return _this.defaultOnError(response, defer);
-                });
+
+                if (query.download) {
+                    this.httpService({ method: 'GET', url: this.apiBaseUrl + '/expense/', params: query }).success(function (data, status, headers) {
+                        _this.downloadHelperService.download(data, status, headers);
+                        defer.resolve(data);
+                    }).error(function (data) {
+                        return _this.defaultOnError(data, defer);
+                    });
+                } else {
+                    this.expenseResource.query(query, function (response) {
+                        return _this.defaultOnSuccess(response, defer);
+                    }, function (response) {
+                        return _this.defaultOnError(response, defer);
+                    });
+                }
                 return defer.promise;
             };
 

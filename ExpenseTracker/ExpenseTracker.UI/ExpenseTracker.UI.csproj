@@ -432,7 +432,7 @@
     <TypeScriptCompile Include="ExpenseTracker\Directives\Validations\ValidationBase.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Errors.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\AlertTypeEnum.ts" />
-    <TypeScriptCompile Include="ExpenseTracker\Models\IDataProviderParams.d.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Models\IDataProviderQuery.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IErrorResponse.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IExpense.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IPopup.ts" />
@@ -446,6 +446,7 @@
     <TypeScriptCompile Include="ExpenseTracker\Services\ApiResource.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\Cache.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\DataProvider.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Services\DownloadHelper.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\Expense.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\Popup.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\Profile.ts" />

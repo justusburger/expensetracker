@@ -1,6 +1,10 @@
 ﻿module ExpenseTracker {
     export class Component {
 
+        public get apiBaseUrl(): string {
+            return this.injectorService.get('API_BASE_PATH');
+        }
+
         private _injectorService: ng.auto.IInjectorService;
         public get injectorService(): ng.auto.IInjectorService {
             if (!this._injectorService) 
@@ -49,6 +53,14 @@
         }
         public set popupService(value: ExpenseTracker.Services.Popup) {
             this._popupService = value;
+        }
+
+        private _downloadHelperService: ExpenseTracker.Services.DownloadHelper;
+        public get downloadHelperService(): ExpenseTracker.Services.DownloadHelper {
+            return this._downloadHelperService || (this._downloadHelperService = this.injectorService.get(ExpenseTracker.Services.DownloadHelper.Name));
+        }
+        public set downloadHelperService(value: ExpenseTracker.Services.DownloadHelper) {
+            this._downloadHelperService = value;
         }
 
         private _promiseService: ng.IQService;

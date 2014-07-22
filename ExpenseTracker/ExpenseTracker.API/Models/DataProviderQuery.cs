@@ -27,5 +27,6 @@ namespace ExpenseTracker.API.Models
 
         public int ItemCount { get; set; }
         public Dictionary<string, string> Filters { get; set; }
+        public bool ApplyPagination { get; set; }
     }
 }

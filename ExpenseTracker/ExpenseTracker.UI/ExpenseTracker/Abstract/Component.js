@@ -9,6 +9,14 @@
                 _this.isCheckingSession = false;
             });
         }
+        Object.defineProperty(Component.prototype, "apiBaseUrl", {
+            get: function () {
+                return this.injectorService.get('API_BASE_PATH');
+            },
+            enumerable: true,
+            configurable: true
+        });
+
         Object.defineProperty(Component.prototype, "injectorService", {
             get: function () {
                 if (!this._injectorService)
@@ -72,6 +80,17 @@
             },
             set: function (value) {
                 this._popupService = value;
+            },
+            enumerable: true,
+            configurable: true
+        });
+
+        Object.defineProperty(Component.prototype, "downloadHelperService", {
+            get: function () {
+                return this._downloadHelperService || (this._downloadHelperService = this.injectorService.get(ExpenseTracker.Services.DownloadHelper.Name));
+            },
+            set: function (value) {
+                this._downloadHelperService = value;
             },
             enumerable: true,
             configurable: true

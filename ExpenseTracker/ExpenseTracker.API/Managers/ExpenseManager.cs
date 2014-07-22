@@ -96,7 +96,12 @@ namespace ExpenseTracker.API.Managers
             //Pagination
             if (query.Page > query.PageCount)
                 query.Page = query.PageCount;
-            results.Items = expenses.Skip(results.Query.Skip).Take(results.Query.Take);
+
+            results.Items = expenses;
+
+            if(query.ApplyPagination)
+                results.Items = results.Items.Skip(results.Query.Skip).Take(results.Query.Take);
+
             return results;
         }
     }

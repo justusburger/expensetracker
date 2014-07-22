@@ -14,7 +14,8 @@ namespace ExpenseTracker.API.Helpers
             var result = new DataProviderQuery
             {
                 Page = viewModel.Page,
-                PageSize = viewModel.PageSize
+                PageSize = viewModel.PageSize,
+                ApplyPagination = !viewModel.Download
             };
 
             if (viewModel.Filters != null && viewModel.Filters.Any())

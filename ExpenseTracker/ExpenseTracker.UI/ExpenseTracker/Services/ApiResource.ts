@@ -6,10 +6,6 @@
             super();
         }
 
-        public get apiBaseUrl(): string {
-            return this.injectorService.get('API_BASE_PATH');
-        }
-
         public defaultOnError<T>(response: Models.IErrorResponse, defer: ng.IDeferred<T>, expectedErrors?: number[]): void {
             if (response.data && !Enumerable.From(expectedErrors).Contains(response.data.errorCode)) {
                 this.alertService.error('An unexpected error occured: ' + response.data.message);

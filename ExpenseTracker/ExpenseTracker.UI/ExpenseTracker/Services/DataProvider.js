@@ -50,6 +50,20 @@ var ExpenseTracker;
                 });
             };
 
+            DataProvider.prototype.download = function () {
+                var _this = this;
+                var query = {
+                    page: this.query.page,
+                    pageSize: this.query.pageSize,
+                    filters: this.filters,
+                    download: true
+                };
+                this.beginUpdate();
+                this.selectorFn(query).then(function (results) {
+                    return _this.endUpdate();
+                });
+            };
+
             DataProvider.prototype.setPage = function (page) {
                 this.load({
                     page: page,

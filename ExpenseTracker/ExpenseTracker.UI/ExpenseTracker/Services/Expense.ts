@@ -22,10 +22,20 @@
 
         public getAll(query: Models.IDataProviderQuery): ng.IPromise<Models.IDataProviderResults<Models.IExpense>> {
             var defer = this.promiseService.defer<Models.IDataProviderResults<Models.IExpense>>();
-            this.expenseResource.query(query,
-                (response) => this.defaultOnSuccess(response, defer),
-                (response: Models.IErrorResponse) => this.defaultOnError(response, defer)
-            );
+
+            if (query.download) {
+                this.httpService({ method: 'GET', url: this.apiBaseUrl + '/expense/', params: query })
+                    .success((data: any, status: number, headers: (headerName: string) => string) => {
+                        this.downloadHelperService.download(data, status, headers);
+                        defer.resolve(data);
+                    })
+                    .error((data: any) => this.defaultOnError(data, defer));
+            } else {
+                this.expenseResource.query(query,
+                    (response) => this.defaultOnSuccess(response, defer),
+                    (response: Models.IErrorResponse) => this.defaultOnError(response, defer)
+                );
+            }
             return defer.promise;
         }
 
@@ -34,7 +44,7 @@
             this.expenseResource.get({ id: id },
                 (response) => this.defaultOnSuccess(response, defer),
                 (response: Models.IErrorResponse) => this.defaultOnError(response, defer)
-            );
+                );
             return defer.promise;
         }
 
@@ -43,7 +53,7 @@
             this.expenseResource.save(expense,
                 (response) => this.defaultOnSuccess(response, defer),
                 (response: Models.IErrorResponse) => this.defaultOnError(response, defer)
-            );
+                );
             return defer.promise;
         }
 
@@ -52,7 +62,7 @@
             this.expenseResource.update(expense,
                 (response) => this.defaultOnSuccess(response, defer),
                 (response: Models.IErrorResponse) => this.defaultOnError(response, defer)
-            );
+                );
             return defer.promise;
         }
 
@@ -61,7 +71,7 @@
             this.expenseResource.delete({ id: id },
                 (response) => this.defaultOnSuccess(response, defer),
                 (response: Models.IErrorResponse) => this.defaultOnError(response, defer)
-            );
+                );
             return defer.promise;
         }
 
@@ -70,7 +80,7 @@
             this.expenseResource.getAllTags(
                 (response) => this.defaultOnSuccess(response, defer),
                 (response: Models.IErrorResponse) => this.defaultOnError(response, defer)
-            );
+                );
             return defer.promise;
         }
 

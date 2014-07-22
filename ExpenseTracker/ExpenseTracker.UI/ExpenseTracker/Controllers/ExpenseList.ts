@@ -45,7 +45,6 @@
                 this.alertService.success('Expense removed');
             }, () => this.endUpdate());
         }
-
     }
 
     angular.module('ExpenseTracker.Controllers').controller(ExpenseList.Name, [

@@ -28,6 +28,10 @@ namespace ExpenseTracker.API.Controllers
         private Response Query(DataProviderQueryViewModel query)
         {
             ExpenseDataProviderResults results = ExpenseManager.Query(CurrentUser.Id, query.ToEntity());
+
+            if (query.Download)
+                return new ExpenseExportHelper().Export(results.ToViewModel());
+
             return Response.AsJson(results.ToViewModel());
         }
 

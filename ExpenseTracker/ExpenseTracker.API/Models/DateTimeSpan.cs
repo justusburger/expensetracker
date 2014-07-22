@@ -14,10 +14,8 @@ namespace ExpenseTracker.API.Models
         {
             get
             {
-                var timespan = To - From;
-                if (timespan.Days < 1)
-                    return 1;
-                return timespan.Days;
+                var timespan = new DateTime(To.Year, To.Month, To.Day) - new DateTime(From.Year, From.Month, From.Day);
+                return timespan.Days + 1;
             }
         }
     }

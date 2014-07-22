@@ -91,6 +91,7 @@
     <Compile Include="Exceptions\UniqueOrIndexContraintException.cs" />
     <Compile Include="Helpers\ControllerExtensions.cs" />
     <Compile Include="Helpers\DataProviderMapper.cs" />
+    <Compile Include="Helpers\ExpenseExportHelper.cs" />
     <Compile Include="Helpers\ExpenseFilterHelper.cs" />
     <Compile Include="Helpers\ExpenseMapper.cs" />
     <Compile Include="Helpers\ExpenseTrackerDatabaseInitializer.cs" />

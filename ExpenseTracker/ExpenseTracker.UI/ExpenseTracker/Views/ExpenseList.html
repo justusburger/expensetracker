@@ -14,17 +14,18 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-3">
+        <div class="col-sm-3 list-page-sidebar">
             <date-filter source="$controller.expenseDataProvider"></date-filter>
             <tags-filter source="$controller.expenseDataProvider"></tags-filter>
         </div>
         <div class="col-md-9">
             <p class="row">
-                <span class="col-md-4 page-loading pull-left" ng-show="$controller.expenseDataProvider.isLoading()">
+                <span class="col-md-6 page-loading pull-left" ng-show="$controller.expenseDataProvider.isLoading()">
                     <em>Loading expenses</em>
                     <span class="glyphicon glyphicon-cog spinner"></span>
                 </span>
-                <grid-text-filter class="pull-right col-md-4" source="$controller.expenseDataProvider" filter-fields="description amount"></grid-text-filter>
+                <grid-text-filter class="col-md-4 pull-right" source="$controller.expenseDataProvider" filter-fields="description amount"></grid-text-filter>
+                <a ng-disabled="$controller.expenseDataProvider.isLoading()" ng-click="$controller.expenseDataProvider.download()" tooltip="Export as CSV" tooltip-placement="left" tooltip-popup-delay="1000" class="glyphicon glyphicon-export btn btn-default btn-sm pull-right"></a>
             </p>
             <div class="panel panel-default">
                 <table class="table table-hover table-striped" ng-class="{ 'loading': $controller.expenseDataProvider.isLoading() }">

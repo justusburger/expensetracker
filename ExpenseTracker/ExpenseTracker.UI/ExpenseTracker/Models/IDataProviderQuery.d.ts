@@ -6,6 +6,7 @@
          pageCount?: number;
          itemCount?: number;
          filters: string[];
+         download?: boolean;
      }
 
      export interface IDataProviderFilter {

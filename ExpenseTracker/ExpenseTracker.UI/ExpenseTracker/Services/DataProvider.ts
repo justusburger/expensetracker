@@ -43,6 +43,17 @@
             });
         }
 
+        public download(): void {
+            var query: Models.IDataProviderQuery = {
+                page: this.query.page,
+                pageSize: this.query.pageSize,
+                filters: this.filters,
+                download: true
+            };
+            this.beginUpdate();
+            this.selectorFn(query).then((results: Models.IDataProviderResults<T>) => this.endUpdate());
+        }
+
         public setPage(page: number): void {
             this.load({
                 page: page,
