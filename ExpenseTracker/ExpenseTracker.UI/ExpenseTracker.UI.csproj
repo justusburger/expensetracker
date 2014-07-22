@@ -429,6 +429,7 @@
     <TypeScriptCompile Include="ExpenseTracker\Directives\Validate.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\Validations\ComplexPassword.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\Validations\Match.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Directives\Validations\UniqueEmail.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\Validations\ValidationBase.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Errors.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\AlertTypeEnum.ts" />

@@ -15,7 +15,7 @@
             <div class="col-lg-6">
                 <label>Email address</label>
                 <span id="email-validation" class="pull-right"></span>
-                <input type="email" class="form-control" placeholder="john.smith@email.com" name="email" ng-model="$controller.form.email" required validate="#email-validation" />
+                <input type="email" class="form-control" placeholder="john.smith@email.com" name="email" ng-model="$controller.form.email" required validate="#email-validation" unique-email />
                 <p class="help-block">This will be your username when signing in</p>
             </div>
         </div>

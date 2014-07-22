@@ -21,6 +21,7 @@ namespace ExpenseTracker.API.Controllers
         public RegistrationController() : base("/registration")
         {
             Post["/"] = o => CreateRegistrationRequest(this.Bind<RegistrationRequestViewModel>());
+            Get["/email-unique"] = o => EmailUnique((string) Request.Query["email"]);
         }
 
         private Response CreateRegistrationRequest(RegistrationRequestViewModel model)
@@ -32,6 +33,12 @@ namespace ExpenseTracker.API.Controllers
             UserManager.Create(entity, model.Password);
 
             return new Response { StatusCode = HttpStatusCode.Created };
+        }
+
+        private Response EmailUnique(string email)
+        {
+            User user = UserManager.GetByEmail(email);
+            return Response.AsJson(user == null);
         }
     }
 }
