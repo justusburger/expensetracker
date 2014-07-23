@@ -18,6 +18,18 @@
             </span>
         </div>
         <div class="col-md-9">
+            <div ng-show="$controller.isFirstLogin">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <strong>Registration successful</strong>
+                    </div>
+                    <div class="panel-body">
+                        <p>Welcome! This is your profile page. Here you can change profile related settings, set your preferred country/currency and change your password. Set these settings now and then head on over to the <a href="/#/expenses/welcome">Expenses page</a>.</p>
+                    </div>
+                </div>
+                <hr/>
+            </div>
+
             <form name="profileForm" class="form" novalidate>
                 <fieldset ng-disabled="$controller.isLoading()">
                     <div class="row field">
@@ -36,14 +48,14 @@
                         <div class="col-md-6">
                             <label>Country</label>
                             <span class="pull-right" id="country-validation"></span>
-                            <select class="form-control" name="country" required validate="#country-validation" ng-model="$controller.form.country" ng-options="code as code.toUpperCase() + ' - ' + name for (code, name) in $controller.form.availableCountries">
+                            <select class="form-control" name="country" required validate="#country-validation" ng-model="$controller.form.country" ng-options="code.toLowerCase() as code.toUpperCase() + ' - ' + name for (code, name) in $controller.form.availableCountries">
                                 <option style="display: none" value="">Select country</option>
                             </select>
                         </div>
                         <div class="col-md-6">
                             <label>Currency</label>
                             <span class="pull-right" id="currency-validation"></span>
-                            <select class="form-control" name="currency" required validate="#currency-validation" ng-model="$controller.form.currency" ng-options="code as code.toUpperCase() + ' - ' + name for (code, name) in $controller.form.availableCurrencies">
+                            <select class="form-control" name="currency" required validate="#currency-validation" ng-model="$controller.form.currency" ng-options="code.toLowerCase() as code.toUpperCase() + ' - ' + name for (code, name) in $controller.form.availableCurrencies">
                                 <option style="display: none" value="">Select currency</option>
                             </select>
                         </div>

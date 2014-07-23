@@ -34,6 +34,10 @@
             return this.scope['profileForm'];
         }
 
+        public get isFirstLogin(): boolean {
+            return this.routeParamsService['welcome'] === 'welcome';
+        }
+
     }
 
     angular.module('ExpenseTracker.Controllers').controller(Profile.Name, [

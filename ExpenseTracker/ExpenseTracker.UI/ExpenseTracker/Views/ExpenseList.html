@@ -19,6 +19,29 @@
             <tags-filter source="$controller.expenseDataProvider"></tags-filter>
         </div>
         <div class="col-md-9">
+            <div ng-show="$controller.isFirstLogin">
+                <div class="panel panel-success">
+                    <div class="panel-heading">
+                        <strong>Getting started</strong>
+                    </div>
+                    <div class="panel-body">
+                        <p>This is the Expense list page. Here you can see an overview of all the expenses you have added, the total and daily average, aswell as give you filtering methods to find exactly what you're looking for.</p>
+                        <h6><strong>Filtering</strong></h6>
+                        <ul>
+                            <li><strong>By period: </strong>On the left you will find the period filter. This enables you to filter the expense list by date period.</li>
+                            <li><strong>By tags: </strong>At the bottom left is the tags filter. The tags filter enables you to filter the expense list to only show items taged with specific key words.</li>
+                            <li><strong>By description:</strong> Below you will find the description filter. This allows you to find items by description or part thereof.</li>
+                        </ul>
+                        <a class="btn btn-success pull-right" href="/#/expenses">
+                            <span class="glyphicon glyphicon-ok"></span>
+                            <span>Ok, got it</span>
+                        </a>
+                        <p><strong>Start</strong> by adding expenses using the Add button in the top right.</p>
+                        
+                    </div>
+                </div>
+                <hr />
+            </div>
             <p class="row">
                 <span class="col-md-6 page-loading pull-left" ng-show="$controller.expenseDataProvider.isLoading()">
                     <em>Loading expenses</em>
@@ -55,6 +78,9 @@
                             </span>
 
                         </td>
+                    </tr>
+                    <tr ng-hide="$controller.expenseDataProvider.items.any()">
+                        <td colspan="6"><em class="none">No items found.</em></td>
                     </tr>
                     <tr class="total">
                         <td colspan="4">

@@ -10,8 +10,9 @@
         }
 
         public register(): void {
-            this.registrationService.create(this.form).then((response) => {
-                console.log('Done in controller', response);
+            this.registrationService.create(this.form).then((profile: Models.IProfile) => {
+                this.cacheService.profile = profile;
+                this.locationService.path('/profile/welcome');
             });
         }
     }

@@ -9,7 +9,7 @@ namespace ExpenseTracker.API.Managers
 {
     public interface IUserManager : IManager<User>
     {
-        void Create(User entity, string password);
+        User Create(User entity, string password);
         User GetByEmail(string email);
         bool HasPassword(User user, string password);
         User Update(int userId, User user, string newPassword);
@@ -17,12 +17,12 @@ namespace ExpenseTracker.API.Managers
 
     public class UserManager : ManagerBase<User>, IUserManager
     {
-        public void Create(User entity, string password)
+        public User Create(User entity, string password)
         {
             entity.RegistrationDate = DateTime.Now;
             entity.Salt = CryptoHelper.GenerateSalt();
             entity.Hash = GenerateHash(entity.Salt, password);
-            Create(entity);
+            return Create(entity);
         }
 
         public string GenerateHash(string salt, string password)

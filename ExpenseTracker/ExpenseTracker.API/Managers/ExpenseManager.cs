@@ -83,12 +83,14 @@ namespace ExpenseTracker.API.Managers
             results.Query.ItemCount = expenses.Count();
             results.Total = expenses.Sum(e => e.Amount);
             var dateTimeSpan = helper.DateTimeSpan(query.Filters);
-            if (dateTimeSpan.From == (DateTime) SqlDateTime.MinValue && dateTimeSpan.To == (DateTime) SqlDateTime.MaxValue)
+            if (dateTimeSpan.From == (DateTime) SqlDateTime.MinValue && dateTimeSpan.To == (DateTime) SqlDateTime.MaxValue && expenses.Any())
             {
                 dateTimeSpan.From = expenses.Min(e => e.Date);
                 dateTimeSpan.To = expenses.Max(e => e.Date);
             }
-            results.AveragePerDay = Math.Round(results.Total/dateTimeSpan.DaysSafe, 2);
+
+            if(expenses.Any())
+                results.AveragePerDay = Math.Round(results.Total/dateTimeSpan.DaysSafe, 2);
 
             //Sorting
             expenses = expenses.OrderBy(e => e.Date);

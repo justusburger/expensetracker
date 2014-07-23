@@ -53,6 +53,14 @@ var ExpenseTracker;
                 enumerable: true,
                 configurable: true
             });
+
+            Object.defineProperty(Profile.prototype, "isFirstLogin", {
+                get: function () {
+                    return this.routeParamsService['welcome'] === 'welcome';
+                },
+                enumerable: true,
+                configurable: true
+            });
             Profile.Name = 'Profile';
             return Profile;
         })(ExpenseTracker.ControllerBase);

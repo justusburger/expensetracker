@@ -65,6 +65,14 @@ var ExpenseTracker;
                     return _this.endUpdate();
                 });
             };
+
+            Object.defineProperty(ExpenseList.prototype, "isFirstLogin", {
+                get: function () {
+                    return this.routeParamsService['welcome'] === 'welcome';
+                },
+                enumerable: true,
+                configurable: true
+            });
             ExpenseList.Name = 'ExpenseList';
             return ExpenseList;
         })(ExpenseTracker.ControllerBase);

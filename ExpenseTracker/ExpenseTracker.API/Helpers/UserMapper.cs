@@ -29,8 +29,8 @@ namespace ExpenseTracker.API.Helpers
                 Name = viewModel.UserName,
                 Email = viewModel.Email,
                 NewsletterSignup = viewModel.NewsletterSignup,
-                Country = viewModel.Country,
-                Currency = viewModel.Currency
+                Country = viewModel.Country.ToUpper(),
+                Currency = viewModel.Currency.ToUpper()
             };
         }
 
@@ -51,8 +51,8 @@ namespace ExpenseTracker.API.Helpers
                 Id = user.Id,
                 UserName = user.Name,
                 Email = user.Email,
-                Country = user.Country,
-                Currency = user.Currency,
+                Country = user.Country.ToLower(),
+                Currency = user.Currency.ToLower(),
                 AvailableCurrencies = Currency.AvailableCurrencies,
                 AvailableCountries = Country.AvailableCountries,
                 NewsletterSignup = user.NewsletterSignup

@@ -6,6 +6,7 @@
             <span class="glyphicon " ng-class="{ 'glyphicon-plus': !$directive.isAndFilter, 'glyphicon-minus': $directive.isAndFilter }"></span><span class="glyphicon glyphicon-filter"></span>
         </a>
     </span>
+    <em class="none" ng-hide="$directive.tags.any()">You don't have any tags yet.</em>
     <a ng-click="$directive.toggle(tag)" class="badge tag" ng-class="{ 'selected': $directive.isSelected(tag) }" ng-repeat="tag in $directive.tags | orderBy:'-count'">
         {{ tag.text }} <span class="badge">{{ tag.count }}</span>
     </a>

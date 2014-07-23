@@ -11,11 +11,11 @@
             this.registerResource = this.resourceService(this.apiBaseUrl + '/registration/');
         }
 
-        public create(form: Models.IRegistrationRequest): ng.IPromise<void> {
-            var defer = this.promiseService.defer<void>();
+        public create(form: Models.IRegistrationRequest): ng.IPromise<Models.IProfile> {
+            var defer = this.promiseService.defer<Models.IProfile>();
             this.registerResource.save(
                 form,
-                (response) => this.defaultOnSuccess(response, defer),
+                (response: Models.IProfile) => this.defaultOnSuccess(response, defer),
                 (response: Models.IErrorResponse) => this.defaultOnError(response, defer)
             );
             return defer.promise;

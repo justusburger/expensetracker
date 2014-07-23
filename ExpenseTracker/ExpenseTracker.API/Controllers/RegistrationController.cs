@@ -20,19 +20,21 @@ namespace ExpenseTracker.API.Controllers
     {
         public RegistrationController() : base("/registration")
         {
-            Post["/"] = o => CreateRegistrationRequest(this.Bind<RegistrationRequestViewModel>());
+            Post["/"] = o => Register(this.Bind<RegistrationRequestViewModel>());
             Get["/email-unique"] = o => EmailUnique((string) Request.Query["email"]);
         }
 
-        private Response CreateRegistrationRequest(RegistrationRequestViewModel model)
+        private Response Register(RegistrationRequestViewModel model)
         {
             if (!model.AcceptTermsAndConditions)
                 return Error(ErrorResponse.Registration.ACCEPT_TERMS_AND_CONDITIONS_FALSE);
 
             User entity = model.ToEntity();
-            UserManager.Create(entity, model.Password);
+            entity = UserManager.Create(entity, model.Password);
+            var profile = entity.ToViewModel();
+            MemorySessions.SetCurrentUser(profile, Request);
 
-            return new Response { StatusCode = HttpStatusCode.Created };
+            return Response.AsJson(profile);
         }
 
         private Response EmailUnique(string email)

@@ -14,8 +14,10 @@ var ExpenseTracker;
                 this.form = {};
             }
             Registration.prototype.register = function () {
-                this.registrationService.create(this.form).then(function (response) {
-                    console.log('Done in controller', response);
+                var _this = this;
+                this.registrationService.create(this.form).then(function (profile) {
+                    _this.cacheService.profile = profile;
+                    _this.locationService.path('/profile/welcome');
                 });
             };
             Registration.Name = 'Registration';

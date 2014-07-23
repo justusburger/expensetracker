@@ -45,6 +45,10 @@
                 this.alertService.success('Expense removed');
             }, () => this.endUpdate());
         }
+
+        public get isFirstLogin(): boolean {
+            return this.routeParamsService['welcome'] === 'welcome';
+        }
     }
 
     angular.module('ExpenseTracker.Controllers').controller(ExpenseList.Name, [
