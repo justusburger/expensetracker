@@ -34,6 +34,14 @@ namespace ExpenseTracker.API.Models
         public bool Locked { get; set; }
         public int InvalidAuthentications { get; set; }
 
+        [Required]
+        [MaxLength(10)]
+        public string Country { get; set; }
+
+        [Required]
+        [MaxLength(10)]
+        public string Currency { get; set; }
+
         public virtual ICollection<Expense> Expenses { get; set; } 
     }
 }

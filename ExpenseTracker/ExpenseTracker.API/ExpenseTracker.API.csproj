@@ -110,7 +110,13 @@
     <Compile Include="Migrations\201407221230279_AddExpenseComment.Designer.cs">
       <DependentUpon>201407221230279_AddExpenseComment.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201407222203166_AddCountryAndCurrency.cs" />
+    <Compile Include="Migrations\201407222203166_AddCountryAndCurrency.Designer.cs">
+      <DependentUpon>201407222203166_AddCountryAndCurrency.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Country.cs" />
+    <Compile Include="Models\Currency.cs" />
     <Compile Include="Models\DataProviderQuery.cs" />
     <Compile Include="Models\DataProviderResults.cs" />
     <Compile Include="Models\DateTimeSpan.cs" />
@@ -125,6 +131,7 @@
     <Compile Include="ViewModels\ErrorResponse.cs" />
     <Compile Include="ViewModels\ExpenseDataProviderResultsViewModel.cs" />
     <Compile Include="ViewModels\ExpenseViewModel.cs" />
+    <Compile Include="ViewModels\FullProfileViewModel.cs" />
     <Compile Include="ViewModels\RegistrationRequestViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\SignInRequestViewModel.cs" />
@@ -146,6 +153,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201407221230279_AddExpenseComment.resx">
       <DependentUpon>201407221230279_AddExpenseComment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201407222203166_AddCountryAndCurrency.resx">
+      <DependentUpon>201407222203166_AddCountryAndCurrency.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

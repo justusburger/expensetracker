@@ -11,7 +11,10 @@ var ExpenseTracker;
             __extends(Profile, _super);
             function Profile() {
                 _super.call(this);
-                this.profileResource = this.resourceService(this.apiBaseUrl + '/profile');
+                this.profileResource = this.resourceService(this.apiBaseUrl + '/profile', null, {
+                    getFullProfile: { method: 'GET', url: this.apiBaseUrl + '/profile/full' },
+                    update: { method: 'PUT' }
+                });
             }
             Profile.prototype.get = function () {
                 var _this = this;
@@ -20,6 +23,28 @@ var ExpenseTracker;
                     return _this.defaultOnSuccess(response, defer);
                 }, function (response) {
                     return _this.defaultOnError(response, defer, [ExpenseTracker.Errors.UNAUTHENTICATED]);
+                });
+                return defer.promise;
+            };
+
+            Profile.prototype.getFullProfile = function () {
+                var _this = this;
+                var defer = this.promiseService.defer();
+                this.profileResource.getFullProfile(function (response) {
+                    return _this.defaultOnSuccess(response, defer);
+                }, function (response) {
+                    return _this.defaultOnError(response, defer);
+                });
+                return defer.promise;
+            };
+
+            Profile.prototype.update = function (profile) {
+                var _this = this;
+                var defer = this.promiseService.defer();
+                this.profileResource.update(profile, function (response) {
+                    return _this.defaultOnSuccess(response, defer);
+                }, function (response) {
+                    return _this.defaultOnError(response, defer);
                 });
                 return defer.promise;
             };

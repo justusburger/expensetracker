@@ -1,0 +1,83 @@
+﻿<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h1>
+                <span>Profile</span>
+                <span class="page-loading" ng-show="$controller.isLoading()">
+                    <em>Loading profile</em>
+                    <span class="glyphicon glyphicon-cog spinner"></span>
+                </span>
+            </h1>
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-3 text-center">
+            <span class="profile-image">
+                <img src="/images/profilepic.png" width="240" />
+            </span>
+        </div>
+        <div class="col-md-9">
+            <form name="profileForm" class="form" novalidate>
+                <fieldset ng-disabled="$controller.isLoading()">
+                    <div class="row field">
+                        <div class="col-md-6">
+                            <label>Name</label>
+                            <span class="pull-right" id="name-validation"></span>
+                            <input type="text" class="form-control" ng-model="$controller.form.userName" placeholder="Name" name="name" required validate="#name-validation" />
+                        </div>
+                        <div class="col-md-6">
+                            <label>Email</label>
+                            <span class="pull-right" id="email-validation"></span>
+                            <input type="text" class="form-control" ng-model="$controller.form.email" placeholder="Email" name="email" required validate="#email-validation" unique-email="$controller.form.id" />
+                        </div>
+                    </div>
+                    <div class="row field">
+                        <div class="col-md-6">
+                            <label>Country</label>
+                            <span class="pull-right" id="country-validation"></span>
+                            <select class="form-control" name="country" required validate="#country-validation" ng-model="$controller.form.country" ng-options="code as code.toUpperCase() + ' - ' + name for (code, name) in $controller.form.availableCountries">
+                                <option style="display: none" value="">Select country</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Currency</label>
+                            <span class="pull-right" id="currency-validation"></span>
+                            <select class="form-control" name="currency" required validate="#currency-validation" ng-model="$controller.form.currency" ng-options="code as code.toUpperCase() + ' - ' + name for (code, name) in $controller.form.availableCurrencies">
+                                <option style="display: none" value="">Select currency</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row field">
+                        <div class="col-md-12">
+                            <input type="checkbox" ng-model="$controller.form.newsletterSignup" /> <em>(Optional)</em> I would like to recieve the monthly newsletter from ExpenseTracker.com.
+                        </div>
+                    </div>
+                    <p><hr /></p>
+                    <div class="row field">
+                        <div class="col-md-6">
+                            <label>New password</label>
+                            <span class="pull-right" id="password-validation"></span>
+                            <input type="password" class="form-control" ng-model="$controller.form.password" placeholder="New password" name="password" validate="#password-validation" complex-password />
+                            <p class="help-block">Only set the password and confirm password field to change the current password.</p>
+                        </div>
+                        <div class="col-md-6">
+                            <label>Confirm new password</label>
+                            <span class="pull-right" id="confirm-validation"></span>
+                            <input type="password" class="form-control" ng-model="$controller.form.confirm" placeholder="Confirm new password" name="confirm" validate="#confirm-validation" match="password" />
+                        </div>
+                    </div>
+                    <p><hr /></p>
+                    <div class="row field">
+                        <div class="col-md-12">
+                            <a class="btn btn-success pull-right" ng-disabled="profileForm.$pristine || profileForm.$invalid || $controller.isLoading()" ng-click="$controller.save()">
+                                <span class="glyphicon glyphicon-check"></span>
+                                <span>Save</span>
+                            </a>
+                        </div>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</div>

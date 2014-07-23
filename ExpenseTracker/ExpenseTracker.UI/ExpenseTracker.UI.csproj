@@ -75,11 +75,13 @@
     <Content Include="ExpenseTracker\Views\GridPager.html" />
     <Content Include="ExpenseTracker\Views\GridTextFilter.html" />
     <Content Include="ExpenseTracker\Views\PopupHandler.html" />
+    <Content Include="ExpenseTracker\Views\Profile.html" />
     <Content Include="ExpenseTracker\Views\SignIn.html" />
     <Content Include="ExpenseTracker\Views\Tags.html" />
     <Content Include="ExpenseTracker\Views\TagsFilter.html" />
     <Content Include="ExpenseTracker\Views\Validate.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="images\profilepic.png" />
     <Content Include="index.html" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -106,6 +108,7 @@
     <TypeScriptCompile Include="ExpenseTracker\Controllers\ExpenseDetails.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Controllers\ExpenseList.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Abstract\SecuredComponent.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Controllers\Profile.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Controllers\SignIn.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\AlertHandler.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\DateFilter.ts" />
@@ -436,6 +439,7 @@
     <TypeScriptCompile Include="ExpenseTracker\Models\IDataProviderQuery.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IErrorResponse.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IExpense.d.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Models\IFullProfile.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IPopup.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IProfile.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IQueuedAlert.d.ts" />
@@ -478,9 +482,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="images\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <TypeScriptCompile Include="ExpenseTracker\Controllers\Home.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\Registration.ts" />

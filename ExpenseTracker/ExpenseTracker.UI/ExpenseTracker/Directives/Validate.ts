@@ -26,8 +26,6 @@
             this.container.append('<i class="glyphicon glyphicon-exclamation-sign invalid" ng-show="$directive.invalid" popover="{{ $directive.failedValidationMessage }}" popover-trigger="mouseenter" popover-placement="left"></i>');
             this.compileService(this.container)(this.scope);
 
-            if (attributes[Validate.Name + 'Watch'])
-                this.scope.$watch(attributes[Validate.Name + 'Watch'], () => this.modelController.$setViewValue(this.modelController.$viewValue));
         }
 
         public get valid(): boolean {

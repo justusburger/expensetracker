@@ -12,6 +12,7 @@ namespace ExpenseTracker.API.Managers
         void Create(User entity, string password);
         User GetByEmail(string email);
         bool HasPassword(User user, string password);
+        User Update(int userId, User user, string newPassword);
     }
 
     public class UserManager : ManagerBase<User>, IUserManager
@@ -39,6 +40,22 @@ namespace ExpenseTracker.API.Managers
         {
             var hash = GenerateHash(user.Salt, password);
             return hash == user.Hash;
+        }
+
+        public User Update(int userId, User user, string newPassword)
+        {
+            var originalEntity = All.Single(u => u.Id == userId);
+            originalEntity.Name = user.Name;
+            originalEntity.Email = user.Email;
+            originalEntity.NewsletterSignup = user.NewsletterSignup;
+            originalEntity.Country = user.Country;
+            originalEntity.Currency = user.Currency;
+
+            if (!String.IsNullOrEmpty(newPassword))
+                originalEntity.Hash = GenerateHash(originalEntity.Salt, newPassword);
+
+            SaveChanges();
+            return originalEntity;
         }
     }
 }

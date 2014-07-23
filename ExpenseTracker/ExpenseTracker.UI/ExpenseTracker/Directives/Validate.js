@@ -10,7 +10,6 @@ var ExpenseTracker;
         var Validate = (function (_super) {
             __extends(Validate, _super);
             function Validate(scope, element, attributes, modelController) {
-                var _this = this;
                 _super.call(this, scope.$new(), element, attributes);
                 if (!attributes['name'])
                     throw new ExpenseTracker.ArgumentException('name', 'Input does not have a name attribute.');
@@ -24,11 +23,6 @@ var ExpenseTracker;
                 this.container.append('<i class="glyphicon glyphicon-ok valid" ng-show="$directive.valid"></i>');
                 this.container.append('<i class="glyphicon glyphicon-exclamation-sign invalid" ng-show="$directive.invalid" popover="{{ $directive.failedValidationMessage }}" popover-trigger="mouseenter" popover-placement="left"></i>');
                 this.compileService(this.container)(this.scope);
-
-                if (attributes[Validate.Name + 'Watch'])
-                    this.scope.$watch(attributes[Validate.Name + 'Watch'], function () {
-                        return _this.modelController.$setViewValue(_this.modelController.$viewValue);
-                    });
             }
             Object.defineProperty(Validate.prototype, "valid", {
                 get: function () {
