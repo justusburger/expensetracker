@@ -10,13 +10,13 @@ namespace ExpenseTracker.API.Helpers
 {
     public class ExpenseExportHelper
     {
-        public Response Export(ExpenseDataProviderResultsViewModel viewModel)
+        public Response Export(ExpenseDataProviderResultsViewModel viewModel, string currency)
         {
             var response = new Response();
             response.Contents = stream =>
             {
                 var streamWriter = new StreamWriter(stream);
-                streamWriter.WriteLine("\"Date\",\"Time\",\"Tags\",\"Description\",\"Amount\"");
+                streamWriter.WriteLine("\"Date\",\"Time\",\"Tags\",\"Description\",\"Amount ({0})\"", currency);
 
                 foreach (var expense in viewModel.Items)
                 {

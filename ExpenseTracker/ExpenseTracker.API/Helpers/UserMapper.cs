@@ -40,7 +40,8 @@ namespace ExpenseTracker.API.Helpers
             {
                 Id = user.Id,
                 UserName = user.Name,
-                Email = user.Email
+                Email = user.Email,
+                Currency = user.Currency.ToUpperInvariant()
             };
         }
 

@@ -12,5 +12,6 @@ namespace ExpenseTracker.API.ViewModels
         public string UserName { get; set; }
         public string Email { get; set; }
         public IEnumerable<string> Claims { get; private set; }
+        public string Currency { get; set; }
     }
 }

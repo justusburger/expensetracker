@@ -5,6 +5,7 @@
         id: number;
         userName: string;
         email: string;
+        currency: string;
 
     }
 

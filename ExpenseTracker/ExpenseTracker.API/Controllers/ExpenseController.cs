@@ -30,7 +30,7 @@ namespace ExpenseTracker.API.Controllers
             ExpenseDataProviderResults results = ExpenseManager.Query(CurrentUser.Id, query.ToEntity());
 
             if (query.Download)
-                return new ExpenseExportHelper().Export(results.ToViewModel());
+                return new ExpenseExportHelper().Export(results.ToViewModel(), CurrentUser.Currency);
 
             return Response.AsJson(results.ToViewModel());
         }
