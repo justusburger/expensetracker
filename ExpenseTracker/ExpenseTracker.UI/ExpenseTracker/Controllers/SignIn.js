@@ -33,6 +33,14 @@ var ExpenseTracker;
                         _this.alertService.error("Your account is locked. Please contact support.");
                 });
             };
+
+            Object.defineProperty(SignIn.prototype, "sessionExpired", {
+                get: function () {
+                    return this.routeParamsService['expired'] === 'expired';
+                },
+                enumerable: true,
+                configurable: true
+            });
             SignIn.Name = 'SignIn';
             return SignIn;
         })(ExpenseTracker.ControllerBase);

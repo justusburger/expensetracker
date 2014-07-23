@@ -1,5 +1,6 @@
 ﻿<div class="container">
     <form name="signInForm" class="form-signin" role="form" novalidate>
+        <div class="alert alert-info" ng-show="$controller.sessionExpired">Your session has expired. Please sign in again.</div>
         <h2 class="form-signin-heading">Sign in</h2>
         <input type="email" class="form-control" placeholder="Email address" required autofocus ng-model="$controller.form.email"/>
         <input type="password" class="form-control" placeholder="Password" required ng-model="$controller.form.password"/>

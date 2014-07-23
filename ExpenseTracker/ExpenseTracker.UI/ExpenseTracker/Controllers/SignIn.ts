@@ -32,6 +32,9 @@
             );
         }
 
+        public get sessionExpired(): boolean {
+            return this.routeParamsService['expired'] === 'expired';
+        }
     }
 
     angular.module('ExpenseTracker.Controllers').controller(SignIn.Name, [
