@@ -22,7 +22,7 @@ var ExpenseTracker;
                     if (typeof viewValue === 'undefined' || viewValue === null || viewValue === '')
                         return viewValue;
 
-                    this.httpService({ url: this.apiBaseUrl + '/registration/email-unique', method: 'GET', params: { email: viewValue } }).success(function (unique) {
+                    this.httpService({ url: this.apiBaseUrl + '/registration/email-unique', method: 'GET', params: { email: viewValue, id: this.attributes[UniqueEmail.Name] } }).success(function (unique) {
                         _this.modelController.$setValidity(UniqueEmail.Name, unique === 'true');
                     }).error(function (response) {
                         return console.log(response);

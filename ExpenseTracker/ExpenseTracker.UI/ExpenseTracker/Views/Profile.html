@@ -41,7 +41,7 @@
                         <div class="col-md-6">
                             <label>Email</label>
                             <span class="pull-right" id="email-validation"></span>
-                            <input type="text" class="form-control" ng-model="$controller.form.email" placeholder="Email" name="email" required validate="#email-validation" unique-email="$controller.form.id" />
+                            <input type="text" class="form-control" ng-model="$controller.form.email" placeholder="Email" name="email" required validate="#email-validation" unique-email="{{ $controller.form.id }}" />
                         </div>
                     </div>
                     <div class="row field">

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.Infrastructure;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using ExpenseTracker.API.Exceptions;
@@ -21,7 +22,7 @@ namespace ExpenseTracker.API.Controllers
         public RegistrationController() : base("/registration")
         {
             Post["/"] = o => Register(this.Bind<RegistrationRequestViewModel>());
-            Get["/email-unique"] = o => EmailUnique((string) Request.Query["email"]);
+            Get["/email-unique"] = o => EmailUnique((string) Request.Query["email"], (string)Request.Query["id"]);
         }
 
         private Response Register(RegistrationRequestViewModel model)
@@ -37,10 +38,16 @@ namespace ExpenseTracker.API.Controllers
             return Response.AsJson(profile);
         }
 
-        private Response EmailUnique(string email)
+        private Response EmailUnique(string email, string id)
         {
             User user = UserManager.GetByEmail(email);
-            return Response.AsJson(user == null);
+            if(user == null)
+                return Response.AsJson(true);
+
+            if(user.Id.ToString(CultureInfo.InvariantCulture) == id)
+                return Response.AsJson(true);
+
+            return Response.AsJson(false);
         }
     }
 }
