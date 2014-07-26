@@ -4,11 +4,6 @@
         <h2 class="form-signin-heading">Sign in</h2>
         <input type="email" class="form-control" placeholder="Email address" required autofocus ng-model="$controller.form.email"/>
         <input type="password" class="form-control" placeholder="Password" required ng-model="$controller.form.password"/>
-        <div class="checkbox">
-            <label>
-                <input type="checkbox" value="remember-me" ng-model="$controller.form.rememberMe"/> Remember me
-            </label>
-        </div>
         <button class="btn btn-lg btn-primary btn-block login" type="submit" ng-disabled="signInForm.$invalid || $controller.isLoading()" ng-click="$controller.signIn()">
             <i ng-show="$controller.isLoading()" class="glyphicon glyphicon-cog spinner"></i>
             <span>Sign in</span>

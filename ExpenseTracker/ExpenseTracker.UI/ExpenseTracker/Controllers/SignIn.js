@@ -12,11 +12,6 @@ var ExpenseTracker;
             function SignIn(scope) {
                 _super.call(this, scope);
                 this.form = {};
-                this.form = {
-                    email: 'justusburger@gmail.com',
-                    password: 'P@ssw0rd',
-                    rememberMe: true
-                };
             }
             SignIn.prototype.signIn = function () {
                 var _this = this;

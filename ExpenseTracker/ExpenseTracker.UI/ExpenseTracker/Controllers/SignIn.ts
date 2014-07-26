@@ -7,11 +7,6 @@
 
         constructor(scope: ng.IScope) {
             super(scope);
-            this.form = {
-                email: 'justusburger@gmail.com',
-                password: 'P@ssw0rd',
-                rememberMe: true
-            };
         }
 
         public signIn(): void {

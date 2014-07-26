@@ -7,7 +7,7 @@ angular.module('ExpenseTracker', ['ngRoute', 'ngResource', 'ngCookies', 'ui.boot
     function (routeProvider) {
         routeProvider.when('/registration', { controller: ExpenseTracker.Controllers.Registration.Name, templateUrl: 'ExpenseTracker/Views/Registration.html' }).when('/sign-in/:expired?', { controller: ExpenseTracker.Controllers.SignIn.Name, templateUrl: 'ExpenseTracker/Views/SignIn.html' }).when('/expenses/add', { controller: ExpenseTracker.Controllers.ExpenseDetails.Name, templateUrl: 'ExpenseTracker/Views/ExpenseDetails.html' }).when('/expenses/edit/:id', { controller: ExpenseTracker.Controllers.ExpenseDetails.Name, templateUrl: 'ExpenseTracker/Views/ExpenseDetails.html' }).when('/expenses/:welcome?', { controller: ExpenseTracker.Controllers.ExpenseList.Name, templateUrl: 'ExpenseTracker/Views/ExpenseList.html' }).when('/profile/:welcome?', { controller: ExpenseTracker.Controllers.Profile.Name, templateUrl: 'ExpenseTracker/Views/Profile.html' }).otherwise({ controller: ExpenseTracker.Controllers.Home.Name, templateUrl: 'ExpenseTracker/Views/Home.html' });
     }
-]).constant('API_BASE_PATH', '/api');
+]).constant('API_BASE_PATH', '/api').constant('API_BASE_PATH_TEST', 'http://dev.expensetracker.com/api');
 
 angular.element(document).ready(function () {
     var body = angular.element('html');

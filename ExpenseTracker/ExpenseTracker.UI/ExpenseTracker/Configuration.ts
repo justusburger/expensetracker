@@ -17,7 +17,8 @@ angular.module('ExpenseTracker', ['ngRoute', 'ngResource', 'ngCookies', 'ui.boot
 
         }
     ])
-    .constant('API_BASE_PATH', '/api');
+    .constant('API_BASE_PATH', '/api')
+    .constant('API_BASE_PATH_TEST', 'http://dev.expensetracker.com/api');
 
 angular.element(document).ready(() => {
     var body = angular.element('html');
