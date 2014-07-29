@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<bundle xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://vswebessentials.com/schemas/v1/bundle.xsd">
+  <settings>
+    <!--Determines if the bundle file should be automatically optimized after creation/update.-->
+    <minify>true</minify>
+    <!--Determin whether to generate/re-generate this bundle on building the solution.-->
+    <runOnBuild>true</runOnBuild>
+    <!--Specifies a custom subfolder to save files to. By default, compiled output will be placed in the same folder and nested under the original file.-->
+    <outputDirectory />
+  </settings>
+  <!--The order of the <file> elements determines the order of the files in the bundle.-->
+  <files>
+    <file>/ExpenseTracker/Configuration.js</file>
+    <file>/ExpenseTracker/Errors.js</file>
+    <!--Absract-->
+    <file>/ExpenseTracker/Abstract/Component.js</file>
+    <file>/ExpenseTracker/Abstract/ArgumentException.js</file>
+    <file>/ExpenseTracker/Abstract/NotImplementedException.js</file>
+    <file>/ExpenseTracker/Abstract/ArrayExtensions.js</file>
+    <file>/ExpenseTracker/Abstract/SecuredComponent.js</file>
+    <!--Models-->
+    <file>/ExpenseTracker/Models/AlertTypeEnum.js</file>
+    <file>/ExpenseTracker/Models/IPopup.js</file>
+    <!--Services-->
+    <file>/ExpenseTracker/Services/ApiResource.js</file>
+    <file>/ExpenseTracker/Services/SignIn.js</file>
+    <file>/ExpenseTracker/Services/Registration.js</file>
+    <file>/ExpenseTracker/Services/Alert.js</file>
+    <file>/ExpenseTracker/Services/Profile.js</file>
+    <file>/ExpenseTracker/Services/Cache.js</file>
+    <file>/ExpenseTracker/Services/Expense.js</file>
+    <file>/ExpenseTracker/Services/Popup.js</file>
+    <file>/ExpenseTracker/Services/DataProvider.js</file>
+    <file>/ExpenseTracker/Services/DownloadHelper.js</file>
+    <!--Controllers-->
+    <file>/ExpenseTracker/Controllers/ControllerBase.js</file>
+    <file>/ExpenseTracker/Controllers/Home.js</file>
+    <file>/ExpenseTracker/Controllers/Registration.js</file>
+    <file>/ExpenseTracker/Controllers/SignIn.js</file>
+    <file>/ExpenseTracker/Controllers/ExpenseList.js</file>
+    <file>/ExpenseTracker/Controllers/ExpenseDetails.js</file>
+    <file>/ExpenseTracker/Controllers/Profile.js</file>
+    <!--Directives-->
+    <file>/ExpenseTracker/Directives/DirectiveBase.js</file>
+    <file>/ExpenseTracker/Directives/Validate.js</file>
+    <file>/ExpenseTracker/Directives/Menu.js</file>
+    <file>/ExpenseTracker/Directives/AlertHandler.js</file>
+    <file>/ExpenseTracker/Directives/PopupHandler.js</file>
+    <file>/ExpenseTracker/Directives/Validations/ValidationBase.js</file>
+    <file>/ExpenseTracker/Directives/Validations/ComplexPassword.js</file>
+    <file>/ExpenseTracker/Directives/Validations/Match.js</file>
+    <file>/ExpenseTracker/Directives/Validations/UniqueEmail.js</file>
+    <file>/ExpenseTracker/Directives/Datepicker.js</file>
+    <file>/ExpenseTracker/Directives/Tags.js</file>
+    <file>/ExpenseTracker/Directives/GridPager.js</file>
+    <file>/ExpenseTracker/Directives/GridTextFilter.js</file>
+    <file>/ExpenseTracker/Directives/TagsFilter.js</file>
+    <file>/ExpenseTracker/Directives/DateFilter.js</file>
+  </files>
+</bundle>

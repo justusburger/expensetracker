@@ -88,7 +88,27 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="Content\bootstrap-theme.css.map" />
     <Content Include="Content\bootstrap.css.map" />
+    <Content Include="lib.js">
+      <DependentUpon>lib.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="lib.min.js">
+      <DependentUpon>lib.js</DependentUpon>
+    </Content>
+    <Content Include="release.js">
+      <DependentUpon>release.js.bundle</DependentUpon>
+    </Content>
+    <Content Include="release.min.js">
+      <DependentUpon>release.js</DependentUpon>
+    </Content>
     <Content Include="scripts\angular-messages.min.js.map" />
+    <Content Include="release.js.bundle" />
+    <Content Include="release.min.js.map">
+      <DependentUpon>release.min.js</DependentUpon>
+    </Content>
+    <Content Include="lib.js.bundle" />
+    <Content Include="lib.min.js.map">
+      <DependentUpon>lib.min.js</DependentUpon>
+    </Content>
     <None Include="scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="scripts\angular-messages.js" />
     <Content Include="scripts\angular-messages.min.js" />
@@ -456,7 +476,6 @@
     <TypeScriptCompile Include="ExpenseTracker\Services\Popup.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\Profile.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\SignIn.ts" />
-    <TypeScriptCompile Include="tests\Abstract\Component.ts" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -474,7 +493,6 @@
     <Content Include="scripts\angular-loader.min.js.map" />
     <Content Include="scripts\angular-cookies.min.js.map" />
     <Content Include="scripts\angular-animate.min.js.map" />
-    <Content Include="chutzpah.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
