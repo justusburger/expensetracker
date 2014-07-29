@@ -4,3 +4,6 @@
 /ExpenseTracker/ExpenseTracker.UI/bin
 /ExpenseTracker/ExpenseTracker.UI/app/js/ExpenseTracker/Abstract/*.map
 *.map
+/ExpenseTracker/ExpenseTracker.UI/lib.js
+/ExpenseTracker/ExpenseTracker.UI/release.js
+/ExpenseTracker/ExpenseTracker.UI/release.min.js
