@@ -14,3 +14,6 @@
 /ExpenseTracker/ExpenseTracker.UI/ExpenseTracker/Directives/Validations/*.js
 /ExpenseTracker/ExpenseTracker.UI/ExpenseTracker/Models/*.js
 /ExpenseTracker/ExpenseTracker.UI/ExpenseTracker/Services/*.js
+/ExpenseTracker/ExpenseTracker.API/Web.Debug.config
+/ExpenseTracker/ExpenseTracker.API/Web.Release.config
+/ExpenseTracker/ExpenseTracker.API/Web.config
