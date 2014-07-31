@@ -8,3 +8,9 @@
 /ExpenseTracker/ExpenseTracker.UI/release.js
 /ExpenseTracker/ExpenseTracker.UI/release.min.js
 /ExpenseTracker/ExpenseTracker.UI/ExpenseTracker/Controllers/*.js
+/ExpenseTracker/ExpenseTracker.UI/ExpenseTracker/Abstract/*.js
+/ExpenseTracker/ExpenseTracker.UI/ExpenseTracker/*.js
+/ExpenseTracker/ExpenseTracker.UI/ExpenseTracker/Directives/*.js
+/ExpenseTracker/ExpenseTracker.UI/ExpenseTracker/Directives/Validations/*.js
+/ExpenseTracker/ExpenseTracker.UI/ExpenseTracker/Models/*.js
+/ExpenseTracker/ExpenseTracker.UI/ExpenseTracker/Services/*.js
