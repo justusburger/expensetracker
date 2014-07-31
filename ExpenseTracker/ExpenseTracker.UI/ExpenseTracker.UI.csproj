@@ -70,12 +70,14 @@
     <Content Include="ExpenseTracker\Views\AlertHandler.html" />
     <Content Include="ExpenseTracker\Views\DateFilter.html" />
     <Content Include="ExpenseTracker\Views\Datepicker.html" />
+    <Content Include="ExpenseTracker\Views\EmailVerification.html" />
     <Content Include="ExpenseTracker\Views\ExpenseDetails.html" />
     <Content Include="ExpenseTracker\Views\ExpenseList.html" />
     <Content Include="ExpenseTracker\Views\GridPager.html" />
     <Content Include="ExpenseTracker\Views\GridTextFilter.html" />
     <Content Include="ExpenseTracker\Views\PopupHandler.html" />
     <Content Include="ExpenseTracker\Views\Profile.html" />
+    <Content Include="ExpenseTracker\Views\RegistrationComplete.html" />
     <Content Include="ExpenseTracker\Views\SignIn.html" />
     <Content Include="ExpenseTracker\Views\Tags.html" />
     <Content Include="ExpenseTracker\Views\TagsFilter.html" />
@@ -125,10 +127,12 @@
     <Content Include="scripts\jquery-1.9.0.min.map" />
     <TypeScriptCompile Include="ExpenseTracker\Abstract\ArgumentException.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Abstract\Component.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Controllers\EmailVerification.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Controllers\ExpenseDetails.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Controllers\ExpenseList.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Abstract\SecuredComponent.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Controllers\Profile.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Controllers\RegistrationComplete.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Controllers\SignIn.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\AlertHandler.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\DateFilter.ts" />

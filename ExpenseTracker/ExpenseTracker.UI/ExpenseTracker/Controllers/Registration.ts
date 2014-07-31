@@ -10,9 +10,8 @@
         }
 
         public register(): void {
-            this.registrationService.create(this.form).then((profile: Models.IProfile) => {
-                this.cacheService.profile = profile;
-                this.locationService.path('/profile/welcome');
+            this.registrationService.create(this.form).then(() => {
+                this.locationService.path('/registration-complete');
             });
         }
     }

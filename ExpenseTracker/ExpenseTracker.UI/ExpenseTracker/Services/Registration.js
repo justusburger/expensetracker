@@ -11,7 +11,9 @@ var ExpenseTracker;
             __extends(Registration, _super);
             function Registration() {
                 _super.call(this);
-                this.registerResource = this.resourceService(this.apiBaseUrl + '/registration/');
+                this.registerResource = this.resourceService(this.apiBaseUrl + '/registration/', null, {
+                    verify: { method: 'GET', url: this.apiBaseUrl + '/registration/verify/:verificationToken' }
+                });
             }
             Registration.prototype.create = function (form) {
                 var _this = this;
@@ -20,6 +22,17 @@ var ExpenseTracker;
                     return _this.defaultOnSuccess(response, defer);
                 }, function (response) {
                     return _this.defaultOnError(response, defer);
+                });
+                return defer.promise;
+            };
+
+            Registration.prototype.verify = function (verificationToken) {
+                var _this = this;
+                var defer = this.promiseService.defer();
+                this.registerResource.verify({ verificationToken: verificationToken }, function (response) {
+                    return _this.defaultOnSuccess(response, defer);
+                }, function (response) {
+                    return _this.defaultOnError(response, defer, [ExpenseTracker.Errors.EMAIL_VERIFICATION_TOKEN_NOT_FOUND]);
                 });
                 return defer.promise;
             };

@@ -8,6 +8,8 @@ angular.module('ExpenseTracker', ['ngRoute', 'ngResource', 'ngCookies', 'ui.boot
         (routeProvider: ng.route.IRouteProvider) => {
             routeProvider
                 .when('/registration', { controller: ExpenseTracker.Controllers.Registration.Name, templateUrl: 'ExpenseTracker/Views/Registration.html' })
+                .when('/registration-complete', { controller: ExpenseTracker.Controllers.RegistrationComplete.Name, templateUrl: 'ExpenseTracker/Views/RegistrationComplete.html' })
+                .when('/verify/:verificationToken', { controller: ExpenseTracker.Controllers.EmailVerification.Name, templateUrl: 'ExpenseTracker/Views/EmailVerification.html' })
                 .when('/sign-in/:expired?', { controller: ExpenseTracker.Controllers.SignIn.Name, templateUrl: 'ExpenseTracker/Views/SignIn.html' })
                 .when('/expenses/add', { controller: ExpenseTracker.Controllers.ExpenseDetails.Name, templateUrl: 'ExpenseTracker/Views/ExpenseDetails.html' })
                 .when('/expenses/edit/:id', { controller: ExpenseTracker.Controllers.ExpenseDetails.Name, templateUrl: 'ExpenseTracker/Views/ExpenseDetails.html' })

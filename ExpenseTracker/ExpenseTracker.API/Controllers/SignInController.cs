@@ -27,6 +27,9 @@ namespace ExpenseTracker.API.Controllers
             if (user == null)
                 return Error(ErrorResponse.SignIn.INCORRECT_DETAILS);
 
+            if(user.EmailVerificationDate == null)
+                return Error(ErrorResponse.SignIn.EMAIL_NOT_VERIFIED);
+
             if (user.Locked)
                 return Error(ErrorResponse.SignIn.ACCOUNT_LOCKED);
 

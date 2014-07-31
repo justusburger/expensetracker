@@ -36,6 +36,8 @@
     <file>/ExpenseTracker/Controllers/ControllerBase.js</file>
     <file>/ExpenseTracker/Controllers/Home.js</file>
     <file>/ExpenseTracker/Controllers/Registration.js</file>
+    <file>/ExpenseTracker/Controllers/RegistrationComplete.js</file>
+    <file>/ExpenseTracker/Controllers/EmailVerification.js</file>
     <file>/ExpenseTracker/Controllers/SignIn.js</file>
     <file>/ExpenseTracker/Controllers/ExpenseList.js</file>
     <file>/ExpenseTracker/Controllers/ExpenseDetails.js</file>

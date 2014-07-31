@@ -60,24 +60,18 @@
     <Reference Include="nunit.framework">
       <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.DynamicData" />
-    <Reference Include="System.Web.Entity" />
-    <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Web.Extensions" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web.Mvc, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="System.Web" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
-    <Reference Include="System.Web.Services" />
-    <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="EmailTemplates\registration.html" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -89,12 +83,14 @@
     <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\SignInController.cs" />
     <Compile Include="Exceptions\UniqueOrIndexContraintException.cs" />
+    <Compile Include="Helpers\Configuration.cs" />
     <Compile Include="Helpers\ControllerExtensions.cs" />
     <Compile Include="Helpers\DataProviderMapper.cs" />
+    <Compile Include="Helpers\EmailHelper.cs" />
+    <Compile Include="Helpers\EmailTemplateHelper.cs" />
     <Compile Include="Helpers\ExpenseExportHelper.cs" />
     <Compile Include="Helpers\ExpenseFilterHelper.cs" />
     <Compile Include="Helpers\ExpenseMapper.cs" />
-    <Compile Include="Helpers\ExpenseTrackerDatabaseInitializer.cs" />
     <Compile Include="Helpers\ExpenseTrackerDbContext.cs" />
     <Compile Include="Helpers\CryptoHelper.cs" />
     <Compile Include="Helpers\MemorySessions.cs" />
@@ -113,6 +109,10 @@
     <Compile Include="Migrations\201407222203166_AddCountryAndCurrency.cs" />
     <Compile Include="Migrations\201407222203166_AddCountryAndCurrency.Designer.cs">
       <DependentUpon>201407222203166_AddCountryAndCurrency.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201407301657221_EmailVerification.cs" />
+    <Compile Include="Migrations\201407301657221_EmailVerification.Designer.cs">
+      <DependentUpon>201407301657221_EmailVerification.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Country.cs" />
@@ -140,6 +140,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="EmailTemplates\template.html" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -157,6 +158,9 @@
     <EmbeddedResource Include="Migrations\201407222203166_AddCountryAndCurrency.resx">
       <DependentUpon>201407222203166_AddCountryAndCurrency.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201407301657221_EmailVerification.resx">
+      <DependentUpon>201407301657221_EmailVerification.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -173,7 +177,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>53393</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://dev.expensetracker.com/api/</IISUrl>
+          <IISUrl>http://dev.expensetracker.co.za/api/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

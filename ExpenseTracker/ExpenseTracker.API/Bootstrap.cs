@@ -17,7 +17,6 @@ namespace ExpenseTracker.API
         protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
         {
             base.ApplicationStartup(container, pipelines);
-            Database.SetInitializer(new ExpenseTrackerDatabaseInitializer());
             StatelessAuthentication.Enable(pipelines, new StatelessAuthenticationConfiguration(ctx => MemorySessions.GetCurrentUser(ctx.Request)));
             MemorySessions.Enable(pipelines); 
         }

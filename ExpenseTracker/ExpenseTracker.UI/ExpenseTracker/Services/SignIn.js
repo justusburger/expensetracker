@@ -19,7 +19,7 @@ var ExpenseTracker;
                 this.signInResource.save(signInRequest, function (response) {
                     return _this.defaultOnSuccess(response, defer);
                 }, function (response) {
-                    return _this.defaultOnError(response, defer, [ExpenseTracker.Errors.SIGN_IN_INCORRECT_DETAILS, ExpenseTracker.Errors.SIGN_IN_ACCOUNT_LOCKED]);
+                    return _this.defaultOnError(response, defer, [ExpenseTracker.Errors.SIGN_IN_INCORRECT_DETAILS, ExpenseTracker.Errors.SIGN_IN_ACCOUNT_LOCKED, ExpenseTracker.Errors.SIGN_IN_EMAIL_NOT_VERIFIED]);
                 });
                 return defer.promise;
             };
@@ -30,7 +30,7 @@ var ExpenseTracker;
                 this.signInResource.delete(function (response) {
                     return _this.defaultOnSuccess(response, defer);
                 }, function (response) {
-                    return _this.defaultOnError(response, defer, [ExpenseTracker.Errors.SIGN_IN_INCORRECT_DETAILS, ExpenseTracker.Errors.SIGN_IN_ACCOUNT_LOCKED]);
+                    return _this.defaultOnError(response, defer);
                 });
                 return defer.promise;
             };

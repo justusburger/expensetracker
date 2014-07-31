@@ -23,6 +23,7 @@ namespace ExpenseTracker.API.Controllers
         {
             Post["/"] = o => Register(this.Bind<RegistrationRequestViewModel>());
             Get["/email-unique"] = o => EmailUnique((string) Request.Query["email"], (string)Request.Query["id"]);
+            Get["/verify/{verificationToken}"] = o => Verify((string)o["verificationToken"]);
         }
 
         private Response Register(RegistrationRequestViewModel model)
@@ -32,10 +33,8 @@ namespace ExpenseTracker.API.Controllers
 
             User entity = model.ToEntity();
             entity = UserManager.Create(entity, model.Password);
-            var profile = entity.ToViewModel();
-            MemorySessions.SetCurrentUser(profile, Request);
-
-            return Response.AsJson(profile);
+            
+            return Ok;
         }
 
         private Response EmailUnique(string email, string id)
@@ -48,6 +47,18 @@ namespace ExpenseTracker.API.Controllers
                 return Response.AsJson(true);
 
             return Response.AsJson(false);
+        }
+
+        private Response Verify(string verificationToken)
+        {
+            User user = UserManager.Verify(verificationToken);
+
+            if (user == null)
+                return Error(ErrorResponse.Registration.EMAIL_VERIFICATION_TOKEN_NOT_FOUND);
+
+            var profile = user.ToViewModel();
+            MemorySessions.SetCurrentUser(profile, Request);
+            return Response.AsJson(profile);
         }
     }
 }

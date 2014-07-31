@@ -23,12 +23,14 @@ namespace ExpenseTracker.API.Models
         {
             public static ErrorResponse ACCEPT_TERMS_AND_CONDITIONS_FALSE = new ErrorResponse(HttpStatusCode.ExpectationFailed, 1, "Accepting the terms and conditions is required for registration.");
             public static ErrorResponse EMAIL_ALREADY_REGISTERED = new ErrorResponse(HttpStatusCode.BadRequest, 2, "Email already registered.");
+            public static ErrorResponse EMAIL_VERIFICATION_TOKEN_NOT_FOUND = new ErrorResponse(HttpStatusCode.NotFound, 7, "Email verification token not found.");
         }
 
         public static class SignIn
         {
             public static ErrorResponse ACCOUNT_LOCKED = new ErrorResponse(HttpStatusCode.Forbidden, 3, "Account is locked");
             public static ErrorResponse INCORRECT_DETAILS = new ErrorResponse(HttpStatusCode.Forbidden, 4, "Incorrect details");
+            public static ErrorResponse EMAIL_NOT_VERIFIED = new ErrorResponse(HttpStatusCode.Forbidden, 6, "Email not verified");
         }
 
         public static class Profile

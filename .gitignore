@@ -7,3 +7,4 @@
 /ExpenseTracker/ExpenseTracker.UI/lib.js
 /ExpenseTracker/ExpenseTracker.UI/release.js
 /ExpenseTracker/ExpenseTracker.UI/release.min.js
+/ExpenseTracker/ExpenseTracker.UI/ExpenseTracker/Controllers/*.js

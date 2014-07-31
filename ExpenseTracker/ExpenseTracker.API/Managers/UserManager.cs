@@ -13,6 +13,7 @@ namespace ExpenseTracker.API.Managers
         User GetByEmail(string email);
         bool HasPassword(User user, string password);
         User Update(int userId, User user, string newPassword);
+        User Verify(string verificationToken);
     }
 
     public class UserManager : ManagerBase<User>, IUserManager
@@ -20,8 +21,16 @@ namespace ExpenseTracker.API.Managers
         public User Create(User entity, string password)
         {
             entity.RegistrationDate = DateTime.Now;
+            /* Password salting and hashing */
             entity.Salt = CryptoHelper.GenerateSalt();
             entity.Hash = GenerateHash(entity.Salt, password);
+
+            /* Email verification */
+            entity.EmailVerificationDate = null;
+            entity.EmailVerificationToken = CryptoHelper.GenerateSalt();
+            var emailHelper = new EmailHelper();
+            emailHelper.SendRegistrationEmailVerification(entity.Name, entity.Email, entity.EmailVerificationToken);
+
             return Create(entity);
         }
 
@@ -56,6 +65,19 @@ namespace ExpenseTracker.API.Managers
 
             SaveChanges();
             return originalEntity;
+        }
+
+        public User Verify(string verificationToken)
+        {
+            var user = All.SingleOrDefault(u => u.EmailVerificationToken == verificationToken);
+            if (user != null)
+            {
+                user.EmailVerificationToken = null;
+                user.EmailVerificationDate = DateTime.Now;
+                SaveChanges();
+            }
+
+            return user;
         }
     }
 }

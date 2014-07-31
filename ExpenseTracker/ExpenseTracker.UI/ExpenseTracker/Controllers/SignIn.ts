@@ -23,6 +23,8 @@
                         this.alertService.error("Incorrect sign in details. Please try again.");
                     if (response.data.errorCode === ExpenseTracker.Errors.SIGN_IN_ACCOUNT_LOCKED)
                         this.alertService.error("Your account is locked. Please contact support.");
+                    if (response.data.errorCode === ExpenseTracker.Errors.SIGN_IN_EMAIL_NOT_VERIFIED)
+                        this.alertService.error("Your email address has not been verified. Please check your email and click the verification link. If you did not recieve an email, please contact support@expensetracker.co.za.");
                 }
             );
         }
