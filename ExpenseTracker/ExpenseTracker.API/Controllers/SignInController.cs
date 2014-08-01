@@ -17,9 +17,22 @@ namespace ExpenseTracker.API.Controllers
         {
             Post["/"] = o => SignIn(this.Bind<SignInRequestViewModel>());
             Delete["/"] = o => SignOut();
+            Get["/reset-password/{resetToken}"] = o => ValidateResetPasswordLink((string)o["resetToken"]);
+            Put["/reset-password"] = o => ResetPassword(this.Bind<ResetPasswordRequestViewModel>());
         }
 
-        /* In other word: sign in */
+        private Response ValidateResetPasswordLink(string resetToken)
+        {
+            User user = UserManager.VerifyResetPassword(resetToken);
+
+            if (user == null)
+                return Error(ErrorResponse.Profile.RESET_PASSWORD_INVALID_TOKEN);
+
+            UserViewModel profile = user.ToViewModel();
+            MemorySessions.SetCurrentUser(profile, Request);
+            return Response.AsJson(profile);
+        }
+
         private Response SignIn(SignInRequestViewModel model)
         {
             User user = UserManager.GetByEmail(model.Email);
@@ -57,6 +70,24 @@ namespace ExpenseTracker.API.Controllers
         private Response SignOut()
         {
             MemorySessions.RemoveCurrentUser(Request);
+            return Ok;
+        }
+
+        private Response ResetPassword(ResetPasswordRequestViewModel model)
+        {
+            User user = UserManager.GetByEmail(model.Email);
+
+            if (user == null)
+                return Error(ErrorResponse.Profile.RESET_PASSWORD_EMAIL_NOT_FOUND);
+
+            var recaptchaHelper = new RecaptchaHelper();
+            if (!recaptchaHelper.Verify(Request.UserHostAddress, model.Challenge, model.Response))
+                return Error(ErrorResponse.Profile.RESET_PASSWORD_CAPTCHA_INVALID);
+
+            var resetToken = UserManager.GetResetPasswordToken(user);
+            var emailHelper = new EmailHelper();
+            emailHelper.SendResetPasswordLink(user.Name, user.Email, resetToken);
+
             return Ok;
         }
     }

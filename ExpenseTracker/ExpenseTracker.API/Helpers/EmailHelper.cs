@@ -29,6 +29,23 @@ namespace ExpenseTracker.API.Helpers
             };
             client.Send(message);
         }
-        
+
+        public void SendResetPasswordLink(string name, string emailAddress, string resetToken)
+        {
+            var templateHelper = new EmailTemplateHelper();
+            var message = new MailMessage(Configuration.SmtpFrom, emailAddress)
+            {
+                Subject = "Expensetracker.co.za reset password",
+                SubjectEncoding = System.Text.Encoding.UTF8,
+                Body = templateHelper.ResetPasswordEmailBody(name, resetToken),
+                BodyEncoding = System.Text.Encoding.UTF8,
+                IsBodyHtml = true
+            };
+            var client = new SmtpClient(Configuration.SmtpHost)
+            {
+                Credentials = new NetworkCredential(Configuration.SmtpUsername, Configuration.SmtpPassword)
+            };
+            client.Send(message);
+        }
     }
 }

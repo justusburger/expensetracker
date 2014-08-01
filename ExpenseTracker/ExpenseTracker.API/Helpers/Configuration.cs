@@ -15,5 +15,8 @@ namespace ExpenseTracker.API.Helpers
         public static string SmtpPassword { get { return WebConfigurationManager.AppSettings["smtpPassword"]; } }
         public static string ApiHost { get { return WebConfigurationManager.AppSettings["apiHost"]; } }
         public static string UiHost { get { return WebConfigurationManager.AppSettings["uiHost"]; } }
+        public static string RecaptchaPublicKey { get { return WebConfigurationManager.AppSettings["recaptchaPublicKey"]; } }
+        public static string RecaptchaPrivateKey { get { return WebConfigurationManager.AppSettings["recaptchaPrivateKey"]; } }
+        public static string RecaptchaVerificationUrl { get { return WebConfigurationManager.AppSettings["recaptchaVerificationUrl"]; } }
     }
 }

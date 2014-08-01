@@ -13,7 +13,9 @@ namespace ExpenseTracker.API.Managers
         User GetByEmail(string email);
         bool HasPassword(User user, string password);
         User Update(int userId, User user, string newPassword);
-        User Verify(string verificationToken);
+        User VerifyEmail(string emailToken);
+        User VerifyResetPassword(string resetToken);
+        string GetResetPasswordToken(User user);
     }
 
     public class UserManager : ManagerBase<User>, IUserManager
@@ -67,9 +69,9 @@ namespace ExpenseTracker.API.Managers
             return originalEntity;
         }
 
-        public User Verify(string verificationToken)
+        public User VerifyEmail(string emailToken)
         {
-            var user = All.SingleOrDefault(u => u.EmailVerificationToken == verificationToken);
+            var user = All.SingleOrDefault(u => u.EmailVerificationToken == emailToken);
             if (user != null)
             {
                 user.EmailVerificationToken = null;
@@ -78,6 +80,25 @@ namespace ExpenseTracker.API.Managers
             }
 
             return user;
+        }
+
+        public User VerifyResetPassword(string resetToken)
+        {
+            var user = All.SingleOrDefault(u => u.PasswordResetToken == resetToken);
+            if (user != null)
+            {
+                user.PasswordResetToken = null;
+                SaveChanges();
+            }
+
+            return user;
+        }
+
+        public string GetResetPasswordToken(User user)
+        {
+            user.PasswordResetToken = CryptoHelper.GenerateSalt();
+            SaveChanges();
+            return user.PasswordResetToken;
         }
     }
 }

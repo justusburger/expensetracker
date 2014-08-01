@@ -17,5 +17,15 @@ namespace ExpenseTracker.API.Helpers
             body = body.Replace("{{ verificationLink }}", Configuration.UiHost + "/#/verify/" + verificationToken);
             return body;
         }
+
+        public string ResetPasswordEmailBody(string name, string resetToken)
+        {
+            string template = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"EmailTemplates\template.html");
+            string resetPassword = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"EmailTemplates\resetPassword.html");
+            string body = template.Replace("{{ body }}", resetPassword);
+            body = body.Replace("{{ name }}", name);
+            body = body.Replace("{{ resetLink }}", Configuration.UiHost + "/#/reset-password/" + resetToken);
+            return body;
+        }
     }
 }

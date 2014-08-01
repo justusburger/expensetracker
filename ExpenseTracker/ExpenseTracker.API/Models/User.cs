@@ -32,6 +32,9 @@ namespace ExpenseTracker.API.Models
         [MaxLength(100)]
         public string EmailVerificationToken { get; set; }
 
+        [MaxLength(100)]
+        public string PasswordResetToken { get; set; }
+
         public DateTime? EmailVerificationDate { get; set; }
 
         public DateTime RegistrationDate { get; set; }

@@ -21,9 +21,9 @@ namespace ExpenseTracker.API.Models
 
         public static class Registration
         {
-            public static ErrorResponse ACCEPT_TERMS_AND_CONDITIONS_FALSE = new ErrorResponse(HttpStatusCode.ExpectationFailed, 1, "Accepting the terms and conditions is required for registration.");
-            public static ErrorResponse EMAIL_ALREADY_REGISTERED = new ErrorResponse(HttpStatusCode.BadRequest, 2, "Email already registered.");
-            public static ErrorResponse EMAIL_VERIFICATION_TOKEN_NOT_FOUND = new ErrorResponse(HttpStatusCode.NotFound, 7, "Email verification token not found.");
+            public static ErrorResponse ACCEPT_TERMS_AND_CONDITIONS_FALSE = new ErrorResponse(HttpStatusCode.ExpectationFailed, 1, "Accepting the terms and conditions is required for registration");
+            public static ErrorResponse EMAIL_ALREADY_REGISTERED = new ErrorResponse(HttpStatusCode.BadRequest, 2, "Email already registered");
+            public static ErrorResponse EMAIL_VERIFICATION_TOKEN_NOT_FOUND = new ErrorResponse(HttpStatusCode.NotFound, 7, "Email verification token not found");
         }
 
         public static class SignIn
@@ -36,6 +36,9 @@ namespace ExpenseTracker.API.Models
         public static class Profile
         {
             public static ErrorResponse UNAUTHENTICATED = new ErrorResponse(HttpStatusCode.Forbidden, 5, "Unauthenticated");
+            public static ErrorResponse RESET_PASSWORD_EMAIL_NOT_FOUND = new ErrorResponse(HttpStatusCode.NotFound, 8, "Email not found");
+            public static ErrorResponse RESET_PASSWORD_CAPTCHA_INVALID = new ErrorResponse(HttpStatusCode.BadRequest, 9, "Recaptcha solution incorrect");
+            public static ErrorResponse RESET_PASSWORD_INVALID_TOKEN = new ErrorResponse(HttpStatusCode.BadRequest, 10, "Invalid reset token");
         }
 
 

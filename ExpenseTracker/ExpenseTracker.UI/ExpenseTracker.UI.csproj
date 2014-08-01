@@ -67,6 +67,12 @@
     <TypeScriptCompile Include="ExpenseTracker\Abstract\NotImplementedException.ts" />
     <Content Include="Content\ng-tags-input.min.css" />
     <Content Include="css\jasmine.css" />
+    <Content Include="css\styles.css">
+      <DependentUpon>styles.less</DependentUpon>
+    </Content>
+    <Content Include="css\styles.min.css">
+      <DependentUpon>styles.css</DependentUpon>
+    </Content>
     <Content Include="ExpenseTracker\Views\AlertHandler.html" />
     <Content Include="ExpenseTracker\Views\DateFilter.html" />
     <Content Include="ExpenseTracker\Views\Datepicker.html" />
@@ -77,7 +83,9 @@
     <Content Include="ExpenseTracker\Views\GridTextFilter.html" />
     <Content Include="ExpenseTracker\Views\PopupHandler.html" />
     <Content Include="ExpenseTracker\Views\Profile.html" />
+    <Content Include="ExpenseTracker\Views\Captcha.html" />
     <Content Include="ExpenseTracker\Views\RegistrationComplete.html" />
+    <Content Include="ExpenseTracker\Views\ResetPassword.html" />
     <Content Include="ExpenseTracker\Views\SignIn.html" />
     <Content Include="ExpenseTracker\Views\Tags.html" />
     <Content Include="ExpenseTracker\Views\TagsFilter.html" />
@@ -96,20 +104,13 @@
     <Content Include="lib.min.js">
       <DependentUpon>lib.js</DependentUpon>
     </Content>
-    <Content Include="release.js">
-      <DependentUpon>release.js.bundle</DependentUpon>
-    </Content>
-    <Content Include="release.min.js">
-      <DependentUpon>release.js</DependentUpon>
-    </Content>
     <Content Include="scripts\angular-messages.min.js.map" />
-    <Content Include="release.js.bundle" />
-    <Content Include="release.min.js.map">
-      <DependentUpon>release.min.js</DependentUpon>
-    </Content>
     <Content Include="lib.js.bundle" />
     <Content Include="lib.min.js.map">
       <DependentUpon>lib.min.js</DependentUpon>
+    </Content>
+    <Content Include="css\styles.css.map">
+      <DependentUpon>styles.css</DependentUpon>
     </Content>
     <None Include="scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="scripts\angular-messages.js" />
@@ -127,13 +128,16 @@
     <Content Include="scripts\jquery-1.9.0.min.map" />
     <TypeScriptCompile Include="ExpenseTracker\Abstract\ArgumentException.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Abstract\Component.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Abstract\_references.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Controllers\EmailVerification.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Controllers\ExpenseDetails.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Controllers\ExpenseList.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Abstract\SecuredComponent.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Controllers\Profile.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Controllers\RegistrationComplete.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Controllers\ResetPassword.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Controllers\SignIn.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Controllers\_references.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\AlertHandler.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\DateFilter.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\Datepicker.ts" />
@@ -444,6 +448,10 @@
     <Content Include="scripts\linq.js" />
     <Content Include="scripts\linq.min.js" />
     <Content Include="scripts\ng-tags-input.min.js" />
+    <Content Include="scripts\recaptcha_ajax.js" />
+    <Content Include="scripts\recaptcha_ajax.min.js">
+      <DependentUpon>recaptcha_ajax.js</DependentUpon>
+    </Content>
     <Content Include="Web.config" />
     <TypeScriptCompile Include="ExpenseTracker\Controllers\ControllerBase.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Controllers\Registration.ts" />
@@ -451,6 +459,7 @@
     <TypeScriptCompile Include="ExpenseTracker\Directives\GridTextFilter.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\Menu.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\PopupHandler.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Directives\Captcha.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\Tags.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\TagsFilter.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\Validate.ts" />
@@ -458,6 +467,7 @@
     <TypeScriptCompile Include="ExpenseTracker\Directives\Validations\Match.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\Validations\UniqueEmail.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Directives\Validations\ValidationBase.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Directives\_references.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Errors.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\AlertTypeEnum.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IDataProviderQuery.d.ts" />
@@ -468,9 +478,11 @@
     <TypeScriptCompile Include="ExpenseTracker\Models\IProfile.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IQueuedAlert.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IRegistrationRequest.d.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Models\IResetPasswordRequest.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\ISignInRequest.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\ISuccessResponse.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\ITag.d.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Models\_references.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\Alert.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\ApiResource.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\Cache.ts" />
@@ -480,6 +492,8 @@
     <TypeScriptCompile Include="ExpenseTracker\Services\Popup.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\Profile.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\SignIn.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Services\_references.ts" />
+    <TypeScriptCompile Include="_references.ts" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -497,6 +511,9 @@
     <Content Include="scripts\angular-loader.min.js.map" />
     <Content Include="scripts\angular-cookies.min.js.map" />
     <Content Include="scripts\angular-animate.min.js.map" />
+    <Content Include="scripts\recaptcha_ajax.min.js.map">
+      <DependentUpon>recaptcha_ajax.min.js</DependentUpon>
+    </Content>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -527,6 +544,9 @@
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptOutFile>expensetracker.js</TypeScriptOutFile>
+  </PropertyGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />
   <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />

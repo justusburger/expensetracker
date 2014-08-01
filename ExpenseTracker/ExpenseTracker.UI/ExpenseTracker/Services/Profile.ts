@@ -1,8 +1,8 @@
 ﻿module ExpenseTracker.Services {
 
     interface IProfileResourceClass extends ng.resource.IResourceClass<ng.resource.IResource<Models.IFullProfile>> {
-        getFullProfile: (onSuccess: (profile: Models.IFullProfile) => void, onError: Function) => void;
-        update: (model: Models.IFullProfile,  onSuccess: (profile: Models.IFullProfile) => void, onError: Function) => void;
+        getFullProfile: (onSuccess: (profile: Models.IFullProfile) => void, onError: (response: Models.IErrorResponse) => void) => void;
+        update: (model: Models.IFullProfile, onSuccess: (profile: Models.IFullProfile) => void, onError: (response: Models.IErrorResponse) => void) => void;
     }
 
     export class Profile extends ApiResource {

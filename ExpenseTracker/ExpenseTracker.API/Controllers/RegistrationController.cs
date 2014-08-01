@@ -23,7 +23,7 @@ namespace ExpenseTracker.API.Controllers
         {
             Post["/"] = o => Register(this.Bind<RegistrationRequestViewModel>());
             Get["/email-unique"] = o => EmailUnique((string) Request.Query["email"], (string)Request.Query["id"]);
-            Get["/verify/{verificationToken}"] = o => Verify((string)o["verificationToken"]);
+            Get["/verify/{emailToken}"] = o => Verify((string)o["emailToken"]);
         }
 
         private Response Register(RegistrationRequestViewModel model)
@@ -49,9 +49,9 @@ namespace ExpenseTracker.API.Controllers
             return Response.AsJson(false);
         }
 
-        private Response Verify(string verificationToken)
+        private Response Verify(string emailToken)
         {
-            User user = UserManager.Verify(verificationToken);
+            User user = UserManager.VerifyEmail(emailToken);
 
             if (user == null)
                 return Error(ErrorResponse.Registration.EMAIL_VERIFICATION_TOKEN_NOT_FOUND);

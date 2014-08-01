@@ -8,6 +8,7 @@
         public static SIGN_IN_EMAIL_NOT_VERIFIED: number = 6;
         public static UNAUTHENTICATED: number = 5;
         public static EMAIL_VERIFICATION_TOKEN_NOT_FOUND: number = 7;
+        public static RESET_PASSWORD_INVALID_TOKEN: number = 10;
 
     }
 

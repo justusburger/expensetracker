@@ -38,6 +38,10 @@
             return this.routeParamsService['welcome'] === 'welcome';
         }
 
+        public get isResetPassword(): boolean {
+            return this.routeParamsService['welcome'] === 'reset-password';
+        }
+
     }
 
     angular.module('ExpenseTracker.Controllers').controller(Profile.Name, [
