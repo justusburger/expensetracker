@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using ExpenseTracker.WebAPI.Exceptions;
+using Newtonsoft.Json.Serialization;
 
 namespace ExpenseTracker.WebAPI
 {
@@ -23,6 +24,8 @@ namespace ExpenseTracker.WebAPI
 
             GlobalConfiguration.Configuration.Filters.Add(new ApplicationExceptionFilter());
             GlobalConfiguration.Configure(WebApiConfig.Register);
+
+            GlobalConfiguration.Configuration.Formatters.JsonFormatter.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
         }
     }
 }
