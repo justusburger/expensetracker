@@ -14,8 +14,6 @@ namespace ExpenseTracker.WebAPI.ViewModels
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
-        [MinLength(4)]
         public string Password { get; set; }
 
         public string Currency { get; set; }

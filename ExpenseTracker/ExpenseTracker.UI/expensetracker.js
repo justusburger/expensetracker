@@ -13,25 +13,20 @@ angular.element(document).ready(function () {
     var body = angular.element('html');
     angular.bootstrap(body, ['ExpenseTracker']);
 
-    var injector = body.injector();
-    var cacheService = injector.get(ExpenseTracker.Services.Cache.Name);
-    var cookies = injector.get('$cookies');
+    var injectorService = body.injector();
+    var cacheService = injectorService.get(ExpenseTracker.Services.Cache.Name);
 
-    /* Check if user has visited before and still has a session cookie.
-    This session cookie might still be valid so call the profile service to make sure. */
-    if (angular.isDefined(cookies['session'])) {
-        var profileService = injector.get(ExpenseTracker.Services.Profile.Name);
-        profileService.get().then(function (profile) {
-            /* API responded with a profile. This means the session is still valid. */
-            cacheService.profile = profile;
-            cacheService.initializeDefer.resolve();
+    if (cacheService.sessionToken) {
+        var userApiResourceService = injectorService.get(ExpenseTracker.Services.ApiResource.UserApiResourceService.Name);
+        userApiResourceService.get().then(function (user) {
+            cacheService.profile = user;
+            cacheService.initializedDefer.resolve();
         }, function () {
-            return cacheService.initializeDefer.resolve();
+            cacheService.sessionToken = '';
+            cacheService.initializedDefer.resolve();
         });
-    } else {
-        /* The user does not have a session cookie, so simply mark application as loaded */
-        cacheService.initializeDefer.resolve();
-    }
+    } else
+        cacheService.initializedDefer.resolve();
 });
 var ExpenseTracker;
 (function (ExpenseTracker) {
@@ -55,9 +50,8 @@ var ExpenseTracker;
         function Component() {
             var _this = this;
             this._loadingStack = [];
-            this.isCheckingSession = true;
-            this.initialize().then(function () {
-                _this.isCheckingSession = false;
+            this.cacheService.initializedDefer.promise.then(function () {
+                return _this.initialize();
             });
         }
         Object.defineProperty(Component.prototype, "apiBaseUrl", {
@@ -81,45 +75,27 @@ var ExpenseTracker;
             configurable: true
         });
 
-        Object.defineProperty(Component.prototype, "signInService", {
+        Object.defineProperty(Component.prototype, "expenseApiResourceService", {
             get: function () {
-                return this._signInService || (this._signInService = this.injectorService.get(ExpenseTracker.Services.SignIn.Name));
-            },
-            set: function (value) {
-                this._signInService = value;
+                return this._expenseApiResourceService || (this._expenseApiResourceService = this.injectorService.get(ExpenseTracker.Services.ApiResource.ExpenseApiResourceService.Name));
             },
             enumerable: true,
             configurable: true
         });
-
-        Object.defineProperty(Component.prototype, "profileService", {
-            get: function () {
-                return this._profileService || (this._profileService = this.injectorService.get(ExpenseTracker.Services.Profile.Name));
-            },
-            set: function (value) {
-                this._profileService = value;
-            },
-            enumerable: true,
-            configurable: true
-        });
-
         Object.defineProperty(Component.prototype, "expenseService", {
-            get: function () {
-                return this._expenseService || (this._expenseService = this.injectorService.get(ExpenseTracker.Services.Expense.Name));
-            },
             set: function (value) {
-                this._expenseService = value;
+                this._expenseApiResourceService = value;
             },
             enumerable: true,
             configurable: true
         });
 
-        Object.defineProperty(Component.prototype, "registrationService", {
+        Object.defineProperty(Component.prototype, "userApiResourceService", {
             get: function () {
-                return this._registrationService || (this._registrationService = this.injectorService.get(ExpenseTracker.Services.Registration.Name));
+                return this._userApiResourceService || (this._expenseApiResourceService = this.injectorService.get(ExpenseTracker.Services.ApiResource.UserApiResourceService.Name));
             },
             set: function (value) {
-                this._registrationService = value;
+                this._userApiResourceService = value;
             },
             enumerable: true,
             configurable: true
@@ -331,7 +307,7 @@ var ExpenseTracker;
         });
 
         Component.prototype.initialize = function () {
-            return this.cacheService.initializeDefer.promise;
+            return this.promiseService.when(true);
         };
         return Component;
     })();
@@ -508,14 +484,285 @@ var ExpenseTracker;
 /// <reference path="idataproviderquery.d.ts" />
 /// <reference path="ierrorresponse.d.ts" />
 /// <reference path="iexpense.d.ts" />
-/// <reference path="ifullprofile.d.ts" />
+/// <reference path="iuser.d.ts" />
 /// <reference path="ipopup.ts" />
-/// <reference path="iprofile.d.ts" />
 /// <reference path="iqueuedalert.d.ts" />
 /// <reference path="iregistrationrequest.d.ts" />
 /// <reference path="iresetpasswordrequest.d.ts" />
-/// <reference path="isigninrequest.d.ts" />
 /// <reference path="isuccessresponse.d.ts" />
+var ExpenseTracker;
+(function (ExpenseTracker) {
+    (function (Services) {
+        (function (ApiResource) {
+            var ApiResourceService = (function (_super) {
+                __extends(ApiResourceService, _super);
+                function ApiResourceService() {
+                    _super.call(this);
+                }
+                ApiResourceService.prototype.defaultOnError = function (response, defer, expectedErrors) {
+                    if (response.data && !Enumerable.From(expectedErrors).Contains(response.data.errorCode)) {
+                        if (response.status === 401) {
+                            this.cacheService.profile = undefined;
+                            this.locationService.path('/sign-in/expired');
+                        } else {
+                            this.alertService.error('An unexpected error occured: ' + response.data.message);
+                        }
+                    }
+                    defer.reject(response);
+                };
+
+                ApiResourceService.prototype.defaultOnSuccess = function (response, defer) {
+                    defer.resolve(response);
+                };
+
+                ApiResourceService.prototype.asString = function (data) {
+                    return { content: data.substr(1, data.length - 2) };
+                };
+
+                ApiResourceService.prototype.asBoolean = function (data) {
+                    return { content: data === 'true' };
+                };
+                return ApiResourceService;
+            })(ExpenseTracker.Component);
+            ApiResource.ApiResourceService = ApiResourceService;
+        })(Services.ApiResource || (Services.ApiResource = {}));
+        var ApiResource = Services.ApiResource;
+    })(ExpenseTracker.Services || (ExpenseTracker.Services = {}));
+    var Services = ExpenseTracker.Services;
+})(ExpenseTracker || (ExpenseTracker = {}));
+var ExpenseTracker;
+(function (ExpenseTracker) {
+    (function (Services) {
+        (function (ApiResource) {
+            var ExpenseApiResourceService = (function (_super) {
+                __extends(ExpenseApiResourceService, _super);
+                function ExpenseApiResourceService() {
+                    _super.call(this);
+                    this.expenseResource = this.resourceService(this.apiBaseUrl + '/expense/:id', null, {
+                        update: { method: 'PUT' },
+                        getAllTags: { method: 'GET', url: this.apiBaseUrl + '/expense/tags', isArray: true },
+                        query: { method: 'GET' }
+                    });
+                }
+                ExpenseApiResourceService.prototype.getAll = function (query) {
+                    var _this = this;
+                    var defer = this.promiseService.defer();
+
+                    if (query.download) {
+                        this.httpService({ method: 'GET', url: this.apiBaseUrl + '/expense/', params: query }).success(function (data, status, headers) {
+                            _this.downloadHelperService.download(data, status, headers);
+                            defer.resolve(data);
+                        }).error(function (data) {
+                            return _this.defaultOnError(data, defer);
+                        });
+                    } else {
+                        this.expenseResource.query(query, function (response) {
+                            return _this.defaultOnSuccess(response, defer);
+                        }, function (response) {
+                            return _this.defaultOnError(response, defer);
+                        });
+                    }
+                    return defer.promise;
+                };
+
+                ExpenseApiResourceService.prototype.getById = function (id) {
+                    var _this = this;
+                    var defer = this.promiseService.defer();
+                    this.expenseResource.get({ id: id }, function (response) {
+                        return _this.defaultOnSuccess(response, defer);
+                    }, function (response) {
+                        return _this.defaultOnError(response, defer);
+                    });
+                    return defer.promise;
+                };
+
+                ExpenseApiResourceService.prototype.create = function (expense) {
+                    var _this = this;
+                    var defer = this.promiseService.defer();
+                    this.expenseResource.save(expense, function (response) {
+                        return _this.defaultOnSuccess(response, defer);
+                    }, function (response) {
+                        return _this.defaultOnError(response, defer);
+                    });
+                    return defer.promise;
+                };
+
+                ExpenseApiResourceService.prototype.update = function (expense) {
+                    var _this = this;
+                    var defer = this.promiseService.defer();
+                    this.expenseResource.update(expense, function (response) {
+                        return _this.defaultOnSuccess(response, defer);
+                    }, function (response) {
+                        return _this.defaultOnError(response, defer);
+                    });
+                    return defer.promise;
+                };
+
+                ExpenseApiResourceService.prototype.delete = function (id) {
+                    var _this = this;
+                    var defer = this.promiseService.defer();
+                    this.expenseResource.delete({ id: id }, function (response) {
+                        return _this.defaultOnSuccess(response, defer);
+                    }, function (response) {
+                        return _this.defaultOnError(response, defer);
+                    });
+                    return defer.promise;
+                };
+
+                ExpenseApiResourceService.prototype.getAllTags = function () {
+                    var _this = this;
+                    var defer = this.promiseService.defer();
+                    this.expenseResource.getAllTags(function (response) {
+                        return _this.defaultOnSuccess(response, defer);
+                    }, function (response) {
+                        return _this.defaultOnError(response, defer);
+                    });
+                    return defer.promise;
+                };
+                ExpenseApiResourceService.Name = 'ExpenseApiResourceService';
+                return ExpenseApiResourceService;
+            })(ApiResource.ApiResourceService);
+            ApiResource.ExpenseApiResourceService = ExpenseApiResourceService;
+
+            angular.module('ExpenseTracker.Services').factory(ExpenseApiResourceService.Name, function () {
+                return new ExpenseApiResourceService();
+            });
+        })(Services.ApiResource || (Services.ApiResource = {}));
+        var ApiResource = Services.ApiResource;
+    })(ExpenseTracker.Services || (ExpenseTracker.Services = {}));
+    var Services = ExpenseTracker.Services;
+})(ExpenseTracker || (ExpenseTracker = {}));
+var ExpenseTracker;
+(function (ExpenseTracker) {
+    (function (Services) {
+        (function (ApiResource) {
+            var UserApiResourceService = (function (_super) {
+                __extends(UserApiResourceService, _super);
+                function UserApiResourceService() {
+                    _super.call(this);
+                    this.userResource = this.resourceService(this.apiBaseUrl + '/user', null, {
+                        get: { method: 'GET' },
+                        register: { method: 'POST' },
+                        update: { method: 'PUT' },
+                        resetPassword: { method: 'POST', url: this.apiBaseUrl + '/user/reset-password' },
+                        verifyResetPassword: { method: 'GET', url: this.apiBaseUrl + '/user/verify-reset-password/:resetPasswordToken', transformResponse: this.asString },
+                        verifyEmail: { method: 'GET', url: this.apiBaseUrl + '/user/verify-email/:emailToken', transformResponse: this.asString },
+                        signIn: { method: 'POST', url: this.apiBaseUrl + '/user/sign-in', transformResponse: this.asString },
+                        signOut: { method: 'DELETE', url: this.apiBaseUrl + '/user/sign-out' },
+                        emailUnique: { method: 'GET', url: this.apiBaseUrl + '/user/email-unique', transformResponse: this.asBoolean }
+                    });
+                }
+                UserApiResourceService.prototype.get = function () {
+                    var _this = this;
+                    var defer = this.promiseService.defer();
+                    this.userResource.get(function (user) {
+                        return _this.defaultOnSuccess(user, defer);
+                    }, function (response) {
+                        return _this.defaultOnError(response, defer);
+                    });
+                    return defer.promise;
+                };
+
+                UserApiResourceService.prototype.register = function (user) {
+                    var _this = this;
+                    var defer = this.promiseService.defer();
+                    this.userResource.register(user, function (user) {
+                        return _this.defaultOnSuccess(user, defer);
+                    }, function (response) {
+                        return _this.defaultOnError(response, defer);
+                    });
+                    return defer.promise;
+                };
+
+                UserApiResourceService.prototype.update = function (user) {
+                    var _this = this;
+                    var defer = this.promiseService.defer();
+                    this.userResource.update(user, function (user) {
+                        return _this.defaultOnSuccess(user, defer);
+                    }, function (response) {
+                        return _this.defaultOnError(response, defer);
+                    });
+                    return defer.promise;
+                };
+
+                UserApiResourceService.prototype.resetPassword = function (resetPasswordRequest) {
+                    var _this = this;
+                    var defer = this.promiseService.defer();
+                    this.userResource.resetPassword(resetPasswordRequest, function () {
+                        return _this.defaultOnSuccess(true, defer);
+                    }, function (response) {
+                        return _this.defaultOnError(response, defer);
+                    });
+                    return defer.promise;
+                };
+
+                UserApiResourceService.prototype.verifyResetPassword = function (resetPasswordToken) {
+                    var _this = this;
+                    var defer = this.promiseService.defer();
+                    this.userResource.verifyResetPassword({ resetPasswordToken: resetPasswordToken }, function (response) {
+                        return _this.defaultOnSuccess(response.content, defer);
+                    }, function (response) {
+                        return _this.defaultOnError(response, defer);
+                    });
+                    return defer.promise;
+                };
+
+                UserApiResourceService.prototype.verifyEmail = function (emailToken) {
+                    var _this = this;
+                    var defer = this.promiseService.defer();
+                    this.userResource.verifyEmail({ emailToken: emailToken }, function (response) {
+                        return _this.defaultOnSuccess(response.content, defer);
+                    }, function (response) {
+                        return _this.defaultOnError(response, defer);
+                    });
+                    return defer.promise;
+                };
+
+                UserApiResourceService.prototype.signIn = function (user) {
+                    var _this = this;
+                    var defer = this.promiseService.defer();
+                    this.userResource.signIn(user, function (response) {
+                        return _this.defaultOnSuccess(response.content, defer);
+                    }, function (response) {
+                        return _this.defaultOnError(response, defer);
+                    });
+                    return defer.promise;
+                };
+
+                UserApiResourceService.prototype.signOut = function () {
+                    var _this = this;
+                    var defer = this.promiseService.defer();
+                    this.userResource.signOut(function () {
+                        return _this.defaultOnSuccess(true, defer);
+                    }, function (response) {
+                        return _this.defaultOnError(response, defer);
+                    });
+                    return defer.promise;
+                };
+
+                UserApiResourceService.prototype.emailUnique = function (email) {
+                    var _this = this;
+                    var defer = this.promiseService.defer();
+                    this.userResource.emailUnique({ email: email }, function (response) {
+                        return _this.defaultOnSuccess(response.content, defer);
+                    }, function (response) {
+                        return _this.defaultOnError(response, defer);
+                    });
+                    return defer.promise;
+                };
+                UserApiResourceService.Name = 'UserApiResourceService';
+                return UserApiResourceService;
+            })(ApiResource.ApiResourceService);
+            ApiResource.UserApiResourceService = UserApiResourceService;
+
+            angular.module('ExpenseTracker.Services').factory(UserApiResourceService.Name, function () {
+                return new UserApiResourceService();
+            });
+        })(Services.ApiResource || (Services.ApiResource = {}));
+        var ApiResource = Services.ApiResource;
+    })(ExpenseTracker.Services || (ExpenseTracker.Services = {}));
+    var Services = ExpenseTracker.Services;
+})(ExpenseTracker || (ExpenseTracker = {}));
 var ExpenseTracker;
 (function (ExpenseTracker) {
     (function (Services) {
@@ -559,39 +806,13 @@ var ExpenseTracker;
 var ExpenseTracker;
 (function (ExpenseTracker) {
     (function (Services) {
-        var ApiResource = (function (_super) {
-            __extends(ApiResource, _super);
-            function ApiResource() {
-                _super.call(this);
-            }
-            ApiResource.prototype.defaultOnError = function (response, defer, expectedErrors) {
-                if (response.data && !Enumerable.From(expectedErrors).Contains(response.data.errorCode)) {
-                    if (response.status === 401) {
-                        this.cacheService.profile = undefined;
-                        this.locationService.path('/sign-in/expired');
-                    } else {
-                        this.alertService.error('An unexpected error occured: ' + response.data.message);
-                    }
-                }
-                defer.reject(response);
-            };
-
-            ApiResource.prototype.defaultOnSuccess = function (response, defer) {
-                defer.resolve(response);
-            };
-            return ApiResource;
-        })(ExpenseTracker.Component);
-        Services.ApiResource = ApiResource;
-    })(ExpenseTracker.Services || (ExpenseTracker.Services = {}));
-    var Services = ExpenseTracker.Services;
-})(ExpenseTracker || (ExpenseTracker = {}));
-var ExpenseTracker;
-(function (ExpenseTracker) {
-    (function (Services) {
         var Cache = (function () {
-            function Cache(promiseService) {
+            function Cache(cookiesService, httpService, promiseService) {
                 this._data = {};
-                this.initializeDefer = promiseService.defer();
+                this.httpService = httpService;
+                this.cookiesService = cookiesService;
+
+                this.initializedDefer = promiseService.defer();
             }
             Object.defineProperty(Cache.prototype, "profile", {
                 get: function () {
@@ -604,24 +825,36 @@ var ExpenseTracker;
                 configurable: true
             });
 
-            Object.defineProperty(Cache.prototype, "expenseTypeNameDictionary", {
+            Object.defineProperty(Cache.prototype, "sessionToken", {
                 get: function () {
-                    return this._expenseTypeNameDictionary || (this._expenseTypeNameDictionary = {});
+                    if (!angular.isDefined(this._sessionToken)) {
+                        this._sessionToken = this.cookiesService[Cache.SessionTokenCookieName];
+                        this.httpService.defaults.headers.common["X-Auth"] = this._sessionToken;
+                    }
+                    return this._sessionToken;
                 },
                 set: function (value) {
-                    this._expenseTypeNameDictionary = value;
+                    this._sessionToken = value;
+                    this.httpService.defaults.headers.common["X-Auth"] = value;
+                    this.cookiesService[Cache.SessionTokenCookieName] = value;
                 },
                 enumerable: true,
                 configurable: true
             });
             Cache.Name = "Cache";
+            Cache.SessionTokenCookieName = "session";
             return Cache;
         })();
         Services.Cache = Cache;
 
-        angular.module('ExpenseTracker.Services').factory(Cache.Name, ['$q', function (promiseService) {
-                return new Cache(promiseService);
-            }]);
+        angular.module('ExpenseTracker.Services').factory(Cache.Name, [
+            '$cookies',
+            '$http',
+            '$q',
+            function (cookiesService, httpService, promiseService) {
+                return new Cache(cookiesService, httpService, promiseService);
+            }
+        ]);
     })(ExpenseTracker.Services || (ExpenseTracker.Services = {}));
     var Services = ExpenseTracker.Services;
 })(ExpenseTracker || (ExpenseTracker = {}));
@@ -791,105 +1024,6 @@ var ExpenseTracker;
 var ExpenseTracker;
 (function (ExpenseTracker) {
     (function (Services) {
-        var Expense = (function (_super) {
-            __extends(Expense, _super);
-            function Expense() {
-                _super.call(this);
-                this.expenseResource = this.resourceService(this.apiBaseUrl + '/expense/:id', null, {
-                    update: { method: 'PUT' },
-                    getAllTags: { method: 'GET', url: this.apiBaseUrl + '/expense/tags', isArray: true },
-                    query: { method: 'GET' }
-                });
-            }
-            Expense.prototype.getAll = function (query) {
-                var _this = this;
-                var defer = this.promiseService.defer();
-
-                if (query.download) {
-                    this.httpService({ method: 'GET', url: this.apiBaseUrl + '/expense/', params: query }).success(function (data, status, headers) {
-                        _this.downloadHelperService.download(data, status, headers);
-                        defer.resolve(data);
-                    }).error(function (data) {
-                        return _this.defaultOnError(data, defer);
-                    });
-                } else {
-                    this.expenseResource.query(query, function (response) {
-                        return _this.defaultOnSuccess(response, defer);
-                    }, function (response) {
-                        return _this.defaultOnError(response, defer);
-                    });
-                }
-                return defer.promise;
-            };
-
-            Expense.prototype.getById = function (id) {
-                var _this = this;
-                var defer = this.promiseService.defer();
-                this.expenseResource.get({ id: id }, function (response) {
-                    return _this.defaultOnSuccess(response, defer);
-                }, function (response) {
-                    return _this.defaultOnError(response, defer);
-                });
-                return defer.promise;
-            };
-
-            Expense.prototype.create = function (expense) {
-                var _this = this;
-                var defer = this.promiseService.defer();
-                this.expenseResource.save(expense, function (response) {
-                    return _this.defaultOnSuccess(response, defer);
-                }, function (response) {
-                    return _this.defaultOnError(response, defer);
-                });
-                return defer.promise;
-            };
-
-            Expense.prototype.update = function (expense) {
-                var _this = this;
-                var defer = this.promiseService.defer();
-                this.expenseResource.update(expense, function (response) {
-                    return _this.defaultOnSuccess(response, defer);
-                }, function (response) {
-                    return _this.defaultOnError(response, defer);
-                });
-                return defer.promise;
-            };
-
-            Expense.prototype.delete = function (id) {
-                var _this = this;
-                var defer = this.promiseService.defer();
-                this.expenseResource.delete({ id: id }, function (response) {
-                    return _this.defaultOnSuccess(response, defer);
-                }, function (response) {
-                    return _this.defaultOnError(response, defer);
-                });
-                return defer.promise;
-            };
-
-            Expense.prototype.getAllTags = function () {
-                var _this = this;
-                var defer = this.promiseService.defer();
-                this.expenseResource.getAllTags(function (response) {
-                    return _this.defaultOnSuccess(response, defer);
-                }, function (response) {
-                    return _this.defaultOnError(response, defer);
-                });
-                return defer.promise;
-            };
-            Expense.Name = 'Expense';
-            return Expense;
-        })(Services.ApiResource);
-        Services.Expense = Expense;
-
-        angular.module('ExpenseTracker.Services').factory(Expense.Name, function () {
-            return new Expense();
-        });
-    })(ExpenseTracker.Services || (ExpenseTracker.Services = {}));
-    var Services = ExpenseTracker.Services;
-})(ExpenseTracker || (ExpenseTracker = {}));
-var ExpenseTracker;
-(function (ExpenseTracker) {
-    (function (Services) {
         var Popup = (function (_super) {
             __extends(Popup, _super);
             function Popup() {
@@ -911,180 +1045,14 @@ var ExpenseTracker;
     })(ExpenseTracker.Services || (ExpenseTracker.Services = {}));
     var Services = ExpenseTracker.Services;
 })(ExpenseTracker || (ExpenseTracker = {}));
-var ExpenseTracker;
-(function (ExpenseTracker) {
-    (function (Services) {
-        var Profile = (function (_super) {
-            __extends(Profile, _super);
-            function Profile() {
-                _super.call(this);
-                this.profileResource = this.resourceService(this.apiBaseUrl + '/profile', null, {
-                    getFullProfile: { method: 'GET', url: this.apiBaseUrl + '/profile/full' },
-                    update: { method: 'PUT' }
-                });
-            }
-            Profile.prototype.get = function () {
-                var _this = this;
-                var defer = this.promiseService.defer();
-                this.profileResource.get(function (response) {
-                    return _this.defaultOnSuccess(response, defer);
-                }, function (response) {
-                    return _this.defaultOnError(response, defer, [ExpenseTracker.Errors.UNAUTHENTICATED]);
-                });
-                return defer.promise;
-            };
-
-            Profile.prototype.getFullProfile = function () {
-                var _this = this;
-                var defer = this.promiseService.defer();
-                this.profileResource.getFullProfile(function (response) {
-                    return _this.defaultOnSuccess(response, defer);
-                }, function (response) {
-                    return _this.defaultOnError(response, defer);
-                });
-                return defer.promise;
-            };
-
-            Profile.prototype.update = function (profile) {
-                var _this = this;
-                var defer = this.promiseService.defer();
-                this.profileResource.update(profile, function (response) {
-                    return _this.defaultOnSuccess(response, defer);
-                }, function (response) {
-                    return _this.defaultOnError(response, defer);
-                });
-                return defer.promise;
-            };
-            Profile.Name = 'Profile';
-            return Profile;
-        })(Services.ApiResource);
-        Services.Profile = Profile;
-
-        angular.module('ExpenseTracker.Services').factory(Profile.Name, function () {
-            return new Profile();
-        });
-    })(ExpenseTracker.Services || (ExpenseTracker.Services = {}));
-    var Services = ExpenseTracker.Services;
-})(ExpenseTracker || (ExpenseTracker = {}));
-var ExpenseTracker;
-(function (ExpenseTracker) {
-    (function (Services) {
-        var Registration = (function (_super) {
-            __extends(Registration, _super);
-            function Registration() {
-                _super.call(this);
-                this.registerResource = this.resourceService(this.apiBaseUrl + '/registration/', null, {
-                    verify: { method: 'GET', url: this.apiBaseUrl + '/registration/verify/:verificationToken' }
-                });
-            }
-            Registration.prototype.create = function (form) {
-                var _this = this;
-                var defer = this.promiseService.defer();
-                this.registerResource.save(form, function (response) {
-                    return _this.defaultOnSuccess(response, defer);
-                }, function (response) {
-                    return _this.defaultOnError(response, defer);
-                });
-                return defer.promise;
-            };
-
-            Registration.prototype.verify = function (verificationToken) {
-                var _this = this;
-                var defer = this.promiseService.defer();
-                this.registerResource.verify({ verificationToken: verificationToken }, function (response) {
-                    return _this.defaultOnSuccess(response, defer);
-                }, function (response) {
-                    return _this.defaultOnError(response, defer, [ExpenseTracker.Errors.EMAIL_VERIFICATION_TOKEN_NOT_FOUND]);
-                });
-                return defer.promise;
-            };
-            Registration.Name = 'Registration';
-            return Registration;
-        })(Services.ApiResource);
-        Services.Registration = Registration;
-
-        angular.module('ExpenseTracker.Services').factory(Registration.Name, function () {
-            return new Registration();
-        });
-    })(ExpenseTracker.Services || (ExpenseTracker.Services = {}));
-    var Services = ExpenseTracker.Services;
-})(ExpenseTracker || (ExpenseTracker = {}));
-var ExpenseTracker;
-(function (ExpenseTracker) {
-    (function (Services) {
-        var SignIn = (function (_super) {
-            __extends(SignIn, _super);
-            function SignIn() {
-                _super.call(this);
-                this.signInResource = this.resourceService(this.apiBaseUrl + '/sign-in', null, {
-                    resetPassword: { method: 'PUT', url: this.apiBaseUrl + '/sign-in/reset-password' },
-                    validateResetPasswordLink: { method: 'GET', url: this.apiBaseUrl + '/sign-in/reset-password/:resetToken' }
-                });
-            }
-            SignIn.prototype.signIn = function (signInRequest) {
-                var _this = this;
-                var defer = this.promiseService.defer();
-                this.signInResource.save(signInRequest, function (response) {
-                    return _this.defaultOnSuccess(response, defer);
-                }, function (response) {
-                    return _this.defaultOnError(response, defer, [ExpenseTracker.Errors.SIGN_IN_INCORRECT_DETAILS, ExpenseTracker.Errors.SIGN_IN_ACCOUNT_LOCKED, ExpenseTracker.Errors.SIGN_IN_EMAIL_NOT_VERIFIED]);
-                });
-                return defer.promise;
-            };
-
-            SignIn.prototype.signOut = function () {
-                var _this = this;
-                var defer = this.promiseService.defer();
-                this.signInResource.delete(function (response) {
-                    return _this.defaultOnSuccess(response, defer);
-                }, function (response) {
-                    return _this.defaultOnError(response, defer);
-                });
-                return defer.promise;
-            };
-
-            SignIn.prototype.resetPassword = function (resetPasswordRequest) {
-                var _this = this;
-                var defer = this.promiseService.defer();
-                this.signInResource.resetPassword(resetPasswordRequest, function (response) {
-                    return _this.defaultOnSuccess(response, defer);
-                }, function (response) {
-                    return _this.defaultOnError(response, defer);
-                });
-                return defer.promise;
-            };
-
-            SignIn.prototype.validateResetPasswordLink = function (resetToken) {
-                var _this = this;
-                var defer = this.promiseService.defer();
-                this.signInResource.validateResetPasswordLink({ resetToken: resetToken }, function (response) {
-                    return _this.defaultOnSuccess(response, defer);
-                }, function (response) {
-                    return _this.defaultOnError(response, defer, [ExpenseTracker.Errors.RESET_PASSWORD_INVALID_TOKEN]);
-                });
-                return defer.promise;
-            };
-            SignIn.Name = 'SignIn';
-            return SignIn;
-        })(Services.ApiResource);
-        Services.SignIn = SignIn;
-
-        angular.module('ExpenseTracker.Services').factory(SignIn.Name, function () {
-            return new SignIn();
-        });
-    })(ExpenseTracker.Services || (ExpenseTracker.Services = {}));
-    var Services = ExpenseTracker.Services;
-})(ExpenseTracker || (ExpenseTracker = {}));
+/// <reference path="apiresource/apiresourceservice.ts" />
+/// <reference path="apiresource/expenseapiresourceservice.ts" />
+/// <reference path="apiresource/userapiresourceservice.ts" />
 /// <reference path="alert.ts" />
-/// <reference path="apiresource.ts" />
 /// <reference path="cache.ts" />
 /// <reference path="dataprovider.ts" />
 /// <reference path="downloadhelper.ts" />
-/// <reference path="expense.ts" />
 /// <reference path="popup.ts" />
-/// <reference path="profile.ts" />
-/// <reference path="registration.ts" />
-/// <reference path="signin.ts" />
 var ExpenseTracker;
 (function (ExpenseTracker) {
     var ControllerBase = (function (_super) {
@@ -1115,10 +1083,17 @@ var ExpenseTracker;
                         _this.locationService.path("/");
 
                     _this.beginUpdate();
-                    _this.registrationService.verify(token).then(function (profile) {
+                    _this.userApiResourceService.verifyEmail(token).then(function (sessionToken) {
                         _this.endUpdate();
-                        _this.cacheService.profile = profile;
-                        _this.locationService.path('/profile/welcome');
+                        _this.cacheService.sessionToken = sessionToken;
+                        _this.beginUpdate();
+                        _this.userApiResourceService.get().then(function (user) {
+                            _this.endUpdate();
+                            _this.cacheService.profile = user;
+                            _this.locationService.path('/profile/welcome');
+                        }, function () {
+                            return _this.endUpdate();
+                        });
                     }, function (response) {
                         _this.endUpdate();
                         if (response.data.errorCode === ExpenseTracker.Errors.EMAIL_VERIFICATION_TOKEN_NOT_FOUND)
@@ -1349,7 +1324,6 @@ var ExpenseTracker;
             __extends(Profile, _super);
             function Profile(scope) {
                 _super.call(this, scope);
-                this.beginUpdate();
             }
             Object.defineProperty(Profile.prototype, "isSecured", {
                 get: function () {
@@ -1362,20 +1336,15 @@ var ExpenseTracker;
             Profile.prototype.initialize = function () {
                 var _this = this;
                 return _super.prototype.initialize.call(this).then(function () {
-                    _this.profileService.getFullProfile().then(function (profile) {
-                        _this.form = profile;
-                        _this.endUpdate();
-                    }, function () {
-                        return _this.endUpdate();
-                    });
+                    _this.form = _this.cacheService.profile;
                 });
             };
 
             Profile.prototype.save = function () {
                 var _this = this;
                 this.beginUpdate();
-                this.profileService.update(this.form).then(function (newProfile) {
-                    _this.cacheService.profile = newProfile;
+                this.userApiResourceService.update(this.form).then(function (user) {
+                    _this.cacheService.profile = user;
                     _this.profileForm.$setPristine();
                     _this.alertService.success("Profile updated");
                     _this.endUpdate();
@@ -1432,7 +1401,9 @@ var ExpenseTracker;
             }
             Registration.prototype.register = function () {
                 var _this = this;
-                this.registrationService.create(this.form).then(function () {
+                this.beginUpdate();
+                this.userApiResourceService.register(this.form).then(function () {
+                    _this.endUpdate();
                     _this.locationService.path('/registration-complete');
                 });
             };
@@ -1478,25 +1449,33 @@ var ExpenseTracker;
         var ResetPassword = (function (_super) {
             __extends(ResetPassword, _super);
             function ResetPassword(scope) {
-                var _this = this;
                 _super.call(this, scope);
                 this.requestSent = false;
                 this.resetFailed = false;
                 this.form = {};
-
-                if (this.resetToken) {
-                    this.signInService.validateResetPasswordLink(this.resetToken).then(function (profile) {
-                        _this.cacheService.profile = profile;
-                        _this.locationService.path('/profile/reset-password');
-                    }, function (response) {
-                        _this.resetFailed = true;
-                    });
-                }
             }
+            ResetPassword.prototype.initialize = function () {
+                var _this = this;
+                return _super.prototype.initialize.call(this).then(function () {
+                    if (_this.resetToken) {
+                        return _this.userApiResourceService.verifyResetPassword(_this.resetToken).then(function (sessionToken) {
+                            _this.cacheService.sessionToken = sessionToken;
+                            _this.userApiResourceService.get().then(function (user) {
+                                _this.cacheService.profile = user;
+                                _this.locationService.path('/profile/reset-password');
+                            });
+                        }, function (response) {
+                            _this.resetFailed = true;
+                        });
+                    }
+                    return _this.promiseService.when(true);
+                });
+            };
+
             ResetPassword.prototype.reset = function () {
                 var _this = this;
                 this.beginUpdate();
-                this.signInService.resetPassword(this.form).then(function () {
+                this.userApiResourceService.resetPassword(this.form).then(function () {
                     _this.endUpdate();
                     _this.requestSent = true;
                 }, function (response) {
@@ -1537,10 +1516,15 @@ var ExpenseTracker;
             SignIn.prototype.signIn = function () {
                 var _this = this;
                 this.beginUpdate();
-                this.signInService.signIn(this.form).then(function (profile) {
-                    _this.endUpdate();
-                    _this.cacheService.profile = profile;
-                    _this.locationService.path('/expenses');
+                this.userApiResourceService.signIn(this.form).then(function (sessionToken) {
+                    _this.cacheService.sessionToken = sessionToken;
+                    _this.userApiResourceService.get().then(function (user) {
+                        _this.endUpdate();
+                        _this.cacheService.profile = user;
+                        _this.locationService.path('/expenses');
+                    }, function (response) {
+                        return _this.endUpdate();
+                    });
                 }, function (response) {
                     _this.endUpdate();
                     if (response.data.errorCode === ExpenseTracker.Errors.SIGN_IN_INCORRECT_DETAILS)
@@ -2153,7 +2137,7 @@ var ExpenseTracker;
             Menu.prototype.signOut = function () {
                 var _this = this;
                 this.beginUpdate();
-                this.signInService.signOut().then(function () {
+                this.userApiResourceService.signOut().then(function () {
                     return _this.signOutSuccess();
                 }, function () {
                     return _this.signOutSuccess();
@@ -2162,6 +2146,7 @@ var ExpenseTracker;
 
             Menu.prototype.signOutSuccess = function () {
                 this.endUpdate();
+                this.cacheService.sessionToken = '';
                 this.cacheService.profile = null;
                 this.locationService.path("/");
             };
@@ -2640,10 +2625,8 @@ var ExpenseTracker;
                     if (typeof viewValue === 'undefined' || viewValue === null || viewValue === '')
                         return viewValue;
 
-                    this.httpService({ url: this.apiBaseUrl + '/registration/email-unique', method: 'GET', params: { email: viewValue, id: this.attributes[UniqueEmail.Name] } }).success(function (unique) {
-                        _this.modelController.$setValidity(UniqueEmail.Name, unique === 'true');
-                    }).error(function (response) {
-                        return console.log(response);
+                    this.userApiResourceService.emailUnique(viewValue).then(function (unique) {
+                        _this.modelController.$setValidity(UniqueEmail.Name, unique);
                     });
 
                     return viewValue;

@@ -17,10 +17,9 @@
             if (typeof viewValue === 'undefined' || viewValue === null || viewValue === '')
                 return viewValue;
 
-            this.httpService({ url: this.apiBaseUrl + '/registration/email-unique', method: 'GET', params: { email: viewValue, id: this.attributes[UniqueEmail.Name] } })
-                .success((unique: string) => {
-                    this.modelController.$setValidity(UniqueEmail.Name, unique === 'true');
-                }).error((response) => console.log(response));
+            this.userApiResourceService.emailUnique(viewValue).then((unique: boolean) => {
+                this.modelController.$setValidity(UniqueEmail.Name, unique);
+            });
 
             return viewValue;
         }

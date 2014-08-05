@@ -15,11 +15,16 @@
                     this.locationService.path("/");
 
                 this.beginUpdate();
-                this.registrationService.verify(token).then(
-                    (profile: Models.IProfile) => {
+                this.userApiResourceService.verifyEmail(token).then(
+                    (sessionToken: string) => {
                         this.endUpdate();
-                        this.cacheService.profile = profile;
-                        this.locationService.path('/profile/welcome');
+                        this.cacheService.sessionToken = sessionToken;
+                        this.beginUpdate();
+                        this.userApiResourceService.get().then((user: Models.IUser) => {
+                            this.endUpdate();
+                            this.cacheService.profile = user;
+                            this.locationService.path('/profile/welcome');
+                        }, () => this.endUpdate());
                     }, (response: Models.IErrorResponse) => {
                         this.endUpdate();
                         if (response.data.errorCode === ExpenseTracker.Errors.EMAIL_VERIFICATION_TOKEN_NOT_FOUND)

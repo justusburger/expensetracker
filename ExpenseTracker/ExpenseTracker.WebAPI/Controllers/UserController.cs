@@ -1,5 +1,7 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.Net.Http;
 using System.Web.Http;
+using ExpenseTracker.Logic.Helpers;
 using ExpenseTracker.Model;
 using ExpenseTracker.WebAPI.Exceptions;
 using ExpenseTracker.WebAPI.Helpers;
@@ -19,10 +21,12 @@ namespace ExpenseTracker.WebAPI.Controllers
         [HttpPost]
         public HttpResponseMessage Register(UserViewModel model)
         {
+            PasswordComplexityHelper.Validate(model.Password, ModelState, PasswordIs.Required);
+
             if (!ModelState.IsValid)
                 throw new ValidationFailedException(ModelState);
 
-            if(!model.AcceptsTermsAndConditions)
+            if (!model.AcceptsTermsAndConditions)
                 throw new TermsAndConditionsNotAcceptedException();
 
             User entity = model.ToEntity();
@@ -35,6 +39,8 @@ namespace ExpenseTracker.WebAPI.Controllers
         [HttpPut]
         public UserViewModel Update(UserViewModel model)
         {
+            PasswordComplexityHelper.Validate(model.Password, ModelState, PasswordIs.NotRequired);
+
             if (!ModelState.IsValid)
                 throw new ValidationFailedException(ModelState);
 
@@ -45,10 +51,21 @@ namespace ExpenseTracker.WebAPI.Controllers
 
         [Route("user/reset-password")]
         [HttpPost]
-        public void ResetPassword()
+        public void ResetPassword(ResetPasswordRequestViewModel model)
         {
-            UserManager.CreateNewResetPasswordToken(CurrentUser);
-            EmailHelper.SendPasswordResetVerificationEmail(CurrentUser.Name, CurrentUser.Email, CurrentUser.PasswordResetToken);
+            if(!ModelState.IsValid)
+                throw new ValidationFailedException(ModelState);
+
+            //Add recaptcha validation
+            throw new Exception();
+
+            User user = UserManager.GetByEmail(model.Email);
+
+            if (user != null)
+            {
+                UserManager.CreateNewResetPasswordToken(user);
+                EmailHelper.SendPasswordResetVerificationEmail(CurrentUser.Name, CurrentUser.Email, CurrentUser.PasswordResetToken);
+            }
         }
 
         [Route("user/verify-reset-password/{resetPasswordToken}")]
@@ -57,7 +74,7 @@ namespace ExpenseTracker.WebAPI.Controllers
         {
             User user = UserManager.VerifyResetPassword(resetPasswordToken);
 
-            if(user == null)
+            if (user == null)
                 throw new ResetPasswordTokenInvalidException();
 
             UserManager.CreateNewSessionToken(user);

@@ -48,6 +48,9 @@
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -175,6 +178,7 @@
     <Compile Include="Helpers\EmailHelper.cs" />
     <Compile Include="Helpers\EmailTemplateHelper.cs" />
     <Compile Include="Helpers\ExpenseExportHelper.cs" />
+    <Compile Include="Helpers\PasswordComplexityHelper.cs" />
     <Compile Include="Mappers\ApplicationExceptionMapper.cs" />
     <Compile Include="Mappers\DataProviderMapper.cs" />
     <Compile Include="Mappers\ExpenseMapper.cs" />
@@ -185,6 +189,7 @@
     <Compile Include="ViewModels\DataProviderResultsViewModel.cs" />
     <Compile Include="ViewModels\ExpenseDataProviderResultsViewModel.cs" />
     <Compile Include="ViewModels\ExpenseViewModel.cs" />
+    <Compile Include="ViewModels\ResetPasswordRequestViewModel.cs" />
     <Compile Include="ViewModels\ResetPasswordViewModel.cs" />
     <Compile Include="ViewModels\SessionViewModel.cs" />
     <Compile Include="ViewModels\TagViewModel.cs" />

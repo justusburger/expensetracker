@@ -28,20 +28,19 @@ angular.element(document).ready(() => {
     var body = angular.element('html');
     angular.bootstrap(body, ['ExpenseTracker']);
 
-    var injector: ng.auto.IInjectorService = body.injector();
-    var cacheService: ExpenseTracker.Services.Cache = injector.get(ExpenseTracker.Services.Cache.Name);
-    var cookies = injector.get('$cookies');
-    /* Check if user has visited before and still has a session cookie. 
-       This session cookie might still be valid so call the profile service to make sure. */
-    if (angular.isDefined(cookies['session'])) {
-        var profileService: ExpenseTracker.Services.Profile = injector.get(ExpenseTracker.Services.Profile.Name);
-        profileService.get().then((profile: ExpenseTracker.Models.IProfile) => {
-            /* API responded with a profile. This means the session is still valid. */
-            cacheService.profile = profile;
-            cacheService.initializeDefer.resolve();
-        }, () => cacheService.initializeDefer.resolve());
-    } else {
-        /* The user does not have a session cookie, so simply mark application as loaded */
-        cacheService.initializeDefer.resolve();
-    }
+    var injectorService: ng.auto.IInjectorService = body.injector();
+    var cacheService: ExpenseTracker.Services.Cache = injectorService.get(ExpenseTracker.Services.Cache.Name);
+
+    if (cacheService.sessionToken) {
+        var userApiResourceService: ExpenseTracker.Services.ApiResource.UserApiResourceService = injectorService.get(ExpenseTracker.Services.ApiResource.UserApiResourceService.Name);
+        userApiResourceService.get().then((user: ExpenseTracker.Models.IUser) => {
+            cacheService.profile = user;
+            cacheService.initializedDefer.resolve();
+        }, () => {
+            cacheService.sessionToken = '';
+            cacheService.initializedDefer.resolve();
+        });
+    } else
+        cacheService.initializedDefer.resolve();
+
 });

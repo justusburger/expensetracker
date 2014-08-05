@@ -38,6 +38,13 @@ namespace ExpenseTracker.WebAPI.Controllers
             set { _emailHelper = value; }
         }
 
+        private IPasswordComplexityHelper _passwordComplexityHelper;
+        public IPasswordComplexityHelper PasswordComplexityHelper
+        {
+            get { return _passwordComplexityHelper ?? (_passwordComplexityHelper = new PasswordComplexityHelper()); }
+            set { _passwordComplexityHelper = value; }
+        }
+
         private User _currentUser;
         public User CurrentUser
         {

@@ -473,25 +473,22 @@
     <TypeScriptCompile Include="ExpenseTracker\Models\IDataProviderQuery.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IErrorResponse.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IExpense.d.ts" />
-    <TypeScriptCompile Include="ExpenseTracker\Models\IFullProfile.d.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Models\IUser.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IPopup.ts" />
-    <TypeScriptCompile Include="ExpenseTracker\Models\IProfile.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IQueuedAlert.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IRegistrationRequest.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\IResetPasswordRequest.d.ts" />
-    <TypeScriptCompile Include="ExpenseTracker\Models\ISignInRequest.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\ISuccessResponse.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\ITag.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\_references.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\Alert.ts" />
-    <TypeScriptCompile Include="ExpenseTracker\Services\ApiResource.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Services\ApiResource\ApiResourceService.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Services\ApiResource\UserApiResourceService.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\Cache.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\DataProvider.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\DownloadHelper.ts" />
-    <TypeScriptCompile Include="ExpenseTracker\Services\Expense.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Services\ApiResource\ExpenseApiResourceService.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\Popup.ts" />
-    <TypeScriptCompile Include="ExpenseTracker\Services\Profile.ts" />
-    <TypeScriptCompile Include="ExpenseTracker\Services\SignIn.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\_references.ts" />
     <TypeScriptCompile Include="_references.ts" />
   </ItemGroup>
@@ -524,7 +521,6 @@
   <ItemGroup />
   <ItemGroup>
     <TypeScriptCompile Include="ExpenseTracker\Controllers\Home.ts" />
-    <TypeScriptCompile Include="ExpenseTracker\Services\Registration.ts" />
     <TypeScriptCompile Include="scripts\linq.d.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-animate.d.ts" />
     <TypeScriptCompile Include="scripts\typings\angularjs\angular-cookies.d.ts" />

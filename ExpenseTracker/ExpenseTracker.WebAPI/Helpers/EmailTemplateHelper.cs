@@ -18,13 +18,15 @@ namespace ExpenseTracker.WebAPI.Helpers
 
     public class EmailTemplateHelper : IEmailTemplateHelper
     {
+        private class EmailController : Controller { }
+
         private string GetTemplateContent(string template, object viewModel)
         {
             var context = HttpContext.Current;
             var contextBase = new HttpContextWrapper(context);
             var routeData = new RouteData();
             routeData.Values.Add("controller", "EmailController");
-            var controllerContext = new ControllerContext(contextBase, routeData, new HomeController());
+            var controllerContext = new ControllerContext(contextBase, routeData, new EmailController());
             var razorViewEngine = new RazorViewEngine();
             var razorViewResult = razorViewEngine.FindPartialView(controllerContext, template, false);
             var writer = new StringWriter();

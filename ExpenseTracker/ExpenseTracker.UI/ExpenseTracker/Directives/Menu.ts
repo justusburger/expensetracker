@@ -8,14 +8,15 @@
         constructor(scope: ng.IScope, element: JQuery, attributes: ng.IAttributes) {
             super(scope, element, attributes);
         }
-        
+
         public signOut(): void {
             this.beginUpdate();
-            this.signInService.signOut().then(() => this.signOutSuccess(), () => this.signOutSuccess());
+            this.userApiResourceService.signOut().then(() => this.signOutSuccess(), () => this.signOutSuccess());
         }
 
         public signOutSuccess(): void {
             this.endUpdate();
+            this.cacheService.sessionToken = '';
             this.cacheService.profile = null;
             this.locationService.path("/");
         }

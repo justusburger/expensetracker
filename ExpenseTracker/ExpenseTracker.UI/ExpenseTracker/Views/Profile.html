@@ -36,7 +36,7 @@
                         <div class="col-md-6">
                             <label>Name</label>
                             <span class="pull-right" id="name-validation"></span>
-                            <input type="text" class="form-control" ng-model="$controller.form.userName" placeholder="Name" name="name" required validate="#name-validation" />
+                            <input type="text" class="form-control" ng-model="$controller.form.name" placeholder="Name" name="name" required validate="#name-validation" />
                         </div>
                         <div class="col-md-6">
                             <label>Email</label>
@@ -86,7 +86,8 @@
                     <div class="row field">
                         <div class="col-md-12">
                             <a class="btn btn-success pull-right" ng-disabled="profileForm.$pristine || profileForm.$invalid || $controller.isLoading()" ng-click="$controller.save()">
-                                <span class="glyphicon glyphicon-check"></span>
+                                <span ng-hide="$controller.isLoading()" class="glyphicon glyphicon-check"></span>
+                                <span ng-show="$controller.idLoading()" class="glyphicon glyphicon-cog spinner"></span>
                                 <span>Save</span>
                             </a>
                         </div>

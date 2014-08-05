@@ -15,36 +15,20 @@
             this._injectorService = value;
         }
 
-        private _signInService: ExpenseTracker.Services.SignIn;
-        public get signInService(): ExpenseTracker.Services.SignIn {
-            return this._signInService || (this._signInService = this.injectorService.get(ExpenseTracker.Services.SignIn.Name));
+        private _expenseApiResourceService: ExpenseTracker.Services.ApiResource.ExpenseApiResourceService;
+        public get expenseApiResourceService(): ExpenseTracker.Services.ApiResource.ExpenseApiResourceService {
+            return this._expenseApiResourceService || (this._expenseApiResourceService = this.injectorService.get(ExpenseTracker.Services.ApiResource.ExpenseApiResourceService.Name));
         }
-        public set signInService(value: ExpenseTracker.Services.SignIn) {
-            this._signInService = value;
-        }
-
-        private _profileService: ExpenseTracker.Services.Profile;
-        public get profileService(): ExpenseTracker.Services.Profile {
-            return this._profileService || (this._profileService = this.injectorService.get(ExpenseTracker.Services.Profile.Name));
-        }
-        public set profileService(value: ExpenseTracker.Services.Profile) {
-            this._profileService = value;
-        }
-        
-        private _expenseService: ExpenseTracker.Services.Expense;
-        public get expenseService(): ExpenseTracker.Services.Expense {
-            return this._expenseService || (this._expenseService = this.injectorService.get(ExpenseTracker.Services.Expense.Name));
-        }
-        public set expenseService(value: ExpenseTracker.Services.Expense) {
-            this._expenseService = value;
+        public set expenseService(value: ExpenseTracker.Services.ApiResource.ExpenseApiResourceService) {
+            this._expenseApiResourceService = value;
         }
 
-        private _registrationService: ExpenseTracker.Services.Registration;
-        public get registrationService(): ExpenseTracker.Services.Registration {
-            return this._registrationService || (this._registrationService = this.injectorService.get(ExpenseTracker.Services.Registration.Name));
+        private _userApiResourceService: ExpenseTracker.Services.ApiResource.UserApiResourceService;
+        public get userApiResourceService(): ExpenseTracker.Services.ApiResource.UserApiResourceService {
+            return this._userApiResourceService || (this._expenseApiResourceService = this.injectorService.get(ExpenseTracker.Services.ApiResource.UserApiResourceService.Name));
         }
-        public set registrationService(value: ExpenseTracker.Services.Registration) {
-            this._registrationService = value;
+        public set userApiResourceService(value: ExpenseTracker.Services.ApiResource.UserApiResourceService) {
+            this._userApiResourceService = value;
         }
 
         private _popupService: ExpenseTracker.Services.Popup;
@@ -158,7 +142,7 @@
         public set cacheService(value: ExpenseTracker.Services.Cache) {
             this._cacheService = value;
         }
-
+        
         private _dataProviderFactory: ExpenseTracker.Services.DataProviderFactory;
         public get dataProviderFactory(): ExpenseTracker.Services.DataProviderFactory {
             return this._dataProviderFactory || (this._dataProviderFactory = this.injectorService.get(ExpenseTracker.Services.DataProviderFactory.Name));
@@ -170,7 +154,7 @@
         public get isSignedIn(): boolean {
             return !!this.cacheService.profile;
         }
-        public get profile(): Models.IProfile {
+        public get profile(): Models.IUser {
             return this.cacheService.profile;
         }
 
@@ -194,15 +178,12 @@
             return false;
         }
 
-        public isCheckingSession: boolean = true;
         constructor() {
-            this.initialize().then(() => {
-                this.isCheckingSession = false;
-            });
+            this.cacheService.initializedDefer.promise.then(() => this .initialize());
         }
 
         public initialize(): ng.IPromise<void> {
-            return this.cacheService.initializeDefer.promise;
+            return this.promiseService.when(<any>true);
         }
 
     }

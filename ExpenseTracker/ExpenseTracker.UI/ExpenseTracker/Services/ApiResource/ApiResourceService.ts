@@ -1,6 +1,6 @@
-﻿module ExpenseTracker.Services {
+﻿module ExpenseTracker.Services.ApiResource {
     
-    export class ApiResource extends Component {
+    export class ApiResourceService extends Component {
 
         constructor() {
             super();
@@ -20,6 +20,14 @@
 
         public defaultOnSuccess<T>(response: T, defer: ng.IDeferred<T>): void {
             defer.resolve(response);
+        }
+
+        public asString(data: string): any {
+            return { content: data.substr(1, data.length - 2) };
+        }
+
+        public asBoolean(data: string): any {
+            return { content: data === 'true' };
         }
 
     }

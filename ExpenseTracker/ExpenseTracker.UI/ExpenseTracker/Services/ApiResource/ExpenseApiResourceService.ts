@@ -1,13 +1,13 @@
-﻿module ExpenseTracker.Services {
+﻿module ExpenseTracker.Services.ApiResource {
 
     interface IExpenseResourceClass extends ng.resource.IResourceClass<ng.resource.IResource<Models.IExpense>> {
         update: (expense: Models.IExpense, onSuccess: (response: Models.IExpense) => void, onError: Function) => void;
         getAllTags: (onSuccess: (tags: Models.ITag[]) => void, onError: Function) => void;
     }
 
-    export class Expense extends ApiResource {
+    export class ExpenseApiResourceService extends ApiResourceService {
 
-        public static Name: string = 'Expense';
+        public static Name: string = 'ExpenseApiResourceService';
 
         private expenseResource: IExpenseResourceClass;
 
@@ -86,6 +86,6 @@
 
     }
 
-    angular.module('ExpenseTracker.Services').factory(Expense.Name, () => new Expense());
+    angular.module('ExpenseTracker.Services').factory(ExpenseApiResourceService.Name, () => new ExpenseApiResourceService());
 
 }    

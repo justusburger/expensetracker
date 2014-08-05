@@ -119,7 +119,7 @@ namespace ExpenseTracker.WebAPI.Tests.Controllers
             _userManager.Setup(a => a.CreateNewResetPasswordToken(_controller.CurrentUser));
             _emailHelper.Setup(a => a.SendPasswordResetVerificationEmail(_controller.CurrentUser.Name, _controller.CurrentUser.Email, _controller.CurrentUser.PasswordResetToken ));
             //Act
-            _controller.ResetPassword();
+            _controller.ResetPassword(new ResetPasswordRequestViewModel());
             //Assert
             _userManager.VerifyAll();
             _emailHelper.VerifyAll();
@@ -169,7 +169,7 @@ namespace ExpenseTracker.WebAPI.Tests.Controllers
             _userManager.Setup(a => a.VerifyEmail("1234")).Returns(user);
             _userManager.Setup(a => a.CreateNewSessionToken(user));
             //Act
-            string result = _controller.VerifyEmail("1234");
+            var result = _controller.VerifyEmail("1234");
             //Assert
             Assert.AreEqual(user.SessionToken, result);
             _userManager.VerifyAll();

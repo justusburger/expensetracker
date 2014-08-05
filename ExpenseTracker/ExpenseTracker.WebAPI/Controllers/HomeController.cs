@@ -8,7 +8,7 @@ using System.Web.Mvc;
 
 namespace ExpenseTracker.WebAPI.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : ControllerBase
     {
         public string Get()
         {

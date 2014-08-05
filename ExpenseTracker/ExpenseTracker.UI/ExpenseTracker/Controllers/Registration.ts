@@ -3,14 +3,17 @@
     export class Registration extends ControllerBase {
 
         public static Name: string = 'Registration';
-        public form: ExpenseTracker.Models.IRegistrationRequest = <ExpenseTracker.Models.IRegistrationRequest>{};
+        public form: ExpenseTracker.Models.IUser;
 
         constructor(scope: ng.IScope) {
             super(scope);
+            this.form = {};
         }
 
         public register(): void {
-            this.registrationService.create(this.form).then(() => {
+            this.beginUpdate();
+            this.userApiResourceService.register(this.form).then(() => {
+                this.endUpdate();
                 this.locationService.path('/registration-complete');
             });
         }

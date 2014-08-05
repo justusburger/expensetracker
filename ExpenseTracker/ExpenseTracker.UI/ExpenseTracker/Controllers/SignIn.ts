@@ -3,19 +3,23 @@
     export class SignIn extends ControllerBase {
 
         public static Name: string = 'SignIn';
-        public form: ExpenseTracker.Models.ISignInRequest = <ExpenseTracker.Models.ISignInRequest>{};
+        public form: ExpenseTracker.Models.IUser;
 
         constructor(scope: ng.IScope) {
             super(scope);
+            this.form = {};
         }
 
         public signIn(): void {
             this.beginUpdate();
-            this.signInService.signIn(this.form).then(
-                (profile: Models.IProfile) => {
-                    this.endUpdate();
-                    this.cacheService.profile = profile;
-                    this.locationService.path('/expenses');
+            this.userApiResourceService.signIn(this.form).then(
+                (sessionToken: string) => {
+                    this.cacheService.sessionToken = sessionToken;
+                    this.userApiResourceService.get().then((user: Models.IUser) => {
+                        this.endUpdate();
+                        this.cacheService.profile = user;
+                        this.locationService.path('/expenses');
+                    }, (response: Models.IErrorResponse) => this.endUpdate());
                 },
                 (response: Models.IErrorResponse) => {
                     this.endUpdate();
