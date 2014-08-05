@@ -5,7 +5,7 @@
         status: number;
         statusText: string;
         data: {
-            errorCode?: number;
+            type?: string;
             statusCode?: number;
             message?: string;
         };

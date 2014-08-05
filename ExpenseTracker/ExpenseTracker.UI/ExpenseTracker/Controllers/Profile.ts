@@ -5,6 +5,7 @@
         public static Name: string = 'Profile';
         public get isSecured(): boolean { return true; }
         public form: Models.IUser;
+        public options: Models.IUserAvailableOptions;
 
         constructor(scope: ng.IScope) {
             super(scope);
@@ -13,6 +14,12 @@
         public initialize(): ng.IPromise<void> {
             return super.initialize().then(() => {
                 this.form = this.cacheService.profile;
+
+                this.beginUpdate();
+                this.userApiResourceService.availableOptions().then((options: Models.IUserAvailableOptions) => {
+                    this.endUpdate();
+                    this.options = options;
+                }, () => this.endUpdate());
             });
         }
 

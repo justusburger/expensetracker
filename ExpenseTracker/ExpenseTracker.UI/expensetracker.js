@@ -33,13 +33,11 @@ var ExpenseTracker;
     var Errors = (function () {
         function Errors() {
         }
-        Errors.REGISTRATION_EMAIL_ALREADY_REGISTERED = 2;
-        Errors.SIGN_IN_ACCOUNT_LOCKED = 3;
-        Errors.SIGN_IN_INCORRECT_DETAILS = 4;
-        Errors.SIGN_IN_EMAIL_NOT_VERIFIED = 6;
-        Errors.UNAUTHENTICATED = 5;
-        Errors.EMAIL_VERIFICATION_TOKEN_NOT_FOUND = 7;
-        Errors.RESET_PASSWORD_INVALID_TOKEN = 10;
+        Errors.EmailVerificationTokenInvalidException = 'EmailVerificationTokenInvalidException';
+        Errors.IncorrectUsernamePasswordCombinationException = 'IncorrectUsernamePasswordCombinationException';
+        Errors.EmailAddressNotVerifiedException = 'EmailAddressNotVerifiedException';
+        Errors.UserAccountLockedException = 'UserAccountLockedException';
+        Errors.ResetPasswordTokenInvalidException = 'ResetPasswordTokenInvalidException';
         return Errors;
     })();
     ExpenseTracker.Errors = Errors;
@@ -499,8 +497,10 @@ var ExpenseTracker;
                 function ApiResourceService() {
                     _super.call(this);
                 }
-                ApiResourceService.prototype.defaultOnError = function (response, defer, expectedErrors) {
-                    if (response.data && !Enumerable.From(expectedErrors).Contains(response.data.errorCode)) {
+                ApiResourceService.prototype.defaultOnError = function (response, defer, expectedErrorsTypes) {
+                    if (angular.isString(response.data))
+                        response.data = JSON.parse(response.data);
+                    if (response.data && !Enumerable.From(expectedErrorsTypes).Contains(response.data.type)) {
                         if (response.status === 401) {
                             this.cacheService.profile = undefined;
                             this.locationService.path('/sign-in/expired');
@@ -516,11 +516,16 @@ var ExpenseTracker;
                 };
 
                 ApiResourceService.prototype.asString = function (data) {
-                    return { content: data.substr(1, data.length - 2) };
+                    if (data[0] == '"')
+                        return { content: data.substr(1, data.length - 2) };
+
+                    return data;
                 };
 
                 ApiResourceService.prototype.asBoolean = function (data) {
-                    return { content: data === 'true' };
+                    if (data.toLowerCase() === 'true' || data.toLowerCase() === 'false')
+                        return { content: data === 'true' };
+                    return data;
                 };
                 return ApiResourceService;
             })(ExpenseTracker.Component);
@@ -649,7 +654,8 @@ var ExpenseTracker;
                         verifyEmail: { method: 'GET', url: this.apiBaseUrl + '/user/verify-email/:emailToken', transformResponse: this.asString },
                         signIn: { method: 'POST', url: this.apiBaseUrl + '/user/sign-in', transformResponse: this.asString },
                         signOut: { method: 'DELETE', url: this.apiBaseUrl + '/user/sign-out' },
-                        emailUnique: { method: 'GET', url: this.apiBaseUrl + '/user/email-unique', transformResponse: this.asBoolean }
+                        emailUnique: { method: 'GET', url: this.apiBaseUrl + '/user/email-unique', transformResponse: this.asBoolean },
+                        availableOptions: { method: 'GET', url: this.apiBaseUrl + '/user/available-options' }
                     });
                 }
                 UserApiResourceService.prototype.get = function () {
@@ -724,7 +730,11 @@ var ExpenseTracker;
                     this.userResource.signIn(user, function (response) {
                         return _this.defaultOnSuccess(response.content, defer);
                     }, function (response) {
-                        return _this.defaultOnError(response, defer);
+                        return _this.defaultOnError(response, defer, [
+                            ExpenseTracker.Errors.IncorrectUsernamePasswordCombinationException,
+                            ExpenseTracker.Errors.EmailAddressNotVerifiedException,
+                            ExpenseTracker.Errors.UserAccountLockedException
+                        ]);
                     });
                     return defer.promise;
                 };
@@ -745,6 +755,17 @@ var ExpenseTracker;
                     var defer = this.promiseService.defer();
                     this.userResource.emailUnique({ email: email }, function (response) {
                         return _this.defaultOnSuccess(response.content, defer);
+                    }, function (response) {
+                        return _this.defaultOnError(response, defer);
+                    });
+                    return defer.promise;
+                };
+
+                UserApiResourceService.prototype.availableOptions = function () {
+                    var _this = this;
+                    var defer = this.promiseService.defer();
+                    this.userResource.availableOptions(function (options) {
+                        return _this.defaultOnSuccess(options, defer);
                     }, function (response) {
                         return _this.defaultOnError(response, defer);
                     });
@@ -1096,7 +1117,7 @@ var ExpenseTracker;
                         });
                     }, function (response) {
                         _this.endUpdate();
-                        if (response.data.errorCode === ExpenseTracker.Errors.EMAIL_VERIFICATION_TOKEN_NOT_FOUND)
+                        if (response.data.type === ExpenseTracker.Errors.EmailVerificationTokenInvalidException)
                             _this.alertService.error('Invalid email verification link. Please contact support@expensetracker.co.za.');
                     });
                 });
@@ -1337,6 +1358,14 @@ var ExpenseTracker;
                 var _this = this;
                 return _super.prototype.initialize.call(this).then(function () {
                     _this.form = _this.cacheService.profile;
+
+                    _this.beginUpdate();
+                    _this.userApiResourceService.availableOptions().then(function (options) {
+                        _this.endUpdate();
+                        _this.options = options;
+                    }, function () {
+                        return _this.endUpdate();
+                    });
                 });
             };
 
@@ -1527,11 +1556,11 @@ var ExpenseTracker;
                     });
                 }, function (response) {
                     _this.endUpdate();
-                    if (response.data.errorCode === ExpenseTracker.Errors.SIGN_IN_INCORRECT_DETAILS)
+                    if (response.data.type === ExpenseTracker.Errors.IncorrectUsernamePasswordCombinationException)
                         _this.alertService.error("Incorrect sign in details. Please try again.");
-                    if (response.data.errorCode === ExpenseTracker.Errors.SIGN_IN_ACCOUNT_LOCKED)
+                    if (response.data.type === ExpenseTracker.Errors.UserAccountLockedException)
                         _this.alertService.error("Your account is locked. Please contact support.");
-                    if (response.data.errorCode === ExpenseTracker.Errors.SIGN_IN_EMAIL_NOT_VERIFIED)
+                    if (response.data.type === ExpenseTracker.Errors.EmailAddressNotVerifiedException)
                         _this.alertService.error("Your email address has not been verified. Please check your email and click the verification link. If you did not recieve an email, please contact support@expensetracker.co.za.");
                 });
             };
@@ -2133,7 +2162,16 @@ var ExpenseTracker;
             __extends(Menu, _super);
             function Menu(scope, element, attributes) {
                 _super.call(this, scope, element, attributes);
+                this.checkingSession = true;
             }
+            Menu.prototype.initialize = function () {
+                var _this = this;
+                return _super.prototype.initialize.call(this).then(function () {
+                    _this.checkingSession = false;
+                    return _this.promiseService.when(true);
+                });
+            };
+
             Menu.prototype.signOut = function () {
                 var _this = this;
                 this.beginUpdate();

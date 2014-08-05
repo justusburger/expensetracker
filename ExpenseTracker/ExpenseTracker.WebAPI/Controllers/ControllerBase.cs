@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Threading;
 using System.Web.Http;
 using System.Web.Mvc;
 using System.Web.Security;
@@ -17,6 +18,11 @@ namespace ExpenseTracker.WebAPI.Controllers
 {
     public abstract class  ControllerBase : ApiController
     {
+        public ControllerBase()
+        {
+            //Thread.Sleep(2000);
+        }
+
         private IUserManager _userManager;
         public IUserManager UserManager
         {

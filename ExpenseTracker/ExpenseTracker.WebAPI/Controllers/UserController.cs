@@ -156,5 +156,16 @@ namespace ExpenseTracker.WebAPI.Controllers
 
             return false;
         }
+
+        [Route("user/available-options")]
+        [HttpGet]
+        public UserAvailableOptionsViewModel AvailableOptions()
+        {
+            return new UserAvailableOptionsViewModel
+            {
+                Countries = CountryHelper.AvailableCountries,
+                Currencies = CurrencyHelper.AvailableCurrencies
+            };
+        }
     }
 }

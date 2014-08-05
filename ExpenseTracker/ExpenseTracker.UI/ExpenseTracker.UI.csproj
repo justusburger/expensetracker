@@ -480,6 +480,7 @@
     <TypeScriptCompile Include="ExpenseTracker\Models\IResetPasswordRequest.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\ISuccessResponse.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\ITag.d.ts" />
+    <TypeScriptCompile Include="ExpenseTracker\Models\IUserAvailableOptions.d.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Models\_references.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\Alert.ts" />
     <TypeScriptCompile Include="ExpenseTracker\Services\ApiResource\ApiResourceService.ts" />

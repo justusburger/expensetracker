@@ -193,6 +193,7 @@
     <Compile Include="ViewModels\ResetPasswordViewModel.cs" />
     <Compile Include="ViewModels\SessionViewModel.cs" />
     <Compile Include="ViewModels\TagViewModel.cs" />
+    <Compile Include="ViewModels\UserAvailableOptionsViewModel.cs" />
     <Compile Include="ViewModels\UserViewModel.cs" />
     <Compile Include="ViewModels\VerifyEmailViewModel.cs" />
   </ItemGroup>

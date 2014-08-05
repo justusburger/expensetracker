@@ -27,7 +27,7 @@
                         }, () => this.endUpdate());
                     }, (response: Models.IErrorResponse) => {
                         this.endUpdate();
-                        if (response.data.errorCode === ExpenseTracker.Errors.EMAIL_VERIFICATION_TOKEN_NOT_FOUND)
+                        if (response.data.type === ExpenseTracker.Errors.EmailVerificationTokenInvalidException)
                             this.alertService.error('Invalid email verification link. Please contact support@expensetracker.co.za.');
                     }
                 );

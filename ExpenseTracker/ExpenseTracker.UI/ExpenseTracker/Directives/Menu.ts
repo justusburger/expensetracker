@@ -4,9 +4,17 @@
 
         public static Name: string = 'menu';
         public static TemplateUrl: string = 'ExpenseTracker/Views/Menu.html';
+        public checkingSession: boolean = true;
 
         constructor(scope: ng.IScope, element: JQuery, attributes: ng.IAttributes) {
             super(scope, element, attributes);
+        }
+
+        public initialize(): ng.IPromise<void> {
+            return super.initialize().then(() => {
+                this.checkingSession = false;
+                return this.promiseService.when(<any>true);
+            });
         }
 
         public signOut(): void {

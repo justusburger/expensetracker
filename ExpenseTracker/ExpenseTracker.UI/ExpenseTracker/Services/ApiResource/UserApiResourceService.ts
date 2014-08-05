@@ -10,6 +10,7 @@
         signIn: (user: Models.IUser, successFn: (response: { content: string }) => void, errorFn: (response: Models.IErrorResponse) => void) => void;
         signOut: (successFn: () => void, errorFn: (response: Models.IErrorResponse) => void) => void;
         emailUnique: (params: { email: string }, successFn: (response: { content: boolean }) => void, errorFn: (response: Models.IErrorResponse) => void) => void;
+        availableOptions: (successFn: (options: Models.IUserAvailableOptions) => void, errorFn: (response: Models.IErrorResponse) => void) => void;
     }
 
     export class UserApiResourceService extends ApiResourceService {
@@ -28,7 +29,8 @@
                 verifyEmail: { method: 'GET', url: this.apiBaseUrl + '/user/verify-email/:emailToken', transformResponse: this.asString },
                 signIn: { method: 'POST', url: this.apiBaseUrl + '/user/sign-in', transformResponse: this.asString },
                 signOut: { method: 'DELETE', url: this.apiBaseUrl + '/user/sign-out' },
-                emailUnique: { method: 'GET', url: this.apiBaseUrl + '/user/email-unique', transformResponse: this.asBoolean }
+                emailUnique: { method: 'GET', url: this.apiBaseUrl + '/user/email-unique', transformResponse: this.asBoolean },
+                availableOptions: { method: 'GET', url: this.apiBaseUrl + '/user/available-options' }
             });
         }
 
@@ -90,7 +92,11 @@
             var defer = this.promiseService.defer<string>();
             this.userResource.signIn(user,
                 (response: { content: string }) => this.defaultOnSuccess(response.content, defer),
-                (response: Models.IErrorResponse) => this.defaultOnError(response, defer)
+                (response: Models.IErrorResponse) => this.defaultOnError(response, defer, [
+                    ExpenseTracker.Errors.IncorrectUsernamePasswordCombinationException,
+                    ExpenseTracker.Errors.EmailAddressNotVerifiedException,
+                    ExpenseTracker.Errors.UserAccountLockedException
+                ])
             );
             return defer.promise;
         }
@@ -108,6 +114,15 @@
             var defer = this.promiseService.defer<boolean>();
             this.userResource.emailUnique({ email: email },
                 (response: { content: boolean }) => this.defaultOnSuccess(response.content, defer),
+                (response: Models.IErrorResponse) => this.defaultOnError(response, defer)
+            );
+            return defer.promise;
+        }
+
+        public availableOptions(): ng.IPromise<Models.IUserAvailableOptions> {
+            var defer = this.promiseService.defer<Models.IUserAvailableOptions>();
+            this.userResource.availableOptions(
+                (options: Models.IUserAvailableOptions) => this.defaultOnSuccess(options, defer),
                 (response: Models.IErrorResponse) => this.defaultOnError(response, defer)
             );
             return defer.promise;

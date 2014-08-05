@@ -35,11 +35,11 @@
                 </li>
             </ul>
             <form class="navbar-form navbar-right">
-                <span class="checking-session" ng-show="$directive.isCheckingSession">
+                <span class="checking-session" ng-show="$directive.checkingSession">
                     <em>Checking your session</em>
                     <i class="glyphicon glyphicon-cog spinner"></i>
                 </span>
-                <span ng-hide="$directive.isSignedIn || $directive.isCheckingSession">
+                <span ng-hide="$directive.isSignedIn || $directive.checkingSession">
                     <a class="registration-link" href="/#/registration">Don't have an account?</a>
                     <a class="btn btn-success" href="/#/sign-in">Sign in</a>
                 </span>
