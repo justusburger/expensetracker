@@ -1,0 +1,11 @@
+﻿@model ExpenseTracker.WebAPI.ViewModels.VerifyEmailViewModel
+@{
+    Layout = "~/EmailTemplates/Layout.cshtml";
+    ViewBag.Title = "Verify email";
+}
+
+
+<h3>Thank you for registering</h3>
+<p>Dear @Model.Name,<br /><br />You have successfully registered on Expensetracker.co.za. Please click the link below to verify your email address and get started.</p>
+<p><a href="@Model.VerificationLink">@Model.VerificationLink</a></p>
+<p>Regards,<br />Expensetracker.co.za<br /><a href="mailto:support@expensetracker.co.za">support@expensetracker.co.za</a></p>
