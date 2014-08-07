@@ -19,7 +19,7 @@
         public get expenseApiResourceService(): ExpenseTracker.Services.ApiResource.ExpenseApiResourceService {
             return this._expenseApiResourceService || (this._expenseApiResourceService = this.injectorService.get(ExpenseTracker.Services.ApiResource.ExpenseApiResourceService.Name));
         }
-        public set expenseService(value: ExpenseTracker.Services.ApiResource.ExpenseApiResourceService) {
+        public set expenseApiResourceService(value: ExpenseTracker.Services.ApiResource.ExpenseApiResourceService) {
             this._expenseApiResourceService = value;
         }
 

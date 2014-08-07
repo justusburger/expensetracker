@@ -23,7 +23,7 @@
         public initialize(): ng.IPromise<void> {
             return super.initialize().then(() => {
                 if (this.isEditing) {
-                    this.expenseService.getById(this.expenseId).then((expense: Models.IExpense) => {
+                    this.expenseApiResourceService.get(this.expenseId).then((expense: Models.IExpense) => {
                         this.form = expense;
                         this.endUpdate();
                     }, () => this.endUpdate());
@@ -33,7 +33,7 @@
                 }
 
                 this.beginUpdate('tags');
-                this.expenseService.getAllTags().then((tags: Models.ITag[]) => {
+                this.expenseApiResourceService.getAllTags().then((tags: Models.ITag[]) => {
                     this.tags = tags;
                     this.endUpdate('tags');
                 }, () => this.endUpdate('tags'));
@@ -43,13 +43,13 @@
         public save(): void {
             if (this.isEditing) {
                 this.beginUpdate();
-                this.expenseService.update(this.form).then(() => {
+                this.expenseApiResourceService.update(this.form).then(() => {
                     this.alertService.success("Expense updated");
                     this.locationService.path("/expenses");
                 }, () => this.endUpdate());
             } else {
                 this.beginUpdate();
-                this.expenseService.create(this.form).then(() => {
+                this.expenseApiResourceService.create(this.form).then(() => {
                     this.alertService.success("Expense added");
                     this.locationService.path("/expenses");
                 }, () => this.endUpdate());

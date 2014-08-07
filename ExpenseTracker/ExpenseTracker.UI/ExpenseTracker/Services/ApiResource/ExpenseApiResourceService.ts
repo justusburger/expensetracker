@@ -1,8 +1,12 @@
 ﻿module ExpenseTracker.Services.ApiResource {
 
-    interface IExpenseResourceClass extends ng.resource.IResourceClass<ng.resource.IResource<Models.IExpense>> {
-        update: (expense: Models.IExpense, onSuccess: (response: Models.IExpense) => void, onError: Function) => void;
-        getAllTags: (onSuccess: (tags: Models.ITag[]) => void, onError: Function) => void;
+    interface IExpenseResourceClass {
+        query: (query: Models.IDataProviderQuery, successFn: (result: Models.IDataProviderResults<Models.IExpense>) => void, errorFn: (response: Models.IErrorResponse) => void) => void;
+        get: (params: { id: number }, successFn: (result: Models.IExpense) => void, errorFn: (response: Models.IErrorResponse) => void) => void;
+        create: (expense: Models.IExpense, successFn: (expense: Models.IExpense) => void, errorFn: (response: Models.IErrorResponse) => void) => void;
+        update: (expense: Models.IExpense, successFn: (expense: Models.IExpense) => void, errorFn: (response: Models.IErrorResponse) => void) => void;
+        delete: (params: { id: number }, successFn: () => void, errorFn: (response: Models.IErrorResponse) => void) => void;
+        getAllTags: (successFn: (tags: Models.ITag[]) => void, errorFn: (response: Models.IErrorResponse) => void) => void;
     }
 
     export class ExpenseApiResourceService extends ApiResourceService {
@@ -13,14 +17,17 @@
 
         constructor() {
             super();
-            this.expenseResource = <IExpenseResourceClass>this.resourceService(this.apiBaseUrl + '/expense/:id', null, {
+            this.expenseResource = <IExpenseResourceClass><any>this.resourceService(this.apiBaseUrl + '/expense', null, {
+                query: { method: 'GET' },
+                get: { method: 'GET', url: this.apiBaseUrl + '/expense/:id' },
+                create: { method: 'POST' },
                 update: { method: 'PUT' },
-                getAllTags: { method: 'GET', url: this.apiBaseUrl + '/expense/tags', isArray: true },
-                query: { method: 'GET' }
+                delete: { method: 'DELETE', url: this.apiBaseUrl + '/expense/:id' },
+                getAllTags: { method: 'GET', url: this.apiBaseUrl + '/expense/tags', isArray: true }
             });
         }
 
-        public getAll(query: Models.IDataProviderQuery): ng.IPromise<Models.IDataProviderResults<Models.IExpense>> {
+        public query(query: Models.IDataProviderQuery): ng.IPromise<Models.IDataProviderResults<Models.IExpense>> {
             var defer = this.promiseService.defer<Models.IDataProviderResults<Models.IExpense>>();
 
             if (query.download) {
@@ -32,28 +39,28 @@
                     .error((data: any) => this.defaultOnError(data, defer));
             } else {
                 this.expenseResource.query(query,
-                    (response) => this.defaultOnSuccess(response, defer),
+                    (result: Models.IDataProviderResults<Models.IExpense>) => this.defaultOnSuccess(result, defer),
                     (response: Models.IErrorResponse) => this.defaultOnError(response, defer)
                 );
             }
             return defer.promise;
         }
 
-        public getById(id: number): ng.IPromise<Models.IExpense> {
+        public get(id: number): ng.IPromise<Models.IExpense> {
             var defer = this.promiseService.defer<Models.IExpense>();
             this.expenseResource.get({ id: id },
-                (response) => this.defaultOnSuccess(response, defer),
+                (result: Models.IExpense) => this.defaultOnSuccess(result, defer),
                 (response: Models.IErrorResponse) => this.defaultOnError(response, defer)
-                );
+            );
             return defer.promise;
         }
 
         public create(expense: Models.IExpense): ng.IPromise<Models.IExpense> {
             var defer = this.promiseService.defer<Models.IExpense>();
-            this.expenseResource.save(expense,
-                (response) => this.defaultOnSuccess(response, defer),
+            this.expenseResource.create(expense,
+                (expense: Models.IExpense) => this.defaultOnSuccess(expense, defer),
                 (response: Models.IErrorResponse) => this.defaultOnError(response, defer)
-                );
+            );
             return defer.promise;
         }
 
@@ -62,25 +69,25 @@
             this.expenseResource.update(expense,
                 (response) => this.defaultOnSuccess(response, defer),
                 (response: Models.IErrorResponse) => this.defaultOnError(response, defer)
-                );
+            );
             return defer.promise;
         }
 
         public delete(id: number): ng.IPromise<void> {
             var defer = this.promiseService.defer<void>();
             this.expenseResource.delete({ id: id },
-                (response) => this.defaultOnSuccess(response, defer),
+                () => this.defaultOnSuccess(<any>true, defer),
                 (response: Models.IErrorResponse) => this.defaultOnError(response, defer)
-                );
+            );
             return defer.promise;
         }
 
         public getAllTags(): ng.IPromise<Models.ITag[]> {
             var defer = this.promiseService.defer<Models.ITag[]>();
             this.expenseResource.getAllTags(
-                (response) => this.defaultOnSuccess(response, defer),
+                (tags: Models.ITag[]) => this.defaultOnSuccess(tags, defer),
                 (response: Models.IErrorResponse) => this.defaultOnError(response, defer)
-                );
+            );
             return defer.promise;
         }
 

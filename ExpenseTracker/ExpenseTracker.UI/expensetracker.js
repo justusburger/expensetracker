@@ -77,10 +77,6 @@ var ExpenseTracker;
             get: function () {
                 return this._expenseApiResourceService || (this._expenseApiResourceService = this.injectorService.get(ExpenseTracker.Services.ApiResource.ExpenseApiResourceService.Name));
             },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Component.prototype, "expenseService", {
             set: function (value) {
                 this._expenseApiResourceService = value;
             },
@@ -543,13 +539,16 @@ var ExpenseTracker;
                 __extends(ExpenseApiResourceService, _super);
                 function ExpenseApiResourceService() {
                     _super.call(this);
-                    this.expenseResource = this.resourceService(this.apiBaseUrl + '/expense/:id', null, {
+                    this.expenseResource = this.resourceService(this.apiBaseUrl + '/expense', null, {
+                        query: { method: 'GET' },
+                        get: { method: 'GET', url: this.apiBaseUrl + '/expense/:id' },
+                        create: { method: 'POST' },
                         update: { method: 'PUT' },
-                        getAllTags: { method: 'GET', url: this.apiBaseUrl + '/expense/tags', isArray: true },
-                        query: { method: 'GET' }
+                        delete: { method: 'DELETE', url: this.apiBaseUrl + '/expense/:id' },
+                        getAllTags: { method: 'GET', url: this.apiBaseUrl + '/expense/tags', isArray: true }
                     });
                 }
-                ExpenseApiResourceService.prototype.getAll = function (query) {
+                ExpenseApiResourceService.prototype.query = function (query) {
                     var _this = this;
                     var defer = this.promiseService.defer();
 
@@ -561,8 +560,8 @@ var ExpenseTracker;
                             return _this.defaultOnError(data, defer);
                         });
                     } else {
-                        this.expenseResource.query(query, function (response) {
-                            return _this.defaultOnSuccess(response, defer);
+                        this.expenseResource.query(query, function (result) {
+                            return _this.defaultOnSuccess(result, defer);
                         }, function (response) {
                             return _this.defaultOnError(response, defer);
                         });
@@ -570,11 +569,11 @@ var ExpenseTracker;
                     return defer.promise;
                 };
 
-                ExpenseApiResourceService.prototype.getById = function (id) {
+                ExpenseApiResourceService.prototype.get = function (id) {
                     var _this = this;
                     var defer = this.promiseService.defer();
-                    this.expenseResource.get({ id: id }, function (response) {
-                        return _this.defaultOnSuccess(response, defer);
+                    this.expenseResource.get({ id: id }, function (result) {
+                        return _this.defaultOnSuccess(result, defer);
                     }, function (response) {
                         return _this.defaultOnError(response, defer);
                     });
@@ -584,8 +583,8 @@ var ExpenseTracker;
                 ExpenseApiResourceService.prototype.create = function (expense) {
                     var _this = this;
                     var defer = this.promiseService.defer();
-                    this.expenseResource.save(expense, function (response) {
-                        return _this.defaultOnSuccess(response, defer);
+                    this.expenseResource.create(expense, function (expense) {
+                        return _this.defaultOnSuccess(expense, defer);
                     }, function (response) {
                         return _this.defaultOnError(response, defer);
                     });
@@ -606,8 +605,8 @@ var ExpenseTracker;
                 ExpenseApiResourceService.prototype.delete = function (id) {
                     var _this = this;
                     var defer = this.promiseService.defer();
-                    this.expenseResource.delete({ id: id }, function (response) {
-                        return _this.defaultOnSuccess(response, defer);
+                    this.expenseResource.delete({ id: id }, function () {
+                        return _this.defaultOnSuccess(true, defer);
                     }, function (response) {
                         return _this.defaultOnError(response, defer);
                     });
@@ -617,8 +616,8 @@ var ExpenseTracker;
                 ExpenseApiResourceService.prototype.getAllTags = function () {
                     var _this = this;
                     var defer = this.promiseService.defer();
-                    this.expenseResource.getAllTags(function (response) {
-                        return _this.defaultOnSuccess(response, defer);
+                    this.expenseResource.getAllTags(function (tags) {
+                        return _this.defaultOnSuccess(tags, defer);
                     }, function (response) {
                         return _this.defaultOnError(response, defer);
                     });
@@ -1173,7 +1172,7 @@ var ExpenseTracker;
                 var _this = this;
                 return _super.prototype.initialize.call(this).then(function () {
                     if (_this.isEditing) {
-                        _this.expenseService.getById(_this.expenseId).then(function (expense) {
+                        _this.expenseApiResourceService.get(_this.expenseId).then(function (expense) {
                             _this.form = expense;
                             _this.endUpdate();
                         }, function () {
@@ -1185,7 +1184,7 @@ var ExpenseTracker;
                     }
 
                     _this.beginUpdate('tags');
-                    _this.expenseService.getAllTags().then(function (tags) {
+                    _this.expenseApiResourceService.getAllTags().then(function (tags) {
                         _this.tags = tags;
                         _this.endUpdate('tags');
                     }, function () {
@@ -1198,7 +1197,7 @@ var ExpenseTracker;
                 var _this = this;
                 if (this.isEditing) {
                     this.beginUpdate();
-                    this.expenseService.update(this.form).then(function () {
+                    this.expenseApiResourceService.update(this.form).then(function () {
                         _this.alertService.success("Expense updated");
                         _this.locationService.path("/expenses");
                     }, function () {
@@ -1206,7 +1205,7 @@ var ExpenseTracker;
                     });
                 } else {
                     this.beginUpdate();
-                    this.expenseService.create(this.form).then(function () {
+                    this.expenseApiResourceService.create(this.form).then(function () {
                         _this.alertService.success("Expense added");
                         _this.locationService.path("/expenses");
                     }, function () {
@@ -1261,7 +1260,7 @@ var ExpenseTracker;
                 };
 
                 this.expenseDataProvider = this.dataProviderFactory.create(function (query) {
-                    return _this.expenseService.getAll(query);
+                    return _this.expenseApiResourceService.query(query);
                 });
             }
             Object.defineProperty(ExpenseList.prototype, "isSecured", {
@@ -1286,7 +1285,7 @@ var ExpenseTracker;
             ExpenseList.prototype.removeConfirmed = function (expense) {
                 var _this = this;
                 this.beginUpdate();
-                this.expenseService.delete(expense.id).then(function () {
+                this.expenseApiResourceService.delete(expense.id).then(function () {
                     _this.endUpdate();
                     _this.expenseDataProvider.refresh();
                     _this.alertService.success('Expense removed');
@@ -2364,7 +2363,7 @@ var ExpenseTracker;
                 var _this = this;
                 return _super.prototype.initialize.call(this).then(function () {
                     _this.beginUpdate();
-                    return _this.expenseService.getAllTags().then(function (tags) {
+                    return _this.expenseApiResourceService.getAllTags().then(function (tags) {
                         _this.tags = tags;
                         _this.endUpdate();
                     }, function () {

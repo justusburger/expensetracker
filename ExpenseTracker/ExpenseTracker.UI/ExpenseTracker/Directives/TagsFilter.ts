@@ -22,7 +22,7 @@
         public initialize(): ng.IPromise<void> {
             return super.initialize().then(() => {
                 this.beginUpdate();
-                return this.expenseService.getAllTags().then((tags: Models.ITag[]) => {
+                return this.expenseApiResourceService.getAllTags().then((tags: Models.ITag[]) => {
                     this.tags = tags;
                     this.endUpdate();
                 }, () => this.endUpdate());

@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Text;
 using ExpenseTracker.WebAPI.ViewModels;
 
@@ -39,7 +40,7 @@ namespace ExpenseTracker.WebAPI.Helpers
             stringBuilder.AppendLine(String.Format("\"Average per day\",,,,{0}", viewModel.AveragePerDay));
 
             response.Content = new StringContent(stringBuilder.ToString());
-            response.Headers.Add("Content-Type", "application/csv");
+            response.Content.Headers.ContentType = new MediaTypeHeaderValue("application/csv");
             response.Headers.Add("x-filename", "Expenses export.csv");
             return response;
         }

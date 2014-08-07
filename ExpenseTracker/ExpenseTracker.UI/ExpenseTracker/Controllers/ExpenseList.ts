@@ -26,7 +26,7 @@
                 ]
             };
 
-            this.expenseDataProvider = this.dataProviderFactory.create(query => this.expenseService.getAll(query));
+            this.expenseDataProvider = this.dataProviderFactory.create(query => this.expenseApiResourceService.query(query));
         }
 
         public initialize(): ng.IPromise<void> {
@@ -39,7 +39,7 @@
 
         public removeConfirmed(expense: Models.IExpense): void {
             this.beginUpdate();
-            this.expenseService.delete(expense.id).then(() => {
+            this.expenseApiResourceService.delete(expense.id).then(() => {
                 this.endUpdate();
                 this.expenseDataProvider.refresh();
                 this.alertService.success('Expense removed');

@@ -24,6 +24,7 @@ namespace ExpenseTracker.WebAPI.Controllers
             set { _expenseExportHelper = value; }
         }
 
+        [Route("expense")]
         [HttpGet]
         public HttpResponseMessage Query([FromUri]DataProviderQueryViewModel query)
         {
@@ -35,9 +36,10 @@ namespace ExpenseTracker.WebAPI.Controllers
             if (query.Download)
                 return ExpenseExportHelper.Export(results.ToViewModel(), CurrentUser.Currency);
 
-            return OK(results);
+            return OK(results.ToViewModel());
         }
 
+        [Route("expense/{id}")]
         [HttpGet]
         public ExpenseViewModel Get(int id)
         {
@@ -49,6 +51,7 @@ namespace ExpenseTracker.WebAPI.Controllers
             return expense.ToViewModel();
         }
 
+        [Route("expense")]
         [HttpPost]
         public HttpResponseMessage Create(ExpenseViewModel model)
         {
@@ -60,6 +63,7 @@ namespace ExpenseTracker.WebAPI.Controllers
             return Created(entity.ToViewModel());
         }
 
+        [Route("expense")]
         [HttpPut]
         public ExpenseViewModel Update(ExpenseViewModel model)
         {
@@ -76,6 +80,7 @@ namespace ExpenseTracker.WebAPI.Controllers
             return originalEntity.ToViewModel();
         }
 
+        [Route("expense/{id}")]
         [HttpDelete]
         public void Delete(int id)
         {
