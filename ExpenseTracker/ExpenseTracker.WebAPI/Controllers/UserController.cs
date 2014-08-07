@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 using ExpenseTracker.Logic.Helpers;
 using ExpenseTracker.Model;
@@ -56,15 +57,15 @@ namespace ExpenseTracker.WebAPI.Controllers
             if(!ModelState.IsValid)
                 throw new ValidationFailedException(ModelState);
 
-            //Add recaptcha validation
-            throw new Exception();
+            if(!RecaptchaHelper.Verify(ClientIp, model.Challenge, model.Response))
+                throw new InvalidCaptchaException();
 
             User user = UserManager.GetByEmail(model.Email);
 
             if (user != null)
             {
                 UserManager.CreateNewResetPasswordToken(user);
-                EmailHelper.SendPasswordResetVerificationEmail(CurrentUser.Name, CurrentUser.Email, CurrentUser.PasswordResetToken);
+                EmailHelper.SendPasswordResetVerificationEmail(user.Name, user.Email, user.PasswordResetToken);
             }
         }
 
@@ -166,6 +167,16 @@ namespace ExpenseTracker.WebAPI.Controllers
                 Countries = CountryHelper.AvailableCountries,
                 Currencies = CurrencyHelper.AvailableCurrencies
             };
+        }
+
+        protected string ClientIp
+        {
+            get
+            {
+                if (HttpContext.Current != null)
+                    return HttpContext.Current.Request.UserHostAddress;
+                return null;
+            }
         }
     }
 }

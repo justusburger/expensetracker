@@ -5,6 +5,7 @@ using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http.ModelBinding;
 using ExpenseTracker.Logic.Managers;
 using ExpenseTracker.Model;
 using ExpenseTracker.WebAPI.Controllers;
@@ -22,6 +23,8 @@ namespace ExpenseTracker.WebAPI.Tests.Controllers
         private UserController _controller;
         private Mock<IUserManager> _userManager;
         private Mock<IEmailHelper> _emailHelper;
+        private Mock<IPasswordComplexityHelper> _passwordComplexityHelper;
+        private Mock<IRecaptchaHelper> _recaptchaHelper;
 
         [SetUp]
         public void SetUp()
@@ -34,6 +37,12 @@ namespace ExpenseTracker.WebAPI.Tests.Controllers
 
             _emailHelper = new Mock<IEmailHelper>(MockBehavior.Strict);
             _controller.EmailHelper = _emailHelper.Object;
+
+            _passwordComplexityHelper = new Mock<IPasswordComplexityHelper>(MockBehavior.Strict);
+            _controller.PasswordComplexityHelper = _passwordComplexityHelper.Object;
+
+            _recaptchaHelper = new Mock<IRecaptchaHelper>(MockBehavior.Strict);
+            _controller.RecaptchaHelper = _recaptchaHelper.Object;
         }
 
         [Test]
@@ -53,7 +62,8 @@ namespace ExpenseTracker.WebAPI.Tests.Controllers
         {
             //Arrange
             var model = new UserViewModel();
-            _controller.ModelState.AddModelError("email", "Email is reuired");
+            _passwordComplexityHelper.Setup(a => a.Validate(It.IsAny<string>(), It.IsAny<ModelStateDictionary>(), It.IsAny<PasswordIs>()));
+            _controller.ModelState.AddModelError("email", "Email is required");
             //Act
             var result = _controller.Register(model);
             //Assert
@@ -64,6 +74,7 @@ namespace ExpenseTracker.WebAPI.Tests.Controllers
         public void Register__should_throw_exception_is_terms_not_accepted()
         {
             //Arrange
+            _passwordComplexityHelper.Setup(a => a.Validate(It.IsAny<string>(), It.IsAny<ModelStateDictionary>(), It.IsAny<PasswordIs>()));
             var model = new UserViewModel { AcceptsTermsAndConditions = false };
             //Act
             var result = _controller.Register(model);
@@ -77,6 +88,8 @@ namespace ExpenseTracker.WebAPI.Tests.Controllers
             //Arrange
             var model = new UserViewModel { AcceptsTermsAndConditions = true, Password = "P@ssw0rd" };
             var user = new User { Name = "John Doe", Email = "john@email.com", EmailVerificationToken = "1234" };
+            _passwordComplexityHelper.Setup(
+                a => a.Validate(It.IsAny<string>(), It.IsAny<ModelStateDictionary>(), It.IsAny<PasswordIs>()));
             _userManager.Setup(a => a.Create(It.IsAny<User>(), "P@ssw0rd")).Returns(user);
             _emailHelper.Setup(a => a.SendEmailAddressVerificationEmail(user.Name, user.Email, user.EmailVerificationToken));
             //Act
@@ -91,7 +104,8 @@ namespace ExpenseTracker.WebAPI.Tests.Controllers
         {
             //Arrange
             var model = new UserViewModel();
-            _controller.ModelState.AddModelError("email", "Email is reuired");
+            _passwordComplexityHelper.Setup(a => a.Validate(It.IsAny<string>(), It.IsAny<ModelStateDictionary>(), It.IsAny<PasswordIs>()));
+            _controller.ModelState.AddModelError("email", "Email is required");
             //Act
             UserViewModel result = _controller.Update(model);
             //Assert
@@ -104,6 +118,7 @@ namespace ExpenseTracker.WebAPI.Tests.Controllers
             //Arrange
             var model = new UserViewModel { Password = "P@ssw0rd" };
             _controller.CurrentUser = new User();
+            _passwordComplexityHelper.Setup(a => a.Validate(It.IsAny<string>(), It.IsAny<ModelStateDictionary>(), It.IsAny<PasswordIs>()));
             _userManager.Setup(a => a.Update(_controller.CurrentUser, It.IsAny<User>(), "P@ssw0rd"));
             //Act
             UserViewModel result = _controller.Update(model);
@@ -111,13 +126,38 @@ namespace ExpenseTracker.WebAPI.Tests.Controllers
             _userManager.VerifyAll();
         }
 
+        [Test, ExpectedException(typeof(ValidationFailedException))]
+        public void ResetPassword__should_throw_exception_if_modelstate_invalid()
+        {
+            //Arrange
+            _controller.ModelState.AddModelError("Email", "Email is required");
+            //Act
+            _controller.ResetPassword(new ResetPasswordRequestViewModel());
+            //Assert
+            Assert.Fail();
+        }
+
+        [Test, ExpectedException(typeof(InvalidCaptchaException))]
+        public void ResetPassword__should_throw_exception_catcha_invalid()
+        {
+            //Arrange
+            _recaptchaHelper.Setup(a => a.Verify(It.IsAny<string>(), "aaa", "bbb")).Returns(false);
+            //Act
+            _controller.ResetPassword(new ResetPasswordRequestViewModel{ Challenge = "aaa", Response = "bbb" });
+            //Assert
+            Assert.Fail();
+        }
+
         [Test]
         public void ResetPassword__should_reset_add_reset_token_and_send_verification_email()
         {
             //Arrange
-            _controller.CurrentUser = new User { Name = "John Doe", Email = "john@email.com", PasswordResetToken = "1234" };
-            _userManager.Setup(a => a.CreateNewResetPasswordToken(_controller.CurrentUser));
-            _emailHelper.Setup(a => a.SendPasswordResetVerificationEmail(_controller.CurrentUser.Name, _controller.CurrentUser.Email, _controller.CurrentUser.PasswordResetToken ));
+            _recaptchaHelper.Setup(a => a.Verify(null, null, null)).Returns(true);
+            _passwordComplexityHelper.Setup(a => a.Validate(It.IsAny<string>(), It.IsAny<ModelStateDictionary>(), It.IsAny<PasswordIs>()));
+            User user = new User { Name = "John Doe", Email = "john@email.com", PasswordResetToken = "1234" };
+            _userManager.Setup(a => a.GetByEmail(null)).Returns(user);
+            _userManager.Setup(a => a.CreateNewResetPasswordToken(user));
+            _emailHelper.Setup(a => a.SendPasswordResetVerificationEmail(user.Name, user.Email, user.PasswordResetToken));
             //Act
             _controller.ResetPassword(new ResetPasswordRequestViewModel());
             //Assert

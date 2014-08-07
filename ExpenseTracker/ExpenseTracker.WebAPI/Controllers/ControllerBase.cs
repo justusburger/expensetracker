@@ -51,6 +51,13 @@ namespace ExpenseTracker.WebAPI.Controllers
             set { _passwordComplexityHelper = value; }
         }
 
+        private IRecaptchaHelper _recaptchaHelper;
+        public IRecaptchaHelper RecaptchaHelper
+        {
+            get { return _recaptchaHelper ?? (_recaptchaHelper = new RecaptchaHelper()); }
+            set { _recaptchaHelper = value; }
+        }
+
         private User _currentUser;
         public User CurrentUser
         {

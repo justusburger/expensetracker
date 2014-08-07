@@ -168,6 +168,7 @@
     <Compile Include="Exceptions\TermsAndConditionsNotAcceptedException.cs" />
     <Compile Include="Exceptions\UnauthenticatedException.cs" />
     <Compile Include="Exceptions\UserAccountLockedException.cs" />
+    <Compile Include="Exceptions\InvalidCaptchaException.cs" />
     <Compile Include="Exceptions\ValidationFailedException.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -179,6 +180,7 @@
     <Compile Include="Helpers\EmailTemplateHelper.cs" />
     <Compile Include="Helpers\ExpenseExportHelper.cs" />
     <Compile Include="Helpers\PasswordComplexityHelper.cs" />
+    <Compile Include="Helpers\RecaptchaHelper.cs" />
     <Compile Include="Mappers\ApplicationExceptionMapper.cs" />
     <Compile Include="Mappers\DataProviderMapper.cs" />
     <Compile Include="Mappers\ExpenseMapper.cs" />

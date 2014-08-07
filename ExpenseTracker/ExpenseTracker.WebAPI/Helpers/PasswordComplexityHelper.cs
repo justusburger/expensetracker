@@ -20,8 +20,7 @@ namespace ExpenseTracker.WebAPI.Helpers
 
             if (string.IsNullOrEmpty(password))
                 modelState.AddModelError("Password", "The Password field is Required.");
-
-            if (password.Trim().Length < 6)
+            else if (password.Trim().Length < 6)
                 modelState.AddModelError("Password", "The password field must be at least 6 characters long.");
         }
     }
