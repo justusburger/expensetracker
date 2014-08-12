@@ -16,6 +16,7 @@
     <file>scripts/angular-cookies.min.js</file>
     <file>scripts/angular-route.min.js</file>
     <file>scripts/angular-resource.min.js</file>
+    <file>scripts/angular-animate.min.js</file>
     <file>scripts/angular-ui/ui-bootstrap.min.js</file>
     <file>scripts/angular-ui/ui-bootstrap-tpls.min.js</file>
     <file>scripts/ng-tags-input.min.js</file>

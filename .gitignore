@@ -28,3 +28,5 @@
 /ExpenseTracker/ExpenseTracker.WebAPI/Properties/PublishProfiles
 /ExpenseTracker/ExpenseTracker.sln.DotSettings.user
 /ExpenseTracker/ExpenseTracker.v12.suo
+/ExpenseTracker/ExpenseTracker.UI/_references.js
+/ExpenseTracker/ExpenseTracker.UI/ExpenseTracker/Services/ApiResource/*.js

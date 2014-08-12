@@ -29,6 +29,10 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <PublishDatabaseSettings>
+      <Objects>
+      </Objects>
+    </PublishDatabaseSettings>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -179,6 +183,7 @@
     <Compile Include="Helpers\EmailHelper.cs" />
     <Compile Include="Helpers\EmailTemplateHelper.cs" />
     <Compile Include="Helpers\ExpenseExportHelper.cs" />
+    <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Helpers\PasswordComplexityHelper.cs" />
     <Compile Include="Helpers\RecaptchaHelper.cs" />
     <Compile Include="Mappers\ApplicationExceptionMapper.cs" />

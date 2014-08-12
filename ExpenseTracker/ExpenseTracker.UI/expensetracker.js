@@ -2,7 +2,7 @@
 angular.module('ExpenseTracker.Filters', []);
 angular.module('ExpenseTracker.Controllers', []);
 angular.module('ExpenseTracker.Directives', []);
-angular.module('ExpenseTracker', ['ngRoute', 'ngResource', 'ngCookies', 'ui.bootstrap', 'ngTagsInput', 'ExpenseTracker.Services', 'ExpenseTracker.Controllers', 'ExpenseTracker.Directives', 'ExpenseTracker.Filters']).config([
+angular.module('ExpenseTracker', ['ngRoute', 'ngResource', 'ngAnimate', 'ngCookies', 'ui.bootstrap', 'ngTagsInput', 'ExpenseTracker.Services', 'ExpenseTracker.Controllers', 'ExpenseTracker.Directives', 'ExpenseTracker.Filters']).config([
     '$routeProvider',
     function (routeProvider) {
         routeProvider.when('/registration', { controller: ExpenseTracker.Controllers.Registration.Name, templateUrl: 'ExpenseTracker/Views/Registration.html' }).when('/registration-complete', { controller: ExpenseTracker.Controllers.RegistrationComplete.Name, templateUrl: 'ExpenseTracker/Views/RegistrationComplete.html' }).when('/verify/:verificationToken', { controller: ExpenseTracker.Controllers.EmailVerification.Name, templateUrl: 'ExpenseTracker/Views/EmailVerification.html' }).when('/sign-in/:expired?', { controller: ExpenseTracker.Controllers.SignIn.Name, templateUrl: 'ExpenseTracker/Views/SignIn.html' }).when('/reset-password/:resetToken?', { controller: ExpenseTracker.Controllers.ResetPassword.Name, templateUrl: 'ExpenseTracker/Views/ResetPassword.html' }).when('/expenses/add', { controller: ExpenseTracker.Controllers.ExpenseDetails.Name, templateUrl: 'ExpenseTracker/Views/ExpenseDetails.html' }).when('/expenses/edit/:id', { controller: ExpenseTracker.Controllers.ExpenseDetails.Name, templateUrl: 'ExpenseTracker/Views/ExpenseDetails.html' }).when('/expenses/:welcome?', { controller: ExpenseTracker.Controllers.ExpenseList.Name, templateUrl: 'ExpenseTracker/Views/ExpenseList.html' }).when('/profile/:welcome?', { controller: ExpenseTracker.Controllers.Profile.Name, templateUrl: 'ExpenseTracker/Views/Profile.html' }).otherwise({ controller: ExpenseTracker.Controllers.Home.Name, templateUrl: 'ExpenseTracker/Views/Home.html' });
@@ -2558,8 +2558,8 @@ var ExpenseTracker;
 
                     var valid = true;
 
-                    //Ensure password length is > 4
-                    if (viewValue.length < 4)
+                    //Ensure password length is > 6
+                    if (viewValue.length < 6)
                         valid = false;
 
                     //Ensure password contains atleast 1 number
@@ -2570,7 +2570,7 @@ var ExpenseTracker;
                     return viewValue;
                 };
                 ComplexPassword.Name = 'complexPassword';
-                ComplexPassword.ErrorMessage = 'Password must be 4 or more characters and contain atleast 1 number.';
+                ComplexPassword.ErrorMessage = 'Password must be 6 or more characters and contain atleast 1 number.';
                 return ComplexPassword;
             })(Validations.ValidationBase);
             Validations.ComplexPassword = ComplexPassword;

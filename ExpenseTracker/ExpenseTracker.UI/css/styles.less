@@ -299,6 +299,7 @@ a {
     .glyphicon {
         margin: 0 0 0 -22px !important;
     }
+
     margin-bottom: 10px;
 }
 
@@ -398,7 +399,7 @@ a {
         }
     }
 
-    .none{
+    .none {
         color: #ccc;
         margin-left: 15px;
     }
@@ -454,7 +455,8 @@ a {
             border-bottom: solid 1px #aaa;
         }
     }
-    .none { 
+
+    .none {
         color: #ccc;
     }
 }
@@ -484,7 +486,18 @@ a {
 
 .captcha {
     margin-bottom: 15px;
+
     table {
         width: 100%;
     }
+}
+
+.fade-in.ng-enter {
+    -webkit-transition: 0.2s linear all;
+    transition: 0.2s linear all;
+    opacity: 0;
+}
+
+.fade-in.ng-enter.ng-enter-active {
+    opacity: 1;
 }

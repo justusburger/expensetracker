@@ -3,7 +3,7 @@
     export class ComplexPassword extends ValidationBase {
 
         public static Name: string = 'complexPassword';
-        public static ErrorMessage: string = 'Password must be 4 or more characters and contain atleast 1 number.';
+        public static ErrorMessage: string = 'Password must be 6 or more characters and contain atleast 1 number.';
 
         constructor(scope: ng.IScope, element: JQuery, attributes: ng.IAttributes, modelController: ng.INgModelController) {
             super(scope, element, attributes, modelController);
@@ -18,8 +18,8 @@
                 return viewValue;
 
             var valid = true;
-            //Ensure password length is > 4
-            if (viewValue.length < 4)
+            //Ensure password length is > 6
+            if (viewValue.length < 6)
                 valid = false;
 
             //Ensure password contains atleast 1 number

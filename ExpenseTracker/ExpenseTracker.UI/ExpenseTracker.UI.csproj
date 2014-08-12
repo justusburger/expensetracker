@@ -30,6 +30,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -73,6 +74,7 @@
     <Content Include="css\styles.min.css">
       <DependentUpon>styles.css</DependentUpon>
     </Content>
+    <Content Include="expensetracker.js" />
     <Content Include="ExpenseTracker\Views\AlertHandler.html" />
     <Content Include="ExpenseTracker\Views\DateFilter.html" />
     <Content Include="ExpenseTracker\Views\Datepicker.html" />
@@ -91,7 +93,10 @@
     <Content Include="ExpenseTracker\Views\TagsFilter.html" />
     <Content Include="ExpenseTracker\Views\Validate.html" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="images\export.png" />
+    <Content Include="images\period.png" />
     <Content Include="images\profilepic.png" />
+    <Content Include="images\tags.png" />
     <Content Include="index.html" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
@@ -101,20 +106,15 @@
     <Content Include="lib.js">
       <DependentUpon>lib.js.bundle</DependentUpon>
     </Content>
-    <Content Include="lib.min.js">
-      <DependentUpon>lib.js</DependentUpon>
-    </Content>
     <Content Include="scripts\angular-messages.min.js.map" />
     <Content Include="lib.js.bundle" />
-    <Content Include="lib.min.js.map">
-      <DependentUpon>lib.min.js</DependentUpon>
-    </Content>
     <Content Include="css\styles.css.map">
       <DependentUpon>styles.css</DependentUpon>
     </Content>
     <Content Include="scripts\angular.min.js.map">
       <DependentUpon>angular.min.js</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\Production.pubxml" />
     <None Include="scripts\jquery-1.9.0.intellisense.js" />
     <Content Include="scripts\angular-messages.js" />
     <Content Include="scripts\angular-messages.min.js" />
